@@ -28,11 +28,22 @@
     .card-shadow {
       box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
     }
+    /* Fixed printable A4 scale styling */
+    .a4-page {
+      width: 794px;
+      min-height: 1120px;
+      height: 1120px;
+      background: #ffffff;
+      margin: 0;
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body class="text-slate-800 min-h-screen p-2.5 sm:p-4 md:p-6 pb-24 md:pb-6 flex flex-col items-center justify-start overflow-x-hidden">
 
-  <!-- Ambient background glow for PC -->
+  <!-- Ambient background glow -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div class="absolute -top-12 -right-8 w-72 h-72 rounded-full bg-purple-500/15 blur-3xl"></div>
     <div class="absolute bottom-6 -left-12 w-64 h-64 rounded-full bg-cyan-500/15 blur-3xl"></div>
@@ -41,12 +52,11 @@
   <!-- Master Application Container -->
   <main class="relative z-10 w-full max-w-[1360px] bg-white/95 md:backdrop-blur-2xl rounded-[32px] md:rounded-[36px] shadow-xl md:shadow-2xl border border-white/95 p-4 sm:p-6 md:p-8 flex flex-col md:grid md:grid-cols-12 gap-6 min-h-[calc(100vh-7rem)] md:min-h-[640px]">
     
-    <!-- === DESKTOP SIDEBAR === -->
+    <!-- DESKTOP SIDEBAR -->
     <aside class="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm">
       <div class="space-y-6">
-        <!-- Desktop Logo -->
         <a href="index.html" class="flex items-center gap-3 px-2 pt-1 cursor-pointer">
-          <svg class="w-11 h-11 shrink-0 drop-shadow-[0_0_12px_rgba(0,153,255,0.45)]" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="w-11 h-11 shrink-0 drop-shadow-[0_0_12px_rgba(0,153,255,0.45)]" viewBox="0 0 500 500" fill="none">
             <defs>
               <linearGradient id="deskShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#00f2fe"/>
@@ -76,7 +86,6 @@
           </div>
         </a>
 
-        <!-- Desktop Navigation Items -->
         <nav class="space-y-2">
           <button id="deskHomeBtn" onclick="switchTab('home')" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-purple-700 shadow-sm border border-purple-100/80 text-left cursor-pointer">
             <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -106,15 +115,13 @@
       </div>
     </aside>
 
-    <!-- === MAIN RIGHT / MOBILE DASHBOARD AREA === -->
+    <!-- MAIN DASHBOARD -->
     <section class="flex-1 w-full flex flex-col justify-between space-y-4 md:col-span-8 lg:col-span-9 relative">
-      
       <div>
         <header class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200/60">
           <div class="flex items-center gap-2.5">
-            <!-- Mobile 3D Shield Logo -->
             <div class="md:hidden w-11 h-11 flex items-center justify-center shrink-0">
-              <svg class="w-11 h-11 drop-shadow-[0_0_10px_rgba(0,153,255,0.45)]" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="w-11 h-11 drop-shadow-[0_0_10px_rgba(0,153,255,0.45)]" viewBox="0 0 500 500" fill="none">
                 <defs>
                   <linearGradient id="mobShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stop-color="#00f2fe"/>
@@ -148,7 +155,6 @@
             </div>
           </div>
 
-          <!-- Right Header Items -->
           <div class="flex items-center gap-2 sm:gap-3">
             <div class="relative">
               <button type="button" onclick="toggleNotifications()" class="w-9 h-9 rounded-full bg-white border border-slate-200/80 shadow-xs flex items-center justify-center text-slate-600 hover:text-purple-600 cursor-pointer transition">
@@ -158,7 +164,6 @@
                 <span class="w-2 h-2 rounded-full bg-rose-500 absolute top-1.5 right-1.5"></span>
               </button>
 
-              <!-- Notifications Dropdown -->
               <div id="notifPanel" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 text-xs text-left space-y-2">
                 <div class="flex items-center justify-between border-b pb-2">
                   <span class="font-extrabold text-slate-800">Notifications</span>
@@ -166,12 +171,11 @@
                 </div>
                 <div class="p-2 bg-purple-50/70 rounded-xl space-y-0.5">
                   <p class="font-bold text-slate-800 text-[11px]">✨ AI Resume Maker Live!</p>
-                  <p class="text-[10px] text-slate-500">Instant PDF download without print dialogues.</p>
+                  <p class="text-[10px] text-slate-500">Standard A4 export without cutting margins.</p>
                 </div>
               </div>
             </div>
 
-            <!-- Dynamic Auth Slot -->
             <div id="authSlot">
               <button onclick="handleGoogleLogin()" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200/90 rounded-full shadow-xs text-xs font-bold text-slate-700 cursor-pointer">
                 <span class="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center text-[11px] font-bold">G</span>
@@ -181,9 +185,7 @@
           </div>
         </header>
 
-        <!-- ==============================================
-             VIEW 1: HOME WORKSPACE HUB FEED
-             ============================================== -->
+        <!-- VIEW 1: HOME -->
         <div id="homeFeedView" class="space-y-4 w-full pt-3">
           <div class="flex items-center justify-between pt-1">
             <div>
@@ -248,7 +250,6 @@
             </div>
           </div>
 
-          <!-- Trending Tools Section -->
           <div class="space-y-3 pt-1">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
@@ -278,9 +279,7 @@
           </div>
         </div>
 
-        <!-- ==============================================
-             VIEW 2: FREE TOOLS DIRECTORY (Card View)
-             ============================================== -->
+        <!-- VIEW 2: TOOLS DIRECTORY -->
         <div id="toolsDirectoryView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
             <div>
@@ -321,9 +320,7 @@
           </div>
         </div>
 
-        <!-- ==============================================
-             VIEW 3: RESUME MAKER WORKSPACE VIEW
-             ============================================== -->
+        <!-- VIEW 3: RESUME MAKER WORKSPACE VIEW -->
         <div id="resumeMakerView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="p-3.5 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-sm">
             <div class="flex items-center gap-3">
@@ -334,11 +331,11 @@
                 <h2 class="text-base font-bold flex items-center gap-2">
                   <span>✨</span> AI Resume Maker
                 </h2>
-                <p class="text-[11px] text-purple-100">Live preview &amp; direct full-page PDF ready</p>
+                <p class="text-[11px] text-purple-100">Live preview &amp; full single-page A4 download</p>
               </div>
             </div>
 
-            <!-- Instant Direct PDF Download Button -->
+            <!-- PDF Download Button -->
             <button id="directDownloadPdfBtn" onclick="downloadResumePdfDirect()" class="flex items-center justify-center gap-1.5 px-4 py-2 bg-white text-indigo-900 rounded-xl text-xs font-bold shadow hover:bg-slate-100 transition active:scale-95 cursor-pointer w-full sm:w-auto">
               <svg class="w-3.5 h-3.5 text-purple-700" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
               <span id="downloadBtnText">Download PDF</span>
@@ -348,7 +345,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
             
             <!-- Left Form Controls -->
-            <div class="lg:col-span-7 space-y-4">
+            <div class="lg:col-span-6 space-y-4">
               <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
                 <div class="flex items-center justify-between flex-wrap gap-2">
                   <span class="font-bold text-slate-700">Select Template:</span>
@@ -413,19 +410,17 @@
               </div>
             </div>
 
-            <!-- Right Preview Container -->
-            <div class="lg:col-span-5 bg-slate-200/80 p-2 sm:p-3 rounded-2xl border border-slate-300 w-full overflow-hidden flex justify-center lg:sticky lg:top-4">
-              <div class="w-full max-w-full overflow-hidden">
-                <div id="resumePreviewContainer" class="w-full max-w-full bg-white shadow-md rounded-xl overflow-hidden"></div>
+            <!-- Right Preview Container (Responsive scrollable preview on mobile/desktop) -->
+            <div class="lg:col-span-6 bg-slate-200/80 p-3 rounded-2xl border border-slate-300 w-full overflow-x-auto flex justify-center lg:sticky lg:top-4">
+              <div class="w-full max-w-[500px] shadow-lg rounded-xl overflow-hidden bg-white">
+                <div id="resumePreviewContainer" class="w-full bg-white"></div>
               </div>
             </div>
 
           </div>
         </div>
 
-        <!-- ==============================================
-             VIEW 4: SAVED TOOLS VIEW
-             ============================================== -->
+        <!-- VIEW 4: SAVED TOOLS -->
         <div id="savedView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
             <div>
@@ -451,9 +446,7 @@
           </div>
         </div>
 
-        <!-- ==============================================
-             VIEW 5: PROFILE & SETTINGS VIEW
-             ============================================== -->
+        <!-- VIEW 5: PROFILE & SETTINGS -->
         <div id="profileView" class="hidden space-y-5 w-full text-left pt-3">
           <div class="border-b border-slate-200/80 pb-3">
             <h3 class="text-lg font-bold text-slate-800">User Profile &amp; Settings</h3>
@@ -481,11 +474,9 @@
 
             <div class="pt-3 border-t border-slate-100 flex flex-wrap gap-2 items-center justify-center sm:justify-start">
               <input type="file" id="customPhotoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)" />
-              
               <button onclick="document.getElementById('customPhotoInput').click()" class="px-3.5 py-2 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5">
                 <span>📷</span> Upload Photo
               </button>
-
               <button onclick="handlePhotoDelete()" class="px-3.5 py-2 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5">
                 <span>🗑️</span> Remove Photo
               </button>
@@ -499,7 +490,6 @@
             <p class="text-xs text-slate-500">
               Forgot or want to change your password? We will send an official password reset link directly to your registered email address.
             </p>
-
             <div class="pt-1 flex flex-col sm:flex-row items-center gap-3">
               <button onclick="handlePasswordReset()" class="w-full sm:w-auto px-4 py-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-xl text-xs font-bold shadow transition cursor-pointer flex items-center justify-center gap-1.5">
                 <span>Send Password Reset Email</span>
@@ -520,12 +510,11 @@
         </div>
 
       </div>
-
       <div class="w-full py-1"></div>
     </section>
   </main>
 
-  <!-- === MOBILE BOTTOM NAVIGATION === -->
+  <!-- MOBILE BOTTOM NAVIGATION -->
   <nav class="fixed bottom-3 left-4 right-4 z-40 md:hidden bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-1.5 shadow-xl flex items-center justify-around text-slate-400">
     <button onclick="switchTab('home')" id="navHomeTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl bg-purple-600 text-white shadow-md shadow-purple-500/25 cursor-pointer">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -587,7 +576,6 @@
     const profilePhotoInitial = document.getElementById('profilePhotoInitial');
     const profileAuthBtn = document.getElementById('profileAuthBtn');
 
-    // Instant local cache recovery
     const cachedName = localStorage.getItem('pa_cached_name');
     const cachedPhoto = localStorage.getItem('pa_cached_photo');
     if (cachedName) {
@@ -757,7 +745,6 @@
 
         profileAuthBtn.innerText = "Logout";
         profileAuthBtn.onclick = handleLogout;
-
         updateHeaderAvatar(photo, name);
       } else {
         userGreetingName.innerText = 'Guest';
@@ -843,21 +830,154 @@
       window.renderResumePreview();
     };
 
-    // DIRECT FULL-PAGE A4 PDF GENERATION ENGINE
-    window.downloadResumePdfDirect = () => {
-      const container = document.getElementById('resumePreviewContainer');
-      const printableArea = container.firstElementChild;
-      if (!printableArea) return;
+    // Helper: Returns standard HTML for templates
+    function getResumeHTML(isForPdf = false) {
+      const name = document.getElementById('rName').value.trim() || 'Your Full Name';
+      const title = document.getElementById('rTitle').value.trim() || 'Your Profession / Job Title';
+      const phone = document.getElementById('rPhone').value.trim() || '+91 00000 00000';
+      const email = document.getElementById('rEmail').value.trim() || 'yourname@example.com';
+      const address = document.getElementById('rAddress').value.trim() || 'City, State';
+      const summary = document.getElementById('rSummary').value.trim() || 'Write a brief professional summary about your skills, strengths, and career objectives.';
+      const skills = document.getElementById('rSkills').value.trim() || 'HTML, CSS, JavaScript, Problem Solving';
+      const languages = document.getElementById('rLanguages').value.trim() || 'English, Hindi';
+      const color = document.getElementById('resumeThemeColor').value || '#1e3a8a';
 
+      const skillPills = skills.split(',').map(s => `<span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 4px; font-size: ${isForPdf ? '11px' : '10px'}; display: inline-block;">${s.trim()}</span>`).join(' ');
+
+      if (window.activeResumeTemplate === 'modern') {
+        return `
+          <div class="${isForPdf ? 'a4-page' : 'w-full min-h-[580px]'} bg-white flex text-slate-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            <div class="w-[34%] text-white ${isForPdf ? 'p-8' : 'p-4'} flex flex-col justify-start shrink-0" style="background-color: ${color}">
+              <div class="space-y-6">
+                <div>
+                  <h5 class="text-[11px] font-extrabold uppercase tracking-widest text-white/80 border-b border-white/20 pb-1 mb-2.5">Contact</h5>
+                  <div class="space-y-2 text-[10.5px] text-white/95 leading-relaxed">
+                    <p class="break-all">📞 ${phone}</p>
+                    <p class="break-all">✉️ ${email}</p>
+                    <p class="break-words">📍 ${address}</p>
+                  </div>
+                </div>
+                <div>
+                  <h5 class="text-[11px] font-extrabold uppercase tracking-widest text-white/80 border-b border-white/20 pb-1 mb-2.5">Skills</h5>
+                  <div class="flex flex-wrap gap-1.5">${skillPills}</div>
+                </div>
+                <div>
+                  <h5 class="text-[11px] font-extrabold uppercase tracking-widest text-white/80 border-b border-white/20 pb-1 mb-2.5">Languages</h5>
+                  <p class="text-[10.5px] text-white/95 break-words">${languages}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="w-[66%] ${isForPdf ? 'p-10' : 'p-5'} flex flex-col justify-start space-y-6 min-w-0">
+              <div class="border-b border-slate-200 pb-5">
+                <h2 class="${isForPdf ? 'text-3xl' : 'text-xl'} font-black tracking-tight" style="color: ${color}">${name}</h2>
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">${title}</p>
+                <p class="text-[11px] text-slate-600 mt-3 leading-relaxed">${summary}</p>
+              </div>
+
+              <div>
+                <h4 class="text-xs font-black uppercase tracking-wider mb-2.5 pb-1 border-b border-slate-200" style="color: ${color}">Work Experience</h4>
+                <div class="space-y-2">
+                  <div class="text-[11.5px] flex justify-between font-bold">
+                    <span>Your Role / Designation</span>
+                    <span class="text-slate-400 font-normal">2022 - Present</span>
+                  </div>
+                  <p class="text-[10.5px] font-medium text-slate-500">Company Name / Organization</p>
+                  <p class="text-[10.5px] text-slate-600 leading-relaxed">Key responsibilities, achievements, and contributions to project workflow and company growth.</p>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="text-xs font-black uppercase tracking-wider mb-2.5 pb-1 border-b border-slate-200" style="color: ${color}">Education &amp; Credentials</h4>
+                <div class="space-y-2">
+                  <div class="text-[11.5px] flex justify-between font-bold">
+                    <span>Degree / Qualification Name</span>
+                    <span class="text-slate-400 font-normal">Graduation Year</span>
+                  </div>
+                  <p class="text-[10.5px] font-medium text-slate-500">College, University, or Institution</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (window.activeResumeTemplate === 'classic') {
+        return `
+          <div class="${isForPdf ? 'a4-page' : 'w-full min-h-[580px]'} bg-white ${isForPdf ? 'p-12' : 'p-6'} flex flex-col justify-start text-slate-800" style="font-family: serif;">
+            <div class="text-center border-b border-slate-300 pb-5 mb-5">
+              <h2 class="${isForPdf ? 'text-3xl' : 'text-2xl'} font-bold tracking-tight text-slate-900">${name}</h2>
+              <p class="text-xs font-semibold text-slate-600 uppercase tracking-widest mt-1">${title}</p>
+              <p class="text-[10.5px] text-slate-500 mt-2 break-words">${phone} | ${email} | ${address}</p>
+            </div>
+            <div class="space-y-5">
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2" style="color: ${color}">Professional Profile</h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed">${summary}</p>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2" style="color: ${color}">Experience</h4>
+                <div class="text-[11px] font-bold flex justify-between">
+                  <span>Your Role - Company Name</span>
+                  <span class="font-normal text-slate-500">Year</span>
+                </div>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2" style="color: ${color}">Education</h4>
+                <p class="text-[11px] text-slate-700"><strong>Your Degree</strong> - School or College</p>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2" style="color: ${color}">Skills &amp; Languages</h4>
+                <p class="text-[11px] text-slate-700"><strong>Skills:</strong> ${skills}</p>
+                <p class="text-[11px] text-slate-700 mt-1"><strong>Languages:</strong> ${languages}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        return `
+          <div class="${isForPdf ? 'a4-page' : 'w-full min-h-[580px]'} bg-white flex flex-col justify-start text-slate-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            <div class="${isForPdf ? 'p-10' : 'p-5'} text-white" style="background-color: ${color}">
+              <h2 class="${isForPdf ? 'text-3xl' : 'text-xl'} font-black tracking-tight">${name}</h2>
+              <p class="text-xs font-medium text-white/90 uppercase tracking-wider mt-1">${title}</p>
+              <p class="text-[10px] text-white/85 mt-2 break-words">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
+            </div>
+            <div class="${isForPdf ? 'p-10 space-y-6' : 'p-5 space-y-4'}">
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Executive Summary</h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed mt-1.5">${summary}</p>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Experience</h4>
+                <p class="text-[11.5px] font-bold text-slate-800 mt-1.5">Your Role - Company Name</p>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Skills &amp; Competencies</h4>
+                <p class="text-[11px] text-slate-700 mt-1.5">${skills}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // PERFECT FULL-PAGE A4 PDF GENERATOR (Completely fills 1 single A4 page)
+    window.downloadResumePdfDirect = () => {
       const name = (document.getElementById('rName').value || 'Resume').trim().replace(/\s+/g, '_');
       const btnText = document.getElementById('downloadBtnText');
       btnText.innerText = "Generating PDF...";
 
-      // Standard A4 pixel size at 96 DPI: 794px x 1123px
-      const originalMinHeight = printableArea.style.minHeight;
-      const originalHeight = printableArea.style.height;
-      printableArea.style.minHeight = '1123px';
-      printableArea.style.height = '1123px';
+      // Dedicated hidden A4 container attached to DOM
+      const offscreenDiv = document.createElement('div');
+      offscreenDiv.id = 'pdf-render-box';
+      offscreenDiv.style.position = 'fixed';
+      offscreenDiv.style.left = '0';
+      offscreenDiv.style.top = '0';
+      offscreenDiv.style.zIndex = '-9999';
+      offscreenDiv.style.width = '794px';
+      offscreenDiv.style.minHeight = '1120px';
+      offscreenDiv.style.background = '#ffffff';
+      offscreenDiv.innerHTML = getResumeHTML(true);
+
+      document.body.appendChild(offscreenDiv);
 
       const opt = {
         margin:       0,
@@ -867,137 +987,28 @@
           scale: 2, 
           useCORS: true, 
           logging: false,
-          scrollY: 0
+          width: 794,
+          height: 1120,
+          windowWidth: 794,
+          windowHeight: 1120
         },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        jsPDF:        { unit: 'px', format: [794, 1120], orientation: 'portrait' }
       };
 
-      html2pdf().set(opt).from(printableArea).save().then(() => {
-        printableArea.style.minHeight = originalMinHeight;
-        printableArea.style.height = originalHeight;
+      html2pdf().set(opt).from(offscreenDiv).save().then(() => {
+        if (offscreenDiv.parentNode) document.body.removeChild(offscreenDiv);
         btnText.innerText = "Download PDF";
       }).catch((err) => {
         console.error(err);
-        printableArea.style.minHeight = originalMinHeight;
-        printableArea.style.height = originalHeight;
+        if (offscreenDiv.parentNode) document.body.removeChild(offscreenDiv);
         btnText.innerText = "Download PDF";
       });
     };
 
-    // Live Resume Renderer with Full-Page A4 Height
+    // Live Resume Renderer (For on-screen box)
     window.renderResumePreview = () => {
-      const name = document.getElementById('rName').value.trim() || 'Your Full Name';
-      const title = document.getElementById('rTitle').value.trim() || 'Your Profession / Job Title';
-      const phone = document.getElementById('rPhone').value.trim() || '+91 00000 00000';
-      const email = document.getElementById('rEmail').value.trim() || 'yourname@example.com';
-      const address = document.getElementById('rAddress').value.trim() || 'City, State';
-      const summary = document.getElementById('rSummary').value.trim() || 'Write a brief professional summary about your skills, strengths, and goals.';
-      const skills = document.getElementById('rSkills').value.trim() || 'Skill 1, Skill 2, Skill 3';
-      const languages = document.getElementById('rLanguages').value.trim() || 'English, Hindi';
-      const color = document.getElementById('resumeThemeColor').value || '#1e3a8a';
       const container = document.getElementById('resumePreviewContainer');
-
-      const skillPills = skills.split(',').map(s => `<span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 4px; font-size: 10px; display: inline-block;">${s.trim()}</span>`).join(' ');
-
-      if (window.activeResumeTemplate === 'modern') {
-        container.innerHTML = `
-          <div class="w-full bg-white flex min-h-[1123px] text-slate-800" style="font-family: sans-serif;">
-            <div class="w-[36%] text-white p-6 flex flex-col justify-between shrink-0" style="background-color: ${color}">
-              <div class="space-y-6">
-                <div>
-                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Contact</h5>
-                  <div class="space-y-2 text-[10px] text-white/90">
-                    <p class="break-all">📞 ${phone}</p>
-                    <p class="break-all">✉️ ${email}</p>
-                    <p class="break-words">📍 ${address}</p>
-                  </div>
-                </div>
-                <div>
-                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Skills</h5>
-                  <div class="flex flex-wrap gap-1.5">${skillPills}</div>
-                </div>
-                <div>
-                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Languages</h5>
-                  <p class="text-[10px] text-white/90 break-words">${languages}</p>
-                </div>
-              </div>
-            </div>
-            <div class="w-[64%] p-8 flex flex-col justify-start space-y-6 min-w-0">
-              <div>
-                <div class="border-b pb-4 mb-4">
-                  <h2 class="text-2xl font-black truncate" style="color: ${color}">${name}</h2>
-                  <p class="text-xs font-bold text-slate-500 uppercase tracking-wider truncate mt-1">${title}</p>
-                  <p class="text-[11px] text-slate-600 mt-3 leading-relaxed">${summary}</p>
-                </div>
-                <div class="mb-5">
-                  <h4 class="text-[12px] font-bold uppercase tracking-wider mb-2 pb-1 border-b border-slate-200" style="color: ${color}">Experience</h4>
-                  <div class="text-[11px] flex justify-between font-bold"><span>Your Role</span><span class="text-slate-400 font-normal">2022 - Present</span></div>
-                  <p class="text-[10px] text-slate-500 mt-0.5">Company Name / Organization</p>
-                </div>
-                <div>
-                  <h4 class="text-[12px] font-bold uppercase tracking-wider mb-2 pb-1 border-b border-slate-200" style="color: ${color}">Education</h4>
-                  <div class="text-[11px] flex justify-between font-bold"><span>Degree / Course</span><span class="text-slate-400 font-normal">Year</span></div>
-                  <p class="text-[10px] text-slate-500 mt-0.5">College or University Name</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      } else if (window.activeResumeTemplate === 'classic') {
-        container.innerHTML = `
-          <div class="w-full bg-white p-8 flex flex-col justify-start min-h-[1123px] text-slate-800" style="font-family: serif;">
-            <div>
-              <div class="text-center border-b pb-4 mb-4">
-                <h2 class="text-3xl font-bold tracking-tight text-slate-900 truncate">${name}</h2>
-                <p class="text-xs font-semibold text-slate-600 uppercase mt-1 truncate">${title}</p>
-                <p class="text-[10.5px] text-slate-500 mt-1 break-words">${phone} | ${email} | ${address}</p>
-              </div>
-              <div class="mb-5">
-                <h4 class="text-[12px] font-bold uppercase border-b pb-1 mb-2" style="color: ${color}">Summary</h4>
-                <p class="text-[11px] text-slate-600 leading-relaxed">${summary}</p>
-              </div>
-              <div class="mb-5">
-                <h4 class="text-[12px] font-bold uppercase border-b pb-1 mb-2" style="color: ${color}">Experience</h4>
-                <p class="text-[11px] font-bold">Your Role - Company Name (Year)</p>
-              </div>
-              <div class="mb-5">
-                <h4 class="text-[12px] font-bold uppercase border-b pb-1 mb-2" style="color: ${color}">Education</h4>
-                <p class="text-[11px]"><strong>Your Degree</strong> - School or College</p>
-              </div>
-              <div>
-                <h4 class="text-[12px] font-bold uppercase border-b pb-1 mb-2" style="color: ${color}">Skills</h4>
-                <p class="text-[11px] text-slate-700">${skills}</p>
-              </div>
-            </div>
-          </div>
-        `;
-      } else {
-        container.innerHTML = `
-          <div class="w-full bg-white flex flex-col justify-start min-h-[1123px] text-slate-800" style="font-family: sans-serif;">
-            <div>
-              <div class="p-6 text-white" style="background-color: ${color}">
-                <h2 class="text-2xl font-black truncate">${name}</h2>
-                <p class="text-xs font-medium text-white/90 truncate mt-1">${title}</p>
-                <p class="text-[10px] text-white/80 mt-2 break-words">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
-              </div>
-              <div class="p-8 space-y-6">
-                <div>
-                  <h4 class="text-[12px] font-bold uppercase tracking-wider text-slate-400">Profile</h4>
-                  <p class="text-[11px] text-slate-600 leading-relaxed mt-1.5">${summary}</p>
-                </div>
-                <div>
-                  <h4 class="text-[12px] font-bold uppercase tracking-wider text-slate-400">Experience</h4>
-                  <p class="text-[11px] font-bold text-slate-800 mt-1.5">Your Role - Company Name</p>
-                </div>
-                <div>
-                  <h4 class="text-[12px] font-bold uppercase tracking-wider text-slate-400">Skills</h4>
-                  <p class="text-[11px] text-slate-700 mt-1.5">${skills}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
+      container.innerHTML = getResumeHTML(false);
     };
 
     // Initial render

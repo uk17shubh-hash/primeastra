@@ -142,9 +142,8 @@
       z-index: 102;
     }
 
-    /* BADA AUR PROMINENT LOGO */
     .brand-vector-mark {
-      height: 64px; /* Bada Size */
+      height: 64px;
       width: 64px;
       display: block;
       filter: drop-shadow(0 0 16px rgba(0, 242, 254, 0.65));
@@ -195,6 +194,7 @@
       border-radius: 2px;
     }
 
+    /* AUTH BUTTON / PROFILE CONTAINER */
     .btn-nav-primary {
       background: linear-gradient(135deg, var(--accent-indigo), var(--accent-purple));
       color: #ffffff;
@@ -204,12 +204,91 @@
       border-radius: var(--radius-pill);
       box-shadow: 0 4px 18px rgba(99, 102, 241, 0.4);
       transition: all 0.25s ease;
-      z-index: 102;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
     }
 
     .btn-nav-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+    }
+
+    .profile-trigger {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .profile-avatar-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .profile-avatar-img:hover {
+      transform: scale(1.05);
+    }
+
+    .user-dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 50px;
+      width: 200px;
+      background: #0d111c;
+      border: 1px solid var(--border-glass-hover);
+      border-radius: var(--radius-md);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 150;
+      backdrop-filter: blur(16px);
+    }
+
+    .user-dropdown-menu.active {
+      display: flex;
+    }
+
+    .user-dropdown-info {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-glass);
+      font-size: 12px;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown-info strong {
+      display: block;
+      color: #ffffff;
+      font-size: 13px;
+    }
+
+    .btn-dropdown-logout {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      color: #f87171;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: left;
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-dropdown-logout:hover {
+      background: rgba(239, 68, 68, 0.12);
     }
 
     .mobile-toggle {
@@ -219,12 +298,20 @@
       cursor: pointer;
       z-index: 102;
     }
+
     .mobile-toggle span {
       width: 26px;
       height: 2.5px;
       background: #ffffff;
       border-radius: 2px;
       transition: all 0.3s ease;
+    }
+
+    /* MOBILE DRAWER AUTH BOX */
+    .mobile-auth-slot {
+      display: none;
+      width: 100%;
+      margin-bottom: 8px;
     }
 
     /* HERO */
@@ -649,11 +736,12 @@
       .nav-links {
         position: fixed; top: 0; right: -100%; width: 80%; max-width: 320px; height: 100vh;
         background: rgba(6, 8, 13, 0.98); border: none; flex-direction: column; align-items: flex-start;
-        padding: 90px 32px; gap: 26px; transition: right 0.35s ease;
+        padding: 90px 32px; gap: 20px; transition: right 0.35s ease;
       }
       .nav-links.open { right: 0; }
+      .mobile-auth-slot { display: block; }
       .mobile-toggle { display: flex; }
-      .btn-nav-primary { display: none; }
+      #desktopAuthSlot { display: none !important; }
       .hero-section { min-height: auto; padding: 100px 20px 50px; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
@@ -669,8 +757,7 @@
   <!-- TOP NAVIGATION -->
   <header class="site-nav" id="siteNav">
     <a href="#hero" class="brand-logo" aria-label="PrimeAstra">
-      
-      <!-- BADA PROMINENT 3D SHIELD LOGO (HEADER) -->
+      <!-- 3D SHIELD LOGO -->
       <svg class="brand-vector-mark" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="mainShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -684,42 +771,39 @@
             <stop offset="100%" stop-color="#0088ff"/>
           </linearGradient>
         </defs>
-
-        <!-- 1. Top 4-Point Star -->
         <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#brightStarGrad)"/>
-
-        <!-- 2. Outer Shield Left Flank -->
         <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#mainShieldGrad)"/>
-        
-        <!-- 3. Outer Shield Right Top Accent -->
         <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#mainShieldGrad)"/>
-        
-        <!-- 4. Outer Shield Right Bottom -->
         <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#mainShieldGrad)"/>
-
-        <!-- 5. Stylized 'A' + Rising Growth Arrow -->
         <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#mainShieldGrad)"/>
-        
-        <!-- 6. 3D Arrowhead -->
         <polygon points="380,55 305,108 335,122 360,170" fill="url(#brightStarGrad)"/>
         <polygon points="380,55 335,122 360,170" fill="#0055ff"/>
-
-        <!-- 7. Center 'A' Apex & Crossbar -->
         <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#mainShieldGrad)"/>
       </svg>
-
       <span>Prime<b>Astra</b></span>
     </a>
 
     <nav aria-label="Main Navigation">
       <ul class="nav-links" id="navLinks">
-        <li><a href="#about" class="nav-link" onclick="closeNav()">About</a></li>
+        <!-- 1. Mobile Drawer mein About Us ke upar Login / Register -->
+        <li class="mobile-auth-slot" id="mobileAuthSlot">
+          <button id="mobileLoginBtn" class="btn-nav-primary" style="width: 100%; justify-content: center;">
+            Login / Register
+          </button>
+        </li>
+        <!-- 2. "About" renamed to "About Us" -->
+        <li><a href="#about" class="nav-link" onclick="closeNav()">About Us</a></li>
         <li><a href="#contact" class="nav-link" onclick="closeNav()">Contact Us</a></li>
       </ul>
     </nav>
 
+    <!-- Desktop Right: Start Your Work replaced with Login/Register & Profile -->
     <div style="display: flex; align-items: center; gap: 16px;">
-      <a href="app.html" class="btn-nav-primary">Start Your Work</a>
+      <div id="desktopAuthSlot">
+        <button id="desktopLoginBtn" class="btn-nav-primary">
+          Login / Register
+        </button>
+      </div>
       
       <div class="mobile-toggle" id="mobileToggle" onclick="toggleNav()">
         <span></span>
@@ -867,8 +951,6 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="brand-logo" style="font-size: 20px;">
-        
-        <!-- PROMINENT LOGO (FOOTER) -->
         <svg class="brand-vector-mark" style="height: 48px; width: 48px;" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="#00f2fe"/>
           <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#mainShieldGrad)"/>
@@ -878,15 +960,14 @@
           <polygon points="380,55 335,122 360,170" fill="#0055ff"/>
           <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#mainShieldGrad)"/>
         </svg>
-
         <span>Prime<b>Astra</b></span>
       </div>
 
       <p class="footer-copy">&copy; <span id="year"></span> PrimeAstra . All rights reserved.</p>
 
       <ul class="footer-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
       </ul>
     </div>
   </footer>
@@ -895,6 +976,157 @@
     <span>⚡ Message transmitted to PrimeAstra desk!</span>
   </div>
 
+  <!-- FIREBASE AUTHENTICATION SCRIPT -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getAuth, 
+      GoogleAuthProvider, 
+      signInWithPopup, 
+      onAuthStateChanged, 
+      signOut 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { 
+      getFirestore, 
+      doc, 
+      setDoc, 
+      getDoc 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Firebase Credentials
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4mMH0LMAvN_vuCLCdYR3tGZHdmbq7iMM",
+      authDomain: "primeastra-643ac.firebaseapp.com",
+      projectId: "primeastra-643ac",
+      storageBucket: "primeastra-643ac.firebasestorage.app",
+      messagingSenderId: "756871848434",
+      appId: "1:756871848434:web:07c5220d2a84a026190b6b",
+      measurementId: "G-R8H0S5LW8N"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    const desktopAuthSlot = document.getElementById('desktopAuthSlot');
+    const mobileAuthSlot = document.getElementById('mobileAuthSlot');
+
+    // Google Sign In Handler
+    const handleGoogleAuth = async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          await setDoc(userRef, {
+            uid: user.uid,
+            name: user.displayName || "User",
+            email: user.email,
+            photoUrl: user.photoURL || "",
+            createdAt: new Date().toISOString()
+          });
+        }
+      } catch (err) {
+        console.error("Authentication Error:", err);
+        alert("Login failed: " + err.message);
+      }
+    };
+
+    // Global Logout Handler
+    window.handleLogout = () => {
+      signOut(auth);
+    };
+
+    // Dropdown toggle
+    window.toggleProfileDropdown = (e) => {
+      e.stopPropagation();
+      const menu = document.getElementById('userDropdownMenu');
+      if (menu) menu.classList.toggle('active');
+    };
+
+    document.addEventListener('click', () => {
+      const menu = document.getElementById('userDropdownMenu');
+      if (menu) menu.classList.remove('active');
+    });
+
+    // Auth State Observer
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // User logged in: Check Firestore for custom photo or fallback to Gmail photo or initial avatar
+        let photo = user.photoURL;
+        let displayName = user.displayName || user.email.split('@')[0];
+
+        try {
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          if (userDoc.exists() && userDoc.data().photoUrl) {
+            photo = userDoc.data().photoUrl;
+          }
+        } catch (e) {}
+
+        if (!photo) {
+          const initial = displayName[0].toUpperCase();
+          photo = `https://ui-avatars.com/api/?name=${encodeURIComponent(initial)}&background=00f2fe&color=06080d&bold=true&rounded=true`;
+        }
+
+        // 1. Desktop Profile View
+        desktopAuthSlot.innerHTML = `
+          <div class="profile-trigger" onclick="toggleProfileDropdown(event)">
+            <img src="${photo}" alt="Profile" class="profile-avatar-img" title="${displayName}" />
+            <div class="user-dropdown-menu" id="userDropdownMenu">
+              <div class="user-dropdown-info">
+                <strong>${displayName}</strong>
+                <span>${user.email}</span>
+              </div>
+              <a href="app.html" style="padding: 8px 10px; font-size: 13px; color: #fff; font-weight: 500;">
+                Open Workspace
+              </a>
+              <button onclick="handleLogout()" class="btn-dropdown-logout">
+                Log out
+              </button>
+            </div>
+          </div>
+        `;
+
+        // 2. Mobile Drawer Profile View (Sabse Upar)
+        mobileAuthSlot.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: var(--radius-md);">
+            <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+              <img src="${photo}" alt="Profile" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--accent-cyan); object-fit: cover;" />
+              <div style="overflow: hidden; text-align: left;">
+                <strong style="display: block; font-size: 13px; color: #fff; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${displayName}</strong>
+                <span style="font-size: 11px; color: var(--text-muted); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; display: block;">${user.email}</span>
+              </div>
+            </div>
+            <button onclick="handleLogout()" style="color: #f87171; font-size: 12px; font-weight: 700; padding: 6px 12px; background: rgba(239, 68, 68, 0.15); border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.3);">
+              Logout
+            </button>
+          </div>
+        `;
+
+      } else {
+        // User Logged Out: Normal "Login / Register" Buttons
+        desktopAuthSlot.innerHTML = `
+          <button id="desktopLoginBtn" class="btn-nav-primary">
+            Login / Register
+          </button>
+        `;
+        mobileAuthSlot.innerHTML = `
+          <button id="mobileLoginBtn" class="btn-nav-primary" style="width: 100%; justify-content: center;">
+            Login / Register
+          </button>
+        `;
+
+        document.getElementById('desktopLoginBtn')?.addEventListener('click', handleGoogleAuth);
+        document.getElementById('mobileLoginBtn')?.addEventListener('click', handleGoogleAuth);
+      }
+    });
+  </script>
+
+  <!-- SCRIPT FOR UI & CANVAS -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 

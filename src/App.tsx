@@ -672,7 +672,7 @@ export default function App() {
     }
   };
 
-  // Avatar Photo / Initial Image Resolution
+  // Avatar Resolution
   const getAvatarImage = () => {
     if (userData?.photoUrl) return userData.photoUrl;
     if (currentUser?.photoURL) return currentUser.photoURL;
@@ -694,7 +694,7 @@ export default function App() {
         className="relative z-10 w-full max-w-[1360px] bg-white/80 backdrop-blur-2xl rounded-[28px] md:rounded-[36px] shadow-floating border border-white/95 p-3.5 sm:p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[600px]"
         data-purpose="app-root"
       >
-        {/* === Left Sidebar (Without Premium Card) === */}
+        {/* === Left Sidebar (Desktop Only) === */}
         <aside
           className="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-start bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm"
           data-purpose="sidebar"
@@ -800,6 +800,7 @@ export default function App() {
                     <img src={getAvatarImage()} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
                   </div>
 
+                  {/* Profile Dropdown Menu */}
                   {isDropdownOpen && (
                     <div className="absolute right-0 mt-2.5 w-52 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-floating p-2 z-50 text-xs">
                       <div className="px-3 py-2 border-b border-slate-100 mb-1">
@@ -852,7 +853,7 @@ export default function App() {
                 <PrimeAstraLogo className="w-12 h-12 mx-auto" />
                 <h3 className="text-base font-bold text-slate-800">Welcome to PrimeAstra</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                  Sidebar ya bottom navbar se <strong>AI Resume Maker</strong> select karein.
+                  Neeche navbar se <strong>Resume Maker</strong> select karein[cite: 15].
                 </p>
               </div>
             )}
@@ -860,37 +861,27 @@ export default function App() {
         </section>
       </main>
 
-      {/* === Mobile Floating Bottom Bar (Premium Removed) === */}
-      <div className="fixed bottom-3 left-4 right-4 z-40 md:hidden bg-white/90 backdrop-blur-xl border border-slate-200/90 rounded-2xl p-2 shadow-floating flex items-center justify-around">
+      {/* === Mobile Floating Bottom Bar (Sirf Home aur Resume Maker, No Settings) === */}
+      <div className="fixed bottom-3 left-8 right-8 z-40 md:hidden bg-white/90 backdrop-blur-xl border border-slate-200/90 rounded-2xl p-2 shadow-floating flex items-center justify-around">
         <button
           onClick={() => setActiveNav('home')}
-          className={`flex flex-col items-center gap-1 p-1.5 rounded-xl transition cursor-pointer ${
+          className={`flex-1 flex flex-col items-center gap-1 py-1.5 rounded-xl transition cursor-pointer ${
             activeNav === 'home' ? 'text-purple-700 font-bold' : 'text-slate-500'
           }`}
         >
           <Home className="w-4 h-4" />
-          <span className="text-[10px]">Home</span>
+          <span className="text-[11px]">Home</span>
         </button>
 
         <button
           onClick={() => setActiveNav('resume-maker')}
-          className={`flex flex-col items-center gap-1 p-1.5 rounded-xl transition cursor-pointer ${
-            activeNav === 'resume-maker' ? 'text-purple-700 font-bold bg-purple-50 px-3' : 'text-slate-500'
+          className={`flex-1 flex flex-col items-center gap-1 py-1.5 rounded-xl transition cursor-pointer ${
+            activeNav === 'resume-maker' ? 'text-purple-700 font-bold bg-purple-50' : 'text-slate-500'
           }`}
         >
           <FileText className="w-4 h-4 text-purple-600" />
-          <span className="text-[10px]">Resume Maker</span>
+          <span className="text-[11px]">Resume Maker</span>
         </button>
-
-        {currentUser && (
-          <button
-            onClick={() => setShowSettingsModal(true)}
-            className="flex flex-col items-center gap-1 p-1.5 text-slate-500 rounded-xl transition cursor-pointer"
-          >
-            <Settings className="w-4 h-4" />
-            <span className="text-[10px]">Settings</span>
-          </button>
-        )}
       </div>
 
       {/* === Auth Modal === */}
@@ -1006,7 +997,7 @@ export default function App() {
         </div>
       )}
 
-      {/* === Settings Modal (With Remove Photo Option) === */}
+      {/* === Settings Modal (Profile Picture & Password update) === */}
       {showSettingsModal && currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="relative w-full max-w-[420px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7 text-left">
@@ -1053,7 +1044,6 @@ export default function App() {
                     <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
                   </label>
 
-                  {/* Remove Photo Button */}
                   {(userData?.photoUrl || currentUser?.photoURL) && (
                     <button
                       type="button"

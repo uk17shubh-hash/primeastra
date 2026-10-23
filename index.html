@@ -784,19 +784,16 @@
 
     <nav aria-label="Main Navigation">
       <ul class="nav-links" id="navLinks">
-        <!-- 1. Mobile Drawer mein About Us ke upar Login / Register -->
         <li class="mobile-auth-slot" id="mobileAuthSlot">
           <button id="mobileLoginBtn" class="btn-nav-primary" style="width: 100%; justify-content: center;">
             Login / Register
           </button>
         </li>
-        <!-- 2. "About" renamed to "About Us" -->
         <li><a href="#about" class="nav-link" onclick="closeNav()">About Us</a></li>
         <li><a href="#contact" class="nav-link" onclick="closeNav()">Contact Us</a></li>
       </ul>
     </nav>
 
-    <!-- Desktop Right: Login/Register & Profile -->
     <div style="display: flex; align-items: center; gap: 16px;">
       <div id="desktopAuthSlot">
         <button id="desktopLoginBtn" class="btn-nav-primary">
@@ -923,8 +920,8 @@
         </div>
       </div>
 
-      <!-- CONTACT FORM (FIRESTORE DATABASE CONNECTED) -->
-      <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+      <!-- CONTACT FORM (ID based direct listener) -->
+      <form class="contact-form" id="contactForm">
         <div class="form-group">
           <label class="form-label">Your Name</label>
           <input type="text" class="form-input" id="cName" placeholder="e.g. Alex Johnson" required />
@@ -1126,43 +1123,54 @@
     });
 
     // ==========================================
-    // CONTACT FORM FIRESTORE HANDLER
+    // CONTACT FORM DIRECT FIRESTORE LISTENER
     // ==========================================
-    window.handleContactSubmit = async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('cName').value.trim();
-      const email = document.getElementById('cEmail').value.trim();
-      const message = document.getElementById('cMsg').value.trim();
-      const toast = document.getElementById('toastNotice');
-      const submitBtn = document.getElementById('contactSubmitBtn');
+    const contactForm = document.getElementById('contactForm');
+    const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+    const toast = document.getElementById('toastNotice');
 
-      if (!name || !email || !message) return;
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-      try {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = "<span>Transmitting...</span>";
+        const name = document.getElementById('cName').value.trim();
+        const email = document.getElementById('cEmail').value.trim();
+        const message = document.getElementById('cMsg').value.trim();
 
-        // Firestore ke "contact_messages" collection me add hoga
-        await addDoc(collection(db, "contact_messages"), {
-          name: name,
-          email: email,
-          message: message,
-          createdAt: new Date().toISOString()
-        });
+        if (!name || !email || !message) return;
 
-        toast.innerHTML = "<span>⚡ Message transmitted to PrimeAstra desk!</span>";
-        toast.classList.add('show');
-        document.getElementById('contactForm').reset();
+        try {
+          if (contactSubmitBtn) {
+            contactSubmitBtn.disabled = true;
+            contactSubmitBtn.innerHTML = "<span>Transmitting...</span>";
+          }
 
-        setTimeout(() => toast.classList.remove('show'), 4000);
-      } catch (err) {
-        console.error("Firestore Save Error:", err);
-        alert("Failed to send message: " + err.message);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = "<span>Send Message</span>";
-      }
-    };
+          // Direct addDoc into Firestore collection "contact_messages"
+          await addDoc(collection(db, "contact_messages"), {
+            name: name,
+            email: email,
+            message: message,
+            createdAt: new Date().toISOString()
+          });
+
+          if (toast) {
+            toast.innerHTML = "<span>⚡ Message transmitted to PrimeAstra desk!</span>";
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+          }
+
+          contactForm.reset();
+        } catch (err) {
+          console.error("Firestore Save Error:", err);
+          alert("Error sending message: " + err.message);
+        } finally {
+          if (contactSubmitBtn) {
+            contactSubmitBtn.disabled = false;
+            contactSubmitBtn.innerHTML = "<span>Send Message</span>";
+          }
+        }
+      });
+    }
   </script>
 
   <!-- SCRIPT FOR UI & CANVAS -->

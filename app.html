@@ -2,303 +2,358 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PrimeAstra - Workspace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PrimeAstra - Workspace Hub</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #ECEEF3;
+      background: linear-gradient(180deg, #F3E8FF 0%, #EFF6FF 25%, #F8FAFC 60%, #ECEEF3 100%);
+      -webkit-tap-highlight-color: transparent;
     }
-    .clay-sphere {
-      background: radial-gradient(circle at 35% 35%, rgba(139, 92, 246, 0.4), rgba(59, 130, 246, 0.15) 60%, transparent 80%);
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
     }
-    .glass-disc {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(10px);
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .hero-gradient {
+      background: linear-gradient(145deg, #7C3AED 0%, #6366F1 50%, #4F46E5 100%);
     }
     .shadow-floating {
       box-shadow: 0 25px 60px -15px rgba(100, 116, 139, 0.25);
     }
+    .card-shadow {
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+    }
   </style>
 </head>
-<body class="text-slate-800 min-h-screen relative overflow-x-hidden p-2 sm:p-4 md:p-6 pb-20 md:pb-6 flex items-center justify-center">
+<body class="text-slate-800 min-h-screen p-2 sm:p-4 md:p-6 pb-24 md:pb-6 flex flex-col items-center justify-start">
 
-  <!-- Background Lights -->
+  <!-- Background Lights for Desktop -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    <div class="absolute -top-12 -right-8 w-72 h-72 rounded-full clay-sphere opacity-45 blur-[1px]"></div>
-    <div class="absolute top-28 right-24 w-44 h-44 rounded-full glass-disc opacity-60"></div>
-    <div class="absolute bottom-6 -left-12 w-64 h-64 rounded-full clay-sphere opacity-50 blur-[1.5px]"></div>
+    <div class="absolute -top-12 -right-8 w-72 h-72 rounded-full bg-purple-500/15 blur-3xl"></div>
+    <div class="absolute bottom-6 -left-12 w-64 h-64 rounded-full bg-indigo-500/15 blur-3xl"></div>
   </div>
 
-  <!-- Master Application Shell -->
-  <main class="relative z-10 w-full max-w-[1360px] bg-white/80 backdrop-blur-2xl rounded-[28px] md:rounded-[36px] shadow-floating border border-white/95 p-3.5 sm:p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[620px]">
+  <!-- Master Responsive Application Shell -->
+  <main class="relative z-10 w-full max-w-[1360px] bg-white/80 md:backdrop-blur-2xl rounded-[28px] md:rounded-[36px] md:shadow-floating md:border md:border-white/95 p-2 sm:p-5 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[620px]">
     
-    <!-- === LEFT SIDEBAR === -->
-    <aside class="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-start bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm">
+    <!-- === DESKTOP SIDEBAR (Visible on md and up) === -->
+    <aside class="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm">
       <div class="space-y-6">
         <!-- Logo -->
         <a href="index.html" class="flex items-center gap-3 px-2 pt-1 cursor-pointer">
-          <svg class="w-10 h-10 drop-shadow-[0_0_12px_rgba(99,102,241,0.5)]" viewBox="0 0 500 500" fill="none">
-            <defs>
-              <linearGradient id="paGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#00f2fe" />
-                <stop offset="50%" stop-color="#8b5cf6" />
-                <stop offset="100%" stop-color="#6d28d9" />
-              </linearGradient>
-              <linearGradient id="paStarLight" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ffffff" />
-                <stop offset="60%" stop-color="#a78bfa" />
-                <stop offset="100%" stop-color="#7c3aed" />
-              </linearGradient>
-            </defs>
-            <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#paStarLight)" />
-            <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#paGradLight)" />
-            <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#paGradLight)" />
-            <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#paGradLight)" />
-            <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#paGradLight)" />
-            <polygon points="380,55 305,108 335,122 360,170" fill="url(#paStarLight)" />
-            <polygon points="380,55 335,122 360,170" fill="#6d28d9" />
-            <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#paGradLight)" />
-          </svg>
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-black text-lg flex items-center justify-center shadow-md shadow-purple-500/20">
+            P
+          </div>
           <div>
             <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
               Prime<span class="text-purple-600">Astra</span>
             </h1>
-            <span class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase mt-0.5 block">AI &amp; Wasm Suite</span>
+            <span class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase mt-0.5 block">Workspace Hub</span>
           </div>
         </a>
 
-        <!-- Sidebar Buttons (Same Style) -->
+        <!-- Desktop Navigation -->
         <nav class="space-y-2">
-          <!-- 1. Home Tab Button -->
-          <button id="navHomeBtn" onclick="switchMainTab('home')" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60 text-left">
+          <button id="deskHomeBtn" onclick="showHomeView()" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-purple-700 shadow-sm border border-purple-100/80 text-left cursor-pointer">
             <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-            <span>Home</span>
+            <span>Home Hub</span>
           </button>
 
-          <!-- 2. Free Tools Tab Button (Matches Home button style) -->
-          <button id="navFreeToolsBtn" onclick="switchMainTab('tools')" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-purple-700 shadow-sm border border-purple-100/80 text-left">
-            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"></path></svg>
-            <span>Free Tools</span>
+          <button id="deskToolsBtn" onclick="openResumeMakerTool()" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60 text-left cursor-pointer">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <span>AI Resume Maker</span>
           </button>
         </nav>
       </div>
+
+      <div class="p-3.5 bg-purple-50 rounded-2xl border border-purple-100 text-xs">
+        <span class="font-extrabold text-purple-700 block">PRO Suite Active</span>
+        <span class="text-[11px] text-slate-500">All tools unlocked with zero limits.</span>
+      </div>
     </aside>
 
-    <!-- === RIGHT DASHBOARD === -->
+    <!-- === MAIN RIGHT AREA (Mobile & PC Unified) === -->
     <section class="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col justify-start space-y-4 h-full">
-      <!-- Top Bar -->
-      <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1 shrink-0">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-            Prime<span class="text-purple-600">Astra</span>
-          </h2>
-          <p id="userGreeting" class="text-[11px] sm:text-xs text-slate-500 font-medium">All tools. One place.</p>
+      
+      <!-- Top Bar (Mobile + Desktop adaptive) -->
+      <header class="flex items-center justify-between gap-3 pt-1 pb-2 border-b md:border-b-0 border-slate-200/60">
+        <!-- Brand on Mobile / Search on Desktop -->
+        <div class="flex items-center gap-2.5">
+          <div class="md:hidden w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-black text-lg flex items-center justify-center shadow-md shadow-purple-500/20">
+            P
+          </div>
+          <div>
+            <h2 class="text-base sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-none">
+              Prime<span class="text-purple-600">Astra</span>
+            </h2>
+            <div class="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium mt-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span id="userStatusText">Workspace Hub</span>
+            </div>
+          </div>
         </div>
 
+        <!-- Right Controls -->
         <div class="flex items-center gap-2 sm:gap-3">
-          <div class="relative flex-1 sm:w-72">
-            <svg class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" placeholder="Search tools..." class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200/90 rounded-2xl text-xs font-medium placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20" />
-          </div>
+          <button type="button" class="w-9 h-9 rounded-full bg-white border border-slate-200/80 shadow-xs flex items-center justify-center text-slate-500 relative">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <span class="w-2 h-2 rounded-full bg-rose-500 absolute top-1.5 right-1.5"></span>
+          </button>
 
           <div id="authSlot">
-            <!-- Firebase Login or Profile Avatar here -->
+            <button onclick="handleGoogleLogin()" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200/90 rounded-full shadow-xs text-xs font-bold text-slate-700 cursor-pointer">
+              <span class="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center text-[11px] font-black">G</span>
+              <span class="text-purple-600 font-bold">Login</span>
+            </button>
           </div>
         </div>
       </header>
 
-      <!-- Main Central View Area -->
-      <div class="flex-1 w-full rounded-[24px] md:rounded-[28px] bg-white/60 border border-white/90 backdrop-blur-md p-3 sm:p-5 flex flex-col items-center justify-start text-center relative shadow-sm min-h-0">
+      <!-- ==============================================
+           VIEW 1: HOME WORKSPACE HUB FEED (Matches Screenshot Exactly)
+           ============================================== -->
+      <div id="homeFeedView" class="space-y-4 w-full">
         
-        <!-- ==============================================
-             1. FREE TOOLS CARD DIRECTORY VIEW (Initial Screen)
-             ============================================== -->
-        <div id="toolsDirectoryView" class="w-full text-left space-y-4">
-          <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
-            <div>
-              <h3 class="text-lg font-bold text-slate-800">Free Tools</h3>
-              <p class="text-xs text-slate-500">Fast, local, and 100% free client-side utilities.</p>
-            </div>
-            <span class="px-2.5 py-1 bg-purple-100 text-purple-700 font-bold text-[11px] rounded-lg">
-              1 Tool Live
-            </span>
+        <!-- Greeting Header & PRO Account badge -->
+        <div class="flex items-center justify-between pt-1">
+          <div>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">GOOD DAY 👋</span>
+            <h3 class="text-sm sm:text-base font-extrabold text-slate-800">
+              Welcome back, <span class="text-purple-600" id="userGreetingName">Guest</span>
+            </h3>
           </div>
-
-          <!-- Cards Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-1">
-            
-            <!-- AI Resume Maker Box/Card -->
-            <div onclick="openResumeMakerTool()" class="group bg-white p-4 rounded-2xl border border-slate-200/90 hover:border-purple-300 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between">
-              <div class="flex items-start gap-3.5">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                </div>
-
-                <div class="flex-1 min-w-0">
-                  <h4 class="text-sm font-bold text-slate-800 leading-snug group-hover:text-purple-600 transition truncate">
-                    AI Resume Maker
-                  </h4>
-                  <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
-                    Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.
-                  </p>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between pt-3 mt-3 border-t border-slate-100 text-[10px]">
-                <span class="px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md font-semibold">
-                  Career &amp; Docs
-                </span>
-                <span class="text-purple-600 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
-                  Open &rarr;
-                </span>
-              </div>
-            </div>
-
-          </div>
+          <span class="px-2.5 py-1 bg-purple-100/80 text-purple-700 font-extrabold text-[10px] rounded-lg tracking-wide">
+            PRO Account
+          </span>
         </div>
 
-        <!-- ==============================================
-             2. RESUME MAKER WORKSPACE VIEW (Opens after card click)
-             ============================================== -->
-        <div id="resumeMakerView" class="w-full hidden text-left space-y-4">
-          <!-- Top Tool Banner with Back Arrow -->
-          <div class="p-3.5 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-sm">
-            <div class="flex items-center gap-3">
-              <button onclick="switchMainTab('tools')" class="p-1.5 bg-white/20 hover:bg-white/30 rounded-xl transition cursor-pointer" title="Back to Tools">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-              </button>
-              <div>
-                <h2 class="text-base font-bold flex items-center gap-2">
-                  <span>✨</span> AI Resume Maker
-                </h2>
-                <p class="text-[11px] text-purple-100">Live preview &amp; printable PDF ready</p>
-              </div>
-            </div>
-
-            <button onclick="window.print()" class="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-white text-indigo-900 rounded-xl text-xs font-bold shadow hover:bg-slate-100 transition cursor-pointer w-full sm:w-auto">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-              <span>Download PDF / Print</span>
-            </button>
-          </div>
-
-          <!-- Inputs & Preview Grid -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-            <!-- Left Inputs -->
-            <div class="lg:col-span-6 space-y-4">
-              <!-- Template & Color Selector -->
-              <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="font-bold text-slate-700">Select Template:</span>
-                  <div class="flex items-center gap-1.5">
-                    <button type="button" onclick="setResumeTemplate('modern')" id="tmplBtnModern" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow-xs">Modern</button>
-                    <button type="button" onclick="setResumeTemplate('classic')" id="tmplBtnClassic" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Classic</button>
-                    <button type="button" onclick="setResumeTemplate('executive')" id="tmplBtnExecutive" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Executive</button>
-                  </div>
-                </div>
-
-                <div class="flex items-center justify-between pt-2 border-t border-slate-100">
-                  <div class="flex items-center gap-2">
-                    <span class="font-semibold text-slate-600">Theme Color:</span>
-                    <input type="color" id="resumeThemeColor" value="#1e3a8a" onchange="renderResumePreview()" class="w-7 h-7 rounded-lg border-0 cursor-pointer" />
-                  </div>
-                  <button type="button" onclick="location.reload()" class="text-slate-500 hover:text-slate-800 text-xs">Reset</button>
-                </div>
-              </div>
-
-              <!-- Personal Details -->
-              <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
-                <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Personal Details</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Full Name</label>
-                    <input type="text" id="rName" value="Shubham Singh" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                  </div>
-                  <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Job Title / Post</label>
-                    <input type="text" id="rTitle" value="Computer Operator & Executive" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                  </div>
-                  <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Mobile</label>
-                    <input type="text" id="rPhone" value="+91 9876543210" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                  </div>
-                  <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Email</label>
-                    <input type="email" id="rEmail" value="shubham@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                  </div>
-                  <div class="sm:col-span-2">
-                    <label class="text-[10px] font-semibold text-slate-500">Address</label>
-                    <input type="text" id="rAddress" value="Roorkee, Uttarakhand" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                  </div>
-                  <div class="sm:col-span-2">
-                    <label class="text-[10px] font-semibold text-slate-500">Profile Summary</label>
-                    <textarea rows="2" id="rSummary" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs">Dedicated professional with hands-on experience in computer operations, digital documentation, and online client management.</textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Skills & Languages -->
-              <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 text-xs">
-                <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Skills &amp; Languages</h3>
-                <div>
-                  <label class="text-[10px] font-semibold text-slate-500">Skills (comma separated)</label>
-                  <input type="text" id="rSkills" value="MS Office, Data Entry, Computer Operations, Typing, Documentation" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                </div>
-                <div>
-                  <label class="text-[10px] font-semibold text-slate-500">Languages</label>
-                  <input type="text" id="rLanguages" value="Hindi, English" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Live Preview -->
-            <div class="lg:col-span-6 bg-slate-200/70 p-2 sm:p-3 rounded-2xl border border-slate-300 flex justify-center lg:sticky lg:top-0 w-full overflow-x-auto">
-              <div id="resumePreviewContainer" class="w-full min-w-[340px]">
-                <!-- Dynamic Resume HTML -->
-              </div>
-            </div>
-          </div>
+        <!-- Search Bar with Filter Icon -->
+        <div class="relative">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="workspaceSearchInput"
+            placeholder="Search tools, utilities &amp; AI prompts..."
+            class="w-full pl-10 pr-10 py-3 bg-white border border-slate-200/90 rounded-2xl text-xs font-semibold placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/25"
+          />
+          <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+            </svg>
+          </button>
         </div>
 
-        <!-- ==============================================
-             3. HOME VIEW
-             ============================================== -->
-        <div id="homeView" class="w-full hidden">
-          <div class="m-auto p-8 max-w-md bg-white/90 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
-            <h3 class="text-base font-bold text-slate-800">Welcome to PrimeAstra Hub</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Explore your collection of digital utilities by opening <strong>Free Tools</strong>.
+        <!-- Hero Gradient Card (Screenshot Style) -->
+        <div class="hero-gradient text-white rounded-3xl p-6 sm:p-8 text-center space-y-4 shadow-xl shadow-purple-600/25 relative overflow-hidden">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[10px] font-extrabold tracking-wide uppercase border border-white/20">
+            <span class="text-amber-300">★</span>
+            <span>All-in-One Utility Suite</span>
+          </div>
+
+          <div>
+            <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight">
+              Welcome to PrimeAstra Hub
+            </h3>
+            <p class="text-xs sm:text-sm text-purple-100/90 mt-2 max-w-md mx-auto leading-relaxed font-normal">
+              Explore your curated collection of free digital utilities, dev helpers, and AI power tools.
             </p>
-            <button onclick="switchMainTab('tools')" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-sm transition">
-              Explore Free Tools &rarr;
-            </button>
+          </div>
+
+          <button
+            onclick="openResumeMakerTool()"
+            class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-purple-800 font-extrabold text-xs rounded-xl shadow-md hover:bg-slate-50 transition active:scale-95 cursor-pointer"
+          >
+            <span>Explore Free Tools</span>
+            <span>&rarr;</span>
+          </button>
+
+          <!-- 3 Stats inside Hero Card -->
+          <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-center max-w-lg mx-auto">
+            <div>
+              <div class="text-base sm:text-lg font-extrabold">1+</div>
+              <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">Live Tools</div>
+            </div>
+            <div>
+              <div class="text-base sm:text-lg font-extrabold">Zero</div>
+              <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">Ads or Limits</div>
+            </div>
+            <div>
+              <div class="text-base sm:text-lg font-extrabold">Instant</div>
+              <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">PDF Export</div>
+            </div>
           </div>
         </div>
 
+        <!-- Trending Tools Section (Only Real Tool: AI Resume Maker) -->
+        <div class="space-y-3 pt-1">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <h4 class="text-xs sm:text-sm font-extrabold text-slate-800">Trending Tools</h4>
+              <span class="px-2 py-0.5 bg-amber-100 text-amber-700 font-extrabold text-[9px] rounded-md">Hot</span>
+            </div>
+            <span class="text-[11px] font-bold text-slate-400">100% Free Access</span>
+          </div>
+
+          <!-- Real AI Resume Maker Card -->
+          <div onclick="openResumeMakerTool()" class="p-4 bg-white rounded-2xl border border-purple-200 card-shadow flex items-center justify-between gap-3 cursor-pointer hover:border-purple-400 hover:shadow-md transition active:scale-[0.99]">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center text-xl shadow-sm shrink-0">
+                📝
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <h5 class="text-sm font-extrabold text-slate-800 truncate">AI Resume Maker</h5>
+                  <span class="px-1.5 py-0.2 bg-emerald-100 text-emerald-700 font-extrabold text-[9px] rounded">Live &amp; Ready</span>
+                </div>
+                <p class="text-[11px] text-slate-500 truncate mt-0.5">Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.</p>
+              </div>
+            </div>
+            <button class="px-4 py-2 bg-purple-50 text-purple-700 hover:bg-purple-600 hover:text-white rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer">
+              Open &rarr;
+            </button>
+          </div>
+        </div>
       </div>
+
+      <!-- ==============================================
+           VIEW 2: RESUME MAKER WORKSPACE VIEW (Responsive PC/Mobile)
+           ============================================== -->
+      <div id="resumeMakerView" class="hidden space-y-4 w-full text-left">
+        <!-- Top Tool Banner with Back Arrow -->
+        <div class="p-3.5 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-sm">
+          <div class="flex items-center gap-3">
+            <button onclick="showHomeView()" class="p-1.5 bg-white/20 hover:bg-white/30 rounded-xl transition cursor-pointer" title="Back to Home Hub">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </button>
+            <div>
+              <h2 class="text-base font-bold flex items-center gap-2">
+                <span>✨</span> AI Resume Maker
+              </h2>
+              <p class="text-[11px] text-purple-100">Live preview &amp; printable PDF ready</p>
+            </div>
+          </div>
+
+          <button onclick="window.print()" class="flex items-center justify-center gap-1.5 px-4 py-2 bg-white text-indigo-900 rounded-xl text-xs font-bold shadow hover:bg-slate-100 transition cursor-pointer w-full sm:w-auto">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            <span>Download PDF / Print</span>
+          </button>
+        </div>
+
+        <!-- Inputs & Live Preview Grid (Stacks on mobile, 2 columns on PC) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <!-- Left: Input Form Controls -->
+          <div class="lg:col-span-6 space-y-4">
+            
+            <!-- Template & Color Selector -->
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="font-bold text-slate-700">Select Template:</span>
+                <div class="flex items-center gap-1.5">
+                  <button type="button" onclick="setResumeTemplate('modern')" id="tmplBtnModern" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow-xs cursor-pointer">Modern</button>
+                  <button type="button" onclick="setResumeTemplate('classic')" id="tmplBtnClassic" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">Classic</button>
+                  <button type="button" onclick="setResumeTemplate('executive')" id="tmplBtnExecutive" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">Executive</button>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+                <div class="flex items-center gap-2">
+                  <span class="font-semibold text-slate-600">Theme Color:</span>
+                  <input type="color" id="resumeThemeColor" value="#1e3a8a" onchange="renderResumePreview()" class="w-7 h-7 rounded-lg border-0 cursor-pointer" />
+                </div>
+                <button type="button" onclick="location.reload()" class="text-slate-500 hover:text-slate-800 text-xs cursor-pointer">Reset</button>
+              </div>
+            </div>
+
+            <!-- Personal Details -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
+              <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Personal Details</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div>
+                  <label class="text-[10px] font-semibold text-slate-500">Full Name</label>
+                  <input type="text" id="rName" value="Shubham Singh" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                </div>
+                <div>
+                  <label class="text-[10px] font-semibold text-slate-500">Job Title / Post</label>
+                  <input type="text" id="rTitle" value="Computer Operator & Executive" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                </div>
+                <div>
+                  <label class="text-[10px] font-semibold text-slate-500">Mobile</label>
+                  <input type="text" id="rPhone" value="+91 9876543210" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                </div>
+                <div>
+                  <label class="text-[10px] font-semibold text-slate-500">Email</label>
+                  <input type="email" id="rEmail" value="shubham@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="text-[10px] font-semibold text-slate-500">Address</label>
+                  <input type="text" id="rAddress" value="Roorkee, Uttarakhand" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="text-[10px] font-semibold text-slate-500">Profile Summary</label>
+                  <textarea rows="2" id="rSummary" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs">Dedicated professional with hands-on experience in computer operations, digital documentation, and online client management.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Skills & Languages -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 text-xs">
+              <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Skills &amp; Languages</h3>
+              <div>
+                <label class="text-[10px] font-semibold text-slate-500">Skills (comma separated)</label>
+                <input type="text" id="rSkills" value="MS Office, Data Entry, Computer Operations, Typing, Documentation" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+              </div>
+              <div>
+                <label class="text-[10px] font-semibold text-slate-500">Languages</label>
+                <input type="text" id="rLanguages" value="Hindi, English" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live A4 Preview -->
+          <div class="lg:col-span-6 bg-slate-200/80 p-2 sm:p-3 rounded-2xl border border-slate-300 flex justify-center lg:sticky lg:top-0 w-full overflow-x-auto">
+            <div id="resumePreviewContainer" class="w-full min-w-[320px]"></div>
+          </div>
+        </div>
+      </div>
+
     </section>
   </main>
 
-  <!-- Mobile Floating Bottom Bar -->
-  <div class="fixed bottom-3 left-8 right-8 z-40 md:hidden bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl p-2 shadow-floating flex items-center justify-around">
-    <button onclick="switchMainTab('home')" class="flex-1 flex flex-col items-center gap-1 py-1.5 text-slate-500">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-      <span class="text-[11px]">Home</span>
+  <!-- === MOBILE BOTTOM NAVIGATION (Visible on mobile screens only) === -->
+  <nav class="fixed bottom-3 left-4 right-4 z-40 md:hidden bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-1.5 shadow-xl flex items-center justify-around text-slate-400">
+    <button onclick="showHomeView()" id="navHomeTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl bg-purple-600 text-white shadow-md shadow-purple-500/25 cursor-pointer">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      <span class="text-[10px] font-bold">Home</span>
     </button>
-    <button onclick="switchMainTab('tools')" class="flex-1 flex flex-col items-center gap-1 py-1.5 text-purple-700 font-bold bg-purple-50 rounded-xl">
-      <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"></path></svg>
-      <span class="text-[11px]">Free Tools</span>
+    <button onclick="openResumeMakerTool()" id="navToolsTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"></path></svg>
+      <span class="text-[10px] font-semibold">Free Tools</span>
     </button>
-  </div>
+    <button onclick="showHomeView()" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+      <span class="text-[10px] font-semibold">Saved</span>
+    </button>
+    <button onclick="handleGoogleLogin()" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+      <span class="text-[10px] font-semibold">Profile</span>
+    </button>
+  </nav>
 
-  <!-- SCRIPT -->
+  <!-- FIREBASE AUTH & LIVE RESUME ENGINE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -320,7 +375,7 @@
     const provider = new GoogleAuthProvider();
 
     const authSlot = document.getElementById('authSlot');
-    const userGreeting = document.getElementById('userGreeting');
+    const userGreetingName = document.getElementById('userGreetingName');
 
     window.handleGoogleLogin = async () => {
       try {
@@ -329,7 +384,13 @@
         const ref = doc(db, 'users', user.uid);
         const snap = await getDoc(ref);
         if (!snap.exists()) {
-          await setDoc(ref, { uid: user.uid, name: user.displayName || 'User', email: user.email, photoUrl: user.photoURL || '', createdAt: new Date().toISOString() });
+          await setDoc(ref, {
+            uid: user.uid,
+            name: user.displayName || 'User',
+            email: user.email,
+            photoUrl: user.photoURL || '',
+            createdAt: new Date().toISOString()
+          });
         }
       } catch (e) {
         alert(e.message);
@@ -340,77 +401,86 @@
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        let photo = user.photoURL;
         let name = user.displayName || user.email.split('@')[0];
         try {
           const snap = await getDoc(doc(db, 'users', user.uid));
-          if (snap.exists() && snap.data().photoUrl) photo = snap.data().photoUrl;
+          if (snap.exists() && snap.data().name) name = snap.data().name;
         } catch (e) {}
 
-        if (!photo) {
-          photo = `https://ui-avatars.com/api/?name=${encodeURIComponent(name[0])}&background=7c3aed&color=fff&bold=true&rounded=true`;
-        }
-
-        userGreeting.innerHTML = `Welcome back, <span class="font-bold text-purple-700">${name}</span>`;
+        userGreetingName.innerText = name;
         authSlot.innerHTML = `
-          <div class="flex items-center gap-2 bg-white border border-slate-200 p-1 pr-3 rounded-full shadow-xs">
-            <img src="${photo}" class="w-8 h-8 rounded-full object-cover" />
-            <button onclick="handleLogout()" class="text-xs text-rose-500 font-bold hover:underline cursor-pointer">Logout</button>
-          </div>
+          <button onclick="handleLogout()" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200/80 rounded-full shadow-xs text-xs font-bold text-slate-700 cursor-pointer">
+            <span class="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center text-[11px] font-black">${name.charAt(0).toUpperCase()}</span>
+            <span class="text-rose-500 font-bold">Logout</span>
+          </button>
         `;
       } else {
-        userGreeting.innerText = 'All tools. One place.';
+        userGreetingName.innerText = 'Guest';
         authSlot.innerHTML = `
-          <button onclick="handleGoogleLogin()" class="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl text-xs font-bold shadow-md cursor-pointer">
-            <span>Login / Register</span>
+          <button onclick="handleGoogleLogin()" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200/80 rounded-full shadow-xs text-xs font-bold text-slate-700 cursor-pointer">
+            <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[11px]">S</span>
+            <span class="text-purple-600 font-bold">Login</span>
           </button>
         `;
       }
     });
 
-    window.activeResumeTemplate = 'modern';
-
-    window.switchMainTab = (tab) => {
-      const toolsView = document.getElementById('toolsDirectoryView');
-      const resumeView = document.getElementById('resumeMakerView');
-      const homeView = document.getElementById('homeView');
-      const navHome = document.getElementById('navHomeBtn');
-      const navTools = document.getElementById('navFreeToolsBtn');
-
-      toolsView.classList.add('hidden');
-      resumeView.classList.add('hidden');
-      homeView.classList.add('hidden');
-
-      if (tab === 'home') {
-        homeView.classList.remove('hidden');
-        navHome.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-purple-700 shadow-sm border border-purple-100/80 text-left";
-        navTools.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60 text-left";
-      } else {
-        toolsView.classList.remove('hidden');
-        navTools.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-purple-700 shadow-sm border border-purple-100/80 text-left";
-        navHome.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60 text-left";
-      }
-    };
-
+    // Navigation View Controller
     window.openResumeMakerTool = () => {
-      document.getElementById('toolsDirectoryView').classList.add('hidden');
+      document.getElementById('homeFeedView').classList.add('hidden');
       document.getElementById('resumeMakerView').classList.remove('hidden');
-      renderResumePreview();
+
+      // Update Mobile Nav
+      document.getElementById('navHomeTab').className = "flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer";
+      document.getElementById('navToolsTab').className = "flex flex-col items-center gap-1 py-1 px-4 rounded-2xl bg-purple-600 text-white shadow-md shadow-purple-500/25 cursor-pointer";
+
+      // Update Desktop Nav
+      const deskHome = document.getElementById('deskHomeBtn');
+      const deskTools = document.getElementById('deskToolsBtn');
+      if (deskHome && deskTools) {
+        deskHome.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60 text-left cursor-pointer";
+        deskTools.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-purple-700 shadow-sm border border-purple-100/80 text-left cursor-pointer";
+      }
+
+      window.renderResumePreview();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    window.showHomeView = () => {
+      document.getElementById('resumeMakerView').classList.add('hidden');
+      document.getElementById('homeFeedView').classList.remove('hidden');
+
+      // Update Mobile Nav
+      document.getElementById('navToolsTab').className = "flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer";
+      document.getElementById('navHomeTab').className = "flex flex-col items-center gap-1 py-1 px-4 rounded-2xl bg-purple-600 text-white shadow-md shadow-purple-500/25 cursor-pointer";
+
+      // Update Desktop Nav
+      const deskHome = document.getElementById('deskHomeBtn');
+      const deskTools = document.getElementById('deskToolsBtn');
+      if (deskHome && deskTools) {
+        deskTools.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60 text-left cursor-pointer";
+        deskHome.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-purple-700 shadow-sm border border-purple-100/80 text-left cursor-pointer";
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Template switcher
+    window.activeResumeTemplate = 'modern';
     window.setResumeTemplate = (tmpl) => {
       window.activeResumeTemplate = tmpl;
       ['modern', 'classic', 'executive'].forEach(t => {
         const btn = document.getElementById(`tmplBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
         if (t === tmpl) {
-          btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow-xs";
+          btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow-xs cursor-pointer";
         } else {
-          btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
+          btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer";
         }
       });
-      renderResumePreview();
+      window.renderResumePreview();
     };
 
+    // Live Render Function
     window.renderResumePreview = () => {
       const name = document.getElementById('rName').value || 'Your Name';
       const title = document.getElementById('rTitle').value || 'Professional Title';
@@ -427,104 +497,104 @@
 
       if (window.activeResumeTemplate === 'modern') {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-lg overflow-hidden flex min-h-[520px] text-slate-800" style="font-family: sans-serif;">
-            <div class="w-1/3 text-white p-4 flex flex-col justify-between" style="background-color: ${color}">
-              <div class="space-y-4">
+          <div class="w-full bg-white shadow-md rounded-lg overflow-hidden flex min-h-[460px] text-slate-800" style="font-family: sans-serif;">
+            <div class="w-1/3 text-white p-3 sm:p-4 flex flex-col justify-between" style="background-color: ${color}">
+              <div class="space-y-3">
                 <div>
-                  <h4 class="text-[10px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Contact</h4>
-                  <div class="space-y-1.5 text-[9px] text-white/90">
+                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Contact</h5>
+                  <div class="space-y-1 text-[8.5px] text-white/90">
                     <p class="break-all">📞 ${phone}</p>
                     <p class="break-all">✉️ ${email}</p>
                     <p>📍 ${address}</p>
                   </div>
                 </div>
                 <div>
-                  <h4 class="text-[10px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Skills</h4>
+                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Skills</h5>
                   <div class="flex flex-wrap gap-1">${skillPills}</div>
                 </div>
                 <div>
-                  <h4 class="text-[10px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Languages</h4>
-                  <p class="text-[9px] text-white/90">${languages}</p>
+                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Languages</h5>
+                  <p class="text-[8.5px] text-white/90">${languages}</p>
                 </div>
               </div>
-              <div class="text-[8px] text-white/50 pt-3">PrimeAstra Suite</div>
+              <div class="text-[7.5px] text-white/50 pt-2">PrimeAstra Suite</div>
             </div>
-            <div class="w-2/3 p-5 flex flex-col justify-between space-y-4">
+            <div class="w-2/3 p-4 sm:p-5 flex flex-col justify-between space-y-3">
               <div>
-                <div class="border-b pb-2 mb-3">
-                  <h1 class="text-xl font-black" style="color: ${color}">${name}</h1>
-                  <p class="text-xs font-bold text-slate-500 uppercase">${title}</p>
-                  <p class="text-[10px] text-slate-600 mt-1.5 leading-relaxed">${summary}</p>
+                <div class="border-b pb-2 mb-2">
+                  <h2 class="text-base sm:text-lg font-black" style="color: ${color}">${name}</h2>
+                  <p class="text-[10px] font-bold text-slate-500 uppercase">${title}</p>
+                  <p class="text-[9px] text-slate-600 mt-1 leading-relaxed">${summary}</p>
                 </div>
-                <div class="mb-3">
-                  <h3 class="text-xs font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style="color: ${color}">Experience</h3>
-                  <div class="text-[10px] flex justify-between font-bold"><span>Computer Operator</span><span class="text-slate-400 font-normal">2021 - Present</span></div>
-                  <p class="text-[9px] text-slate-500">Digital Seva Center</p>
+                <div class="mb-2">
+                  <h4 class="text-[10px] font-bold uppercase mb-0.5 pb-0.5 border-b border-slate-200" style="color: ${color}">Experience</h4>
+                  <div class="text-[9.5px] flex justify-between font-bold"><span>Computer Operator</span><span class="text-slate-400 font-normal">2021 - Present</span></div>
+                  <p class="text-[8.5px] text-slate-500">Digital Seva Center</p>
                 </div>
                 <div>
-                  <h3 class="text-xs font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style="color: ${color}">Education</h3>
-                  <div class="text-[10px] flex justify-between font-bold"><span>12th (Commerce)</span><span class="text-slate-400 font-normal">2016</span></div>
-                  <p class="text-[9px] text-slate-500">DAV Inter College, UP Board | First Division</p>
+                  <h4 class="text-[10px] font-bold uppercase mb-0.5 pb-0.5 border-b border-slate-200" style="color: ${color}">Education</h4>
+                  <div class="text-[9.5px] flex justify-between font-bold"><span>12th (Commerce)</span><span class="text-slate-400 font-normal">2016</span></div>
+                  <p class="text-[8.5px] text-slate-500">DAV Inter College, UP Board | First Division</p>
                 </div>
               </div>
-              <div class="border-t pt-2 text-[8px] text-slate-400">Verified Client Document</div>
+              <div class="border-t pt-1.5 text-[8px] text-slate-400 text-center">Verified Client Document</div>
             </div>
           </div>
         `;
       } else if (window.activeResumeTemplate === 'classic') {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-lg p-5 flex flex-col justify-between min-h-[520px] text-slate-800" style="font-family: serif;">
+          <div class="w-full bg-white shadow-md rounded-lg p-5 flex flex-col justify-between min-h-[460px] text-slate-800" style="font-family: serif;">
             <div>
-              <div class="text-center border-b pb-3 mb-3">
-                <h1 class="text-xl font-bold tracking-tight text-slate-900">${name}</h1>
-                <p class="text-xs font-semibold text-slate-600 uppercase mt-0.5">${title}</p>
-                <p class="text-[10px] text-slate-500 mt-1">${phone} | ${email} | ${address}</p>
+              <div class="text-center border-b pb-2.5 mb-2.5">
+                <h2 class="text-lg font-bold tracking-tight text-slate-900">${name}</h2>
+                <p class="text-[10px] font-semibold text-slate-600 uppercase mt-0.5">${title}</p>
+                <p class="text-[8.5px] text-slate-500 mt-0.5">${phone} | ${email} | ${address}</p>
               </div>
-              <div class="mb-3">
-                <h3 class="text-[11px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Summary</h3>
-                <p class="text-[10px] text-slate-600 leading-relaxed">${summary}</p>
+              <div class="mb-2.5">
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Summary</h4>
+                <p class="text-[8.5px] text-slate-600 leading-relaxed">${summary}</p>
               </div>
-              <div class="mb-3">
-                <h3 class="text-[11px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Experience</h3>
-                <p class="text-[10px] font-bold">Computer Operator - Digital Seva Center (2021 - Present)</p>
+              <div class="mb-2.5">
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Experience</h4>
+                <p class="text-[8.5px] font-bold">Computer Operator - Digital Seva Center (2021 - Present)</p>
               </div>
-              <div class="mb-3">
-                <h3 class="text-[11px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Education</h3>
-                <p class="text-[10px]"><strong>12th Commerce</strong> - DAV Inter College (First Division)</p>
+              <div class="mb-2.5">
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Education</h4>
+                <p class="text-[8.5px]"><strong>12th Commerce</strong> - DAV Inter College (First Division)</p>
               </div>
               <div>
-                <h3 class="text-[11px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Skills</h3>
-                <p class="text-[10px] text-slate-700">${skills}</p>
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Skills</h4>
+                <p class="text-[8.5px] text-slate-700">${skills}</p>
               </div>
             </div>
-            <div class="border-t pt-2 text-[8px] text-slate-400 text-center">PrimeAstra Classic Template</div>
+            <div class="border-t pt-1 text-[8px] text-slate-400 text-center">PrimeAstra Classic Template</div>
           </div>
         `;
       } else {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-lg overflow-hidden flex flex-col justify-between min-h-[520px] text-slate-800" style="font-family: sans-serif;">
+          <div class="w-full bg-white shadow-md rounded-lg overflow-hidden flex flex-col justify-between min-h-[460px] text-slate-800" style="font-family: sans-serif;">
             <div>
-              <div class="p-4 text-white" style="background-color: ${color}">
-                <h1 class="text-lg font-black">${name}</h1>
-                <p class="text-[11px] font-medium text-white/90">${title}</p>
-                <p class="text-[9px] text-white/80 mt-1">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
+              <div class="p-3.5 text-white" style="background-color: ${color}">
+                <h2 class="text-base font-black">${name}</h2>
+                <p class="text-[10px] font-medium text-white/90">${title}</p>
+                <p class="text-[8px] text-white/80 mt-1">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
               </div>
-              <div class="p-4 space-y-3">
+              <div class="p-3.5 space-y-2.5">
                 <div>
-                  <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">Profile</h3>
-                  <p class="text-[10px] text-slate-600 leading-relaxed">${summary}</p>
+                  <h4 class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Profile</h4>
+                  <p class="text-[8.5px] text-slate-600 leading-relaxed">${summary}</p>
                 </div>
                 <div>
-                  <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">Experience</h3>
-                  <p class="text-[10px] font-bold text-slate-800">Computer Operator - Digital Seva Center</p>
+                  <h4 class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Experience</h4>
+                  <p class="text-[8.5px] font-bold text-slate-800">Computer Operator - Digital Seva Center</p>
                 </div>
                 <div>
-                  <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">Skills</h3>
-                  <p class="text-[10px] text-slate-700">${skills}</p>
+                  <h4 class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Skills</h4>
+                  <p class="text-[8.5px] text-slate-700">${skills}</p>
                 </div>
               </div>
             </div>
-            <div class="p-3 border-t text-[8px] text-slate-400 text-center">Executive Template</div>
+            <div class="p-2 border-t text-[8px] text-slate-400 text-center">Executive Template</div>
           </div>
         `;
       }

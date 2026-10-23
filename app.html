@@ -28,22 +28,11 @@
     .card-shadow {
       box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
     }
-    /* Fixed printable A4 scale styling */
-    .a4-page {
-      width: 794px;
-      min-height: 1120px;
-      height: 1120px;
-      background: #ffffff;
-      margin: 0;
-      position: relative;
-      box-sizing: border-box;
-      overflow: hidden;
-    }
   </style>
 </head>
 <body class="text-slate-800 min-h-screen p-2.5 sm:p-4 md:p-6 pb-24 md:pb-6 flex flex-col items-center justify-start overflow-x-hidden">
 
-  <!-- Ambient background glow -->
+  <!-- Ambient background glow for PC -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div class="absolute -top-12 -right-8 w-72 h-72 rounded-full bg-purple-500/15 blur-3xl"></div>
     <div class="absolute bottom-6 -left-12 w-64 h-64 rounded-full bg-cyan-500/15 blur-3xl"></div>
@@ -115,7 +104,7 @@
       </div>
     </aside>
 
-    <!-- MAIN DASHBOARD -->
+    <!-- MAIN RIGHT / MOBILE DASHBOARD AREA -->
     <section class="flex-1 w-full flex flex-col justify-between space-y-4 md:col-span-8 lg:col-span-9 relative">
       <div>
         <header class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200/60">
@@ -171,7 +160,7 @@
                 </div>
                 <div class="p-2 bg-purple-50/70 rounded-xl space-y-0.5">
                   <p class="font-bold text-slate-800 text-[11px]">✨ AI Resume Maker Live!</p>
-                  <p class="text-[10px] text-slate-500">Standard A4 export without cutting margins.</p>
+                  <p class="text-[10px] text-slate-500">Instant full-scale A4 PDF ready.</p>
                 </div>
               </div>
             </div>
@@ -410,9 +399,9 @@
               </div>
             </div>
 
-            <!-- Right Preview Container (Responsive scrollable preview on mobile/desktop) -->
-            <div class="lg:col-span-6 bg-slate-200/80 p-3 rounded-2xl border border-slate-300 w-full overflow-x-auto flex justify-center lg:sticky lg:top-4">
-              <div class="w-full max-w-[500px] shadow-lg rounded-xl overflow-hidden bg-white">
+            <!-- Right Preview Container -->
+            <div class="lg:col-span-6 bg-slate-200/80 p-3 rounded-2xl border border-slate-300 w-full overflow-hidden flex justify-center lg:sticky lg:top-4">
+              <div class="w-full shadow-lg rounded-xl overflow-hidden bg-white">
                 <div id="resumePreviewContainer" class="w-full bg-white"></div>
               </div>
             </div>
@@ -830,7 +819,7 @@
       window.renderResumePreview();
     };
 
-    // Helper: Returns standard HTML for templates
+    // Helper: Clean Standard Resume Content Generator
     function getResumeHTML(isForPdf = false) {
       const name = document.getElementById('rName').value.trim() || 'Your Full Name';
       const title = document.getElementById('rTitle').value.trim() || 'Your Profession / Job Title';
@@ -842,59 +831,65 @@
       const languages = document.getElementById('rLanguages').value.trim() || 'English, Hindi';
       const color = document.getElementById('resumeThemeColor').value || '#1e3a8a';
 
-      const skillPills = skills.split(',').map(s => `<span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 4px; font-size: ${isForPdf ? '11px' : '10px'}; display: inline-block;">${s.trim()}</span>`).join(' ');
+      const skillPills = skills.split(',').map(s => `
+        <span style="background: rgba(255,255,255,0.22); padding: 4px 8px; border-radius: 4px; font-size: ${isForPdf ? '11px' : '10px'}; display: inline-block; margin-bottom: 4px;">
+          ${s.trim()}
+        </span>
+      `).join(' ');
 
       if (window.activeResumeTemplate === 'modern') {
         return `
-          <div class="${isForPdf ? 'a4-page' : 'w-full min-h-[580px]'} bg-white flex text-slate-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-            <div class="w-[34%] text-white ${isForPdf ? 'p-8' : 'p-4'} flex flex-col justify-start shrink-0" style="background-color: ${color}">
-              <div class="space-y-6">
-                <div>
-                  <h5 class="text-[11px] font-extrabold uppercase tracking-widest text-white/80 border-b border-white/20 pb-1 mb-2.5">Contact</h5>
-                  <div class="space-y-2 text-[10.5px] text-white/95 leading-relaxed">
-                    <p class="break-all">📞 ${phone}</p>
-                    <p class="break-all">✉️ ${email}</p>
-                    <p class="break-words">📍 ${address}</p>
-                  </div>
+          <div style="width: 100%; min-height: ${isForPdf ? '1120px' : '580px'}; background: #ffffff; display: flex; font-family: 'Plus Jakarta Sans', sans-serif; box-sizing: border-box;">
+            <!-- Left Side Column -->
+            <div style="width: 34%; background-color: ${color}; color: #ffffff; padding: ${isForPdf ? '36px 28px' : '20px 16px'}; box-sizing: border-box; flex-shrink: 0;">
+              <div style="margin-bottom: 28px;">
+                <h5 style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 6px; margin-bottom: 12px;">Contact</h5>
+                <div style="font-size: ${isForPdf ? '12px' : '10px'}; line-height: 1.8; opacity: 0.95; word-break: break-all;">
+                  <p>📞 ${phone}</p>
+                  <p>✉️ ${email}</p>
+                  <p style="word-break: break-word;">📍 ${address}</p>
                 </div>
-                <div>
-                  <h5 class="text-[11px] font-extrabold uppercase tracking-widest text-white/80 border-b border-white/20 pb-1 mb-2.5">Skills</h5>
-                  <div class="flex flex-wrap gap-1.5">${skillPills}</div>
-                </div>
-                <div>
-                  <h5 class="text-[11px] font-extrabold uppercase tracking-widest text-white/80 border-b border-white/20 pb-1 mb-2.5">Languages</h5>
-                  <p class="text-[10.5px] text-white/95 break-words">${languages}</p>
-                </div>
+              </div>
+
+              <div style="margin-bottom: 28px;">
+                <h5 style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 6px; margin-bottom: 12px;">Skills</h5>
+                <div>${skillPills}</div>
+              </div>
+
+              <div>
+                <h5 style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 6px; margin-bottom: 12px;">Languages</h5>
+                <p style="font-size: ${isForPdf ? '12px' : '10px'}; opacity: 0.95; word-break: break-word;">${languages}</p>
               </div>
             </div>
-            
-            <div class="w-[66%] ${isForPdf ? 'p-10' : 'p-5'} flex flex-col justify-start space-y-6 min-w-0">
-              <div class="border-b border-slate-200 pb-5">
-                <h2 class="${isForPdf ? 'text-3xl' : 'text-xl'} font-black tracking-tight" style="color: ${color}">${name}</h2>
-                <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">${title}</p>
-                <p class="text-[11px] text-slate-600 mt-3 leading-relaxed">${summary}</p>
+
+            <!-- Right Content Area -->
+            <div style="width: 66%; padding: ${isForPdf ? '40px 32px' : '22px 18px'}; box-sizing: border-box; display: flex; flex-direction: column;">
+              <div style="border-bottom: 2px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 24px;">
+                <h2 style="font-size: ${isForPdf ? '32px' : '20px'}; font-weight: 900; color: ${color}; margin: 0; line-height: 1.1;">${name}</h2>
+                <p style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1.2px; margin-top: 6px;">${title}</p>
+                <p style="font-size: ${isForPdf ? '12px' : '10.5px'}; color: #475569; line-height: 1.6; margin-top: 12px;">${summary}</p>
               </div>
 
-              <div>
-                <h4 class="text-xs font-black uppercase tracking-wider mb-2.5 pb-1 border-b border-slate-200" style="color: ${color}">Work Experience</h4>
-                <div class="space-y-2">
-                  <div class="text-[11.5px] flex justify-between font-bold">
+              <div style="margin-bottom: 24px;">
+                <h4 style="font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: ${color}; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px;">Experience</h4>
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; display: flex; justify-content: space-between;">
                     <span>Your Role / Designation</span>
-                    <span class="text-slate-400 font-normal">2022 - Present</span>
+                    <span style="font-weight: 400; color: #94a3b8;">2022 - Present</span>
                   </div>
-                  <p class="text-[10.5px] font-medium text-slate-500">Company Name / Organization</p>
-                  <p class="text-[10.5px] text-slate-600 leading-relaxed">Key responsibilities, achievements, and contributions to project workflow and company growth.</p>
+                  <p style="font-size: 11px; color: #64748b; margin-top: 2px;">Company Name / Organization</p>
+                  <p style="font-size: ${isForPdf ? '11.5px' : '10px'}; color: #475569; line-height: 1.5; margin-top: 6px;">Contributed to core development workflows, enhanced operational efficiency, and spearheaded collaborative initiatives.</p>
                 </div>
               </div>
 
               <div>
-                <h4 class="text-xs font-black uppercase tracking-wider mb-2.5 pb-1 border-b border-slate-200" style="color: ${color}">Education &amp; Credentials</h4>
-                <div class="space-y-2">
-                  <div class="text-[11.5px] flex justify-between font-bold">
+                <h4 style="font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: ${color}; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px;">Education</h4>
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; display: flex; justify-content: space-between;">
                     <span>Degree / Qualification Name</span>
-                    <span class="text-slate-400 font-normal">Graduation Year</span>
+                    <span style="font-weight: 400; color: #94a3b8;">Year</span>
                   </div>
-                  <p class="text-[10.5px] font-medium text-slate-500">College, University, or Institution</p>
+                  <p style="font-size: 11px; color: #64748b; margin-top: 2px;">College or University Name</p>
                 </div>
               </div>
             </div>
@@ -902,56 +897,51 @@
         `;
       } else if (window.activeResumeTemplate === 'classic') {
         return `
-          <div class="${isForPdf ? 'a4-page' : 'w-full min-h-[580px]'} bg-white ${isForPdf ? 'p-12' : 'p-6'} flex flex-col justify-start text-slate-800" style="font-family: serif;">
-            <div class="text-center border-b border-slate-300 pb-5 mb-5">
-              <h2 class="${isForPdf ? 'text-3xl' : 'text-2xl'} font-bold tracking-tight text-slate-900">${name}</h2>
-              <p class="text-xs font-semibold text-slate-600 uppercase tracking-widest mt-1">${title}</p>
-              <p class="text-[10.5px] text-slate-500 mt-2 break-words">${phone} | ${email} | ${address}</p>
+          <div style="width: 100%; min-height: ${isForPdf ? '1120px' : '580px'}; background: #ffffff; padding: ${isForPdf ? '48px 40px' : '24px 20px'}; font-family: Georgia, serif; box-sizing: border-box; color: #1e293b;">
+            <div style="text-align: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 16px; margin-bottom: 24px;">
+              <h2 style="font-size: ${isForPdf ? '34px' : '22px'}; font-weight: bold; margin: 0;">${name}</h2>
+              <p style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin-top: 6px;">${title}</p>
+              <p style="font-size: 11px; color: #64748b; margin-top: 6px;">${phone} | ${email} | ${address}</p>
             </div>
-            <div class="space-y-5">
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2" style="color: ${color}">Professional Profile</h4>
-                <p class="text-[11px] text-slate-600 leading-relaxed">${summary}</p>
-              </div>
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2" style="color: ${color}">Experience</h4>
-                <div class="text-[11px] font-bold flex justify-between">
-                  <span>Your Role - Company Name</span>
-                  <span class="font-normal text-slate-500">Year</span>
-                </div>
-              </div>
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2" style="color: ${color}">Education</h4>
-                <p class="text-[11px] text-slate-700"><strong>Your Degree</strong> - School or College</p>
-              </div>
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2" style="color: ${color}">Skills &amp; Languages</h4>
-                <p class="text-[11px] text-slate-700"><strong>Skills:</strong> ${skills}</p>
-                <p class="text-[11px] text-slate-700 mt-1"><strong>Languages:</strong> ${languages}</p>
-              </div>
+            <div style="margin-bottom: 20px;">
+              <h4 style="font-size: 13px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; color: ${color};">Professional Profile</h4>
+              <p style="font-size: 12px; line-height: 1.6; color: #334155; margin-top: 8px;">${summary}</p>
+            </div>
+            <div style="margin-bottom: 20px;">
+              <h4 style="font-size: 13px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; color: ${color};">Experience</h4>
+              <div style="font-size: 12px; margin-top: 8px;"><strong>Your Role</strong> - Company Name <span style="float: right; color: #64748b;">2022 - Present</span></div>
+            </div>
+            <div style="margin-bottom: 20px;">
+              <h4 style="font-size: 13px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; color: ${color};">Education</h4>
+              <div style="font-size: 12px; margin-top: 8px;"><strong>Degree Name</strong> - University Name <span style="float: right; color: #64748b;">Year</span></div>
+            </div>
+            <div>
+              <h4 style="font-size: 13px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; color: ${color};">Skills &amp; Languages</h4>
+              <p style="font-size: 12px; margin-top: 8px;"><strong>Skills:</strong> ${skills}</p>
+              <p style="font-size: 12px; margin-top: 4px;"><strong>Languages:</strong> ${languages}</p>
             </div>
           </div>
         `;
       } else {
         return `
-          <div class="${isForPdf ? 'a4-page' : 'w-full min-h-[580px]'} bg-white flex flex-col justify-start text-slate-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-            <div class="${isForPdf ? 'p-10' : 'p-5'} text-white" style="background-color: ${color}">
-              <h2 class="${isForPdf ? 'text-3xl' : 'text-xl'} font-black tracking-tight">${name}</h2>
-              <p class="text-xs font-medium text-white/90 uppercase tracking-wider mt-1">${title}</p>
-              <p class="text-[10px] text-white/85 mt-2 break-words">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
+          <div style="width: 100%; min-height: ${isForPdf ? '1120px' : '580px'}; background: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; box-sizing: border-box;">
+            <div style="background-color: ${color}; color: #ffffff; padding: ${isForPdf ? '40px 32px' : '22px 18px'};">
+              <h2 style="font-size: ${isForPdf ? '32px' : '22px'}; font-weight: 900; margin: 0;">${name}</h2>
+              <p style="font-size: 12px; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;">${title}</p>
+              <p style="font-size: 11px; opacity: 0.85; margin-top: 8px;">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
             </div>
-            <div class="${isForPdf ? 'p-10 space-y-6' : 'p-5 space-y-4'}">
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Executive Summary</h4>
-                <p class="text-[11px] text-slate-600 leading-relaxed mt-1.5">${summary}</p>
+            <div style="padding: ${isForPdf ? '40px 32px' : '22px 18px'};">
+              <div style="margin-bottom: 24px;">
+                <h4 style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px;">Summary</h4>
+                <p style="font-size: 12px; color: #334155; line-height: 1.6; margin-top: 6px;">${summary}</p>
+              </div>
+              <div style="margin-bottom: 24px;">
+                <h4 style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px;">Experience</h4>
+                <p style="font-size: 12px; font-weight: bold; color: #1e293b; margin-top: 6px;">Your Role - Company Name</p>
               </div>
               <div>
-                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Experience</h4>
-                <p class="text-[11.5px] font-bold text-slate-800 mt-1.5">Your Role - Company Name</p>
-              </div>
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Skills &amp; Competencies</h4>
-                <p class="text-[11px] text-slate-700 mt-1.5">${skills}</p>
+                <h4 style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px;">Skills</h4>
+                <p style="font-size: 12px; color: #334155; margin-top: 6px;">${skills}</p>
               </div>
             </div>
           </div>
@@ -959,25 +949,25 @@
       }
     }
 
-    // PERFECT FULL-PAGE A4 PDF GENERATOR (Completely fills 1 single A4 page)
+    // BULLET-PROOF 100% CLEAN A4 SINGLE-PAGE PDF GENERATOR
     window.downloadResumePdfDirect = () => {
       const name = (document.getElementById('rName').value || 'Resume').trim().replace(/\s+/g, '_');
       const btnText = document.getElementById('downloadBtnText');
       btnText.innerText = "Generating PDF...";
 
-      // Dedicated hidden A4 container attached to DOM
-      const offscreenDiv = document.createElement('div');
-      offscreenDiv.id = 'pdf-render-box';
-      offscreenDiv.style.position = 'fixed';
-      offscreenDiv.style.left = '0';
-      offscreenDiv.style.top = '0';
-      offscreenDiv.style.zIndex = '-9999';
-      offscreenDiv.style.width = '794px';
-      offscreenDiv.style.minHeight = '1120px';
-      offscreenDiv.style.background = '#ffffff';
-      offscreenDiv.innerHTML = getResumeHTML(true);
+      // Ek separate wrapper banate hain jiska scale fixed 800px rahega
+      const wrapper = document.createElement('div');
+      wrapper.style.width = '800px';
+      wrapper.style.minHeight = '1120px';
+      wrapper.style.position = 'absolute';
+      wrapper.style.left = '0';
+      wrapper.style.top = '0';
+      wrapper.style.zIndex = '-999999';
+      wrapper.style.opacity = '1';
+      wrapper.style.background = '#ffffff';
+      wrapper.innerHTML = getResumeHTML(true);
 
-      document.body.appendChild(offscreenDiv);
+      document.body.appendChild(wrapper);
 
       const opt = {
         margin:       0,
@@ -987,25 +977,24 @@
           scale: 2, 
           useCORS: true, 
           logging: false,
-          width: 794,
-          height: 1120,
-          windowWidth: 794,
-          windowHeight: 1120
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: 800
         },
-        jsPDF:        { unit: 'px', format: [794, 1120], orientation: 'portrait' }
+        jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
       };
 
-      html2pdf().set(opt).from(offscreenDiv).save().then(() => {
-        if (offscreenDiv.parentNode) document.body.removeChild(offscreenDiv);
+      html2pdf().set(opt).from(wrapper).save().then(() => {
+        document.body.removeChild(wrapper);
         btnText.innerText = "Download PDF";
       }).catch((err) => {
         console.error(err);
-        if (offscreenDiv.parentNode) document.body.removeChild(offscreenDiv);
+        if (wrapper.parentNode) document.body.removeChild(wrapper);
         btnText.innerText = "Download PDF";
       });
     };
 
-    // Live Resume Renderer (For on-screen box)
+    // Live Resume Renderer (For responsive UI box)
     window.renderResumePreview = () => {
       const container = document.getElementById('resumePreviewContainer');
       container.innerHTML = getResumeHTML(false);

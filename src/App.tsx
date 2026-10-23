@@ -4,8 +4,21 @@ import {
   ChevronRight,
   Search,
   Bell,
+  LogOut,
+  User as UserIcon,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+
+// Firebase imports
+import { auth, db } from './firebase';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  User,
+} from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 // === PRIMEASTRA 3D SHIELD LOGO ===
 const PrimeAstraLogo: React.FC<{ className?: string }> = ({ className = 'w-10 h-10' }) => (
@@ -39,8 +52,47 @@ const PrimeAstraLogo: React.FC<{ className?: string }> = ({ className = 'w-10 h-
 );
 
 export default function App() {
+  // Navigation & Search State
   const [activeNav, setActiveNav] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Firebase Auth & User Data State
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [userData, setUserData] = useState<{ name?: string; email?: string } | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  // Login / Signup Form State
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [authName, setAuthName] = useState('');
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [formSubmitting, setFormSubmitting] = useState(false);
+
+  // Auth State Listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setCurrentUser(user);
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists()) {
+            setUserData(userDoc.data() as { name?: string; email?: string });
+          } else {
+            setUserData({ email: user.email || '' });
+          }
+        } catch {
+          setUserData({ email: user.email || '' });
+        }
+      } else {
+        setCurrentUser(null);
+        setUserData(null);
+      }
+      setAuthLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // ⌘K Keyboard Shortcut
   useEffect(() => {
@@ -54,9 +106,153 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Login / Register Submit Handler
+  const handleAuthSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+    setFormSubmitting(true);
+
+    try {
+      if (isRegistering) {
+        const cred = await createUserWithEmailAndPassword(auth, authEmail, authPassword);
+        const newProfile = {
+          uid: cred.user.uid,
+          name: authName.trim() || 'User',
+          email: authEmail.trim(),
+          createdAt: new Date().toISOString(),
+        };
+        await setDoc(doc(db, 'users', cred.user.uid), newProfile);
+        setUserData(newProfile);
+      } else {
+        await signInWithEmailAndPassword(auth, authEmail, authPassword);
+      }
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setAuthError(errorObj.message || 'Authentication failed. Please check credentials.');
+    } finally {
+      setFormSubmitting(false);
+    }
+  };
+
+  // Helper Initials
+  const getInitials = () => {
+    if (userData?.name) {
+      return userData.name.slice(0, 2).toUpperCase();
+    }
+    if (currentUser?.email) {
+      return currentUser.email.slice(0, 2).toUpperCase();
+    }
+    return 'PA';
+  };
+
+  // 1. Loading State
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#ECEEF3] flex flex-col items-center justify-center gap-3 text-slate-700">
+        <PrimeAstraLogo className="w-12 h-12 animate-pulse" />
+        <p className="text-sm font-semibold tracking-wide">Loading PrimeAstra...</p>
+      </div>
+    );
+  }
+
+  // 2. Not Logged In -> Clean Floating Login / Sign-up Screen
+  if (!currentUser) {
+    return (
+      <div className="bg-[#ECEEF3] text-slate-800 antialiased min-h-screen relative overflow-x-hidden flex items-center justify-center p-4">
+        {/* Ambient 3D Elements */}
+        <div aria-hidden="true" className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          <div className="absolute -top-12 -right-8 w-72 h-72 rounded-full clay-sphere opacity-45 blur-[1px] animate-float" />
+          <div className="absolute top-28 right-24 w-44 h-44 rounded-full glass-disc opacity-60 animate-float-delayed" />
+          <div className="absolute bottom-6 -left-12 w-64 h-64 rounded-full clay-sphere opacity-50 blur-[1.5px] animate-float" />
+        </div>
+
+        <div className="relative z-10 w-full max-w-[420px] bg-white/85 backdrop-blur-2xl rounded-[32px] shadow-floating border border-white/95 p-6 md:p-8">
+          <div className="flex flex-col items-center text-center mb-6">
+            <PrimeAstraLogo className="w-14 h-14 mb-2" />
+            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+              Prime<span className="text-purple-600">Astra</span>
+            </h1>
+            <p className="text-xs text-slate-500 mt-1">
+              {isRegistering ? 'Create your new account' : 'Sign in to access your tools'}
+            </p>
+          </div>
+
+          {authError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-xs rounded-xl">
+              {authError}
+            </div>
+          )}
+
+          <form onSubmit={handleAuthSubmit} className="space-y-4">
+            {isRegistering && (
+              <div>
+                <label className="block text-xs font-semibold text-slate-600 mb-1">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={authName}
+                  onChange={(e) => setAuthName(e.target.value)}
+                  placeholder="Enter your name"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500 transition"
+                />
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-600 mb-1">Email</label>
+              <input
+                type="email"
+                required
+                value={authEmail}
+                onChange={(e) => setAuthEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500 transition"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-600 mb-1">Password</label>
+              <input
+                type="password"
+                required
+                value={authPassword}
+                onChange={(e) => setAuthPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500 transition"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={formSubmitting}
+              className="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer disabled:opacity-70 mt-2"
+            >
+              {formSubmitting ? 'Please wait...' : isRegistering ? 'Register & Enter' : 'Sign In'}
+            </button>
+          </form>
+
+          <p className="text-center text-xs text-slate-500 mt-5">
+            {isRegistering ? 'Already have an account? ' : "Don't have an account? "}
+            <button
+              type="button"
+              onClick={() => {
+                setIsRegistering(!isRegistering);
+                setAuthError('');
+              }}
+              className="text-purple-600 font-bold hover:underline"
+            >
+              {isRegistering ? 'Log in' : 'Create one'}
+            </button>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // 3. Logged In -> Full PrimeAstra Dashboard Application Shell
   return (
     <div className="bg-[#ECEEF3] text-slate-800 antialiased min-h-screen relative overflow-x-hidden selection:bg-purple-600 selection:text-white flex items-center justify-center p-3 md:p-6 lg:p-8">
-      {/* === Ambient Background 3D Elements === */}
+      {/* Ambient Background 3D Elements */}
       <div aria-hidden="true" className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute -top-12 -right-8 w-72 h-72 rounded-full clay-sphere opacity-45 blur-[1px] animate-float" />
         <div className="absolute top-28 right-24 w-44 h-44 rounded-full glass-disc opacity-60 animate-float-delayed" />
@@ -64,12 +260,12 @@ export default function App() {
         <div className="absolute -bottom-16 right-16 w-60 h-60 rounded-full border-[28px] border-purple-200/50 clay-torus opacity-40 animate-float-delayed" />
       </div>
 
-      {/* === Master Application Shell Container === */}
+      {/* Master Application Shell Container */}
       <main
         className="relative z-10 w-full max-w-[1360px] bg-white/75 backdrop-blur-2xl rounded-[36px] shadow-floating border border-white/95 p-4 md:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[580px] max-h-[720px]"
         data-purpose="app-root"
       >
-        {/* === Left Navigation Sidebar === */}
+        {/* Left Navigation Sidebar */}
         <aside
           className="lg:col-span-3 xl:col-span-3 flex flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm"
           data-purpose="sidebar"
@@ -106,8 +302,6 @@ export default function App() {
                 <span>Home</span>
               </button>
 
-             
-
               {/* Settings */}
               <button
                 onClick={() => setActiveNav('settings')}
@@ -126,8 +320,8 @@ export default function App() {
             </nav>
           </div>
 
-          {/* Bottom Card: Go Premium */}
-          <div className="mt-8 pt-4">
+          {/* Bottom Card: Go Premium & Logout */}
+          <div className="mt-8 pt-4 space-y-3">
             <div
               onClick={() => {
                 confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
@@ -146,10 +340,19 @@ export default function App() {
                 <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
             </div>
+
+            {/* Logout Button */}
+            <button
+              onClick={() => signOut(auth)}
+              className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-semibold text-rose-600 bg-rose-50/70 hover:bg-rose-100/70 rounded-xl transition cursor-pointer border border-rose-100"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Log out</span>
+            </button>
           </div>
         </aside>
 
-        {/* === Right Content Area (Clean & Banner-Free) === */}
+        {/* Right Content Area */}
         <section className="lg:col-span-9 xl:col-span-9 flex flex-col justify-start space-y-6 h-full" data-purpose="main-dashboard">
           {/* Header & Global Omni-Search */}
           <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1" data-purpose="top-header">
@@ -157,7 +360,9 @@ export default function App() {
               <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                 Prime<span className="text-purple-600">Astra</span>
               </h2>
-              <p className="text-xs text-slate-500 font-medium">All tools. One place. Unlimited possibilities.</p>
+              <p className="text-xs text-slate-500 font-medium">
+                Welcome back, <span className="font-semibold text-purple-700">{userData?.name || currentUser.email}</span>
+              </p>
             </div>
 
             {/* Search Bar, Notification, Profile */}
@@ -190,20 +395,30 @@ export default function App() {
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-violet-600 ring-2 ring-white" />
               </button>
 
-              {/* User Profile Avatar */}
-              <div className="flex items-center">
-                <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-slate-200 to-indigo-100 p-0.5 border border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-400/50 transition">
-                  <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center text-slate-600 font-bold text-xs uppercase">
-                    PA
+              {/* User Profile Avatar with Initials */}
+              <div className="flex items-center" title={userData?.name || currentUser.email || ''}>
+                <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-400/50 transition">
+                  <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center text-purple-700 font-bold text-xs uppercase">
+                    {getInitials()}
                   </div>
                 </div>
               </div>
             </div>
           </header>
 
-          {/* Main Clean Workspace Canvas (Hero Banner Removed) */}
+          {/* Main Clean Workspace Canvas */}
           <div className="flex-1 w-full rounded-[28px] bg-white/45 border border-white/80 backdrop-blur-md p-6 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-clay-sm">
-            {/* Aapke naye tools ya components direct yahan embed ho sakte hain */}
+            <div className="p-6 max-w-md bg-white/70 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+              <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl mx-auto flex items-center justify-center">
+                <UserIcon className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-bold text-slate-800">
+                {userData?.name ? `Hello, ${userData.name}!` : 'User Workspace Ready'}
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Aapka personal account aur database space create ho chuka hai. Yahan par aapke personalized tools aur converted files save hongi.
+              </p>
+            </div>
           </div>
         </section>
       </main>

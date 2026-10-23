@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>PrimeAstra</title>
+  <title>PrimeAstra - Workspace Hub</title>
   
   <!-- Direct 3D Shield Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='fShield' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300f2fe'/%3E%3Cstop offset='45%25' stop-color='%230099ff'/%3E%3Cstop offset='100%25' stop-color='%23004cd8'/%3E%3C/linearGradient%3E%3ClinearGradient id='fStar' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='60%25' stop-color='%2300f2fe'/%3E%3Cstop offset='100%25' stop-color='%230088ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z' fill='url(%23fStar)'/%3E%3Cpath d='M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z' fill='url(%23fShield)'/%3E%3Cpath d='M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z' fill='url(%23fShield)'/%3E%3Cpath d='M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z' fill='url(%23fShield)'/%3E%3Cpath d='M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z' fill='url(%23fShield)'/%3E%3Cpolygon points='380,55 305,108 335,122 360,170' fill='url(%23fStar)'/%3E%3Cpolygon points='380,55 335,122 360,170' fill='%230055ff'/%3E%3Cpath d='M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z' fill='url(%23fShield)'/%3E%3C/svg%3E">
@@ -25,6 +25,38 @@
     .card-shadow {
       box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
     }
+
+    /* ONLY PRINT THE RESUME CONTAINER */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      body, html {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      #resumePrintTarget, #resumePrintTarget * {
+        visibility: visible !important;
+      }
+      #resumePrintTarget {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100vw !important;
+        min-height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: #ffffff !important;
+        z-index: 999999 !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 8mm;
+      }
+    }
   </style>
 </head>
 <body class="text-slate-800 min-h-screen p-2.5 sm:p-4 md:p-6 pb-24 md:pb-6 flex flex-col items-center justify-start">
@@ -35,7 +67,7 @@
     <div class="absolute bottom-6 -left-12 w-64 h-64 rounded-full bg-cyan-500/15 blur-3xl"></div>
   </div>
 
-  <!-- Master Application Container (Full Height Stretch on Mobile) -->
+  <!-- Master Application Container -->
   <main class="relative z-10 w-full max-w-[1360px] bg-white/95 md:backdrop-blur-2xl rounded-[32px] md:rounded-[36px] shadow-xl md:shadow-2xl border border-white/95 p-4 sm:p-6 md:p-8 flex flex-col md:grid md:grid-cols-12 gap-6 min-h-[calc(100vh-7rem)] md:min-h-[640px]">
     
     <!-- === DESKTOP SIDEBAR === -->
@@ -106,11 +138,10 @@
     <!-- === MAIN RIGHT / MOBILE DASHBOARD AREA === -->
     <section class="flex-1 w-full flex flex-col justify-between space-y-4 md:col-span-8 lg:col-span-9 relative">
       
-      <!-- Top Bar Header (With Full Visible Responsive 3D SVG) -->
       <div>
         <header class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200/60">
           <div class="flex items-center gap-2.5">
-            <!-- Mobile 3D Shield Logo (Fixed Sizing & Visible Viewbox) -->
+            <!-- Mobile 3D Shield Logo -->
             <div class="md:hidden w-11 h-11 flex items-center justify-center shrink-0">
               <svg class="w-11 h-11 drop-shadow-[0_0_10px_rgba(0,153,255,0.45)]" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -336,6 +367,7 @@
               </div>
             </div>
 
+            <!-- Print Trigger Button -->
             <button onclick="window.print()" class="flex items-center justify-center gap-1.5 px-4 py-2 bg-white text-indigo-900 rounded-xl text-xs font-bold shadow hover:bg-slate-100 transition cursor-pointer w-full sm:w-auto">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
               <span>Download PDF / Print</span>
@@ -343,6 +375,7 @@
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <!-- Form Inputs -->
             <div class="lg:col-span-6 space-y-4">
               <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
                 <div class="flex items-center justify-between flex-wrap gap-2">
@@ -406,8 +439,11 @@
               </div>
             </div>
 
+            <!-- Print Target (Only this container is printed) -->
             <div class="lg:col-span-6 bg-slate-200/80 p-2 sm:p-3 rounded-2xl border border-slate-300 flex justify-center lg:sticky lg:top-0 w-full overflow-x-auto">
-              <div id="resumePreviewContainer" class="w-full min-w-[320px]"></div>
+              <div id="resumePrintTarget" class="w-full min-w-[320px]">
+                <div id="resumePreviewContainer" class="w-full"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -441,7 +477,7 @@
         </div>
 
         <!-- ==============================================
-             VIEW 5: PROFILE & SETTINGS VIEW (Photo Upload/Delete & Password)
+             VIEW 5: PROFILE & SETTINGS VIEW
              ============================================== -->
         <div id="profileView" class="hidden space-y-5 w-full text-left pt-3">
           <div class="border-b border-slate-200/80 pb-3">
@@ -510,8 +546,7 @@
 
       </div>
 
-      <!-- Bottom Padding Filler to completely eliminate gaps -->
-      <div class="w-full py-2"></div>
+      <div class="w-full py-1"></div>
     </section>
   </main>
 
@@ -577,7 +612,7 @@
     const profilePhotoInitial = document.getElementById('profilePhotoInitial');
     const profileAuthBtn = document.getElementById('profileAuthBtn');
 
-    // Instant local cache recovery so mobile refresh never shows "Guest"
+    // Restore cached name & photo immediately
     const cachedName = localStorage.getItem('pa_cached_name');
     const cachedPhoto = localStorage.getItem('pa_cached_photo');
     if (cachedName) {
@@ -825,6 +860,7 @@
       window.renderResumePreview();
     };
 
+    // Live Resume Renderer (Without any watermark/footers)
     window.renderResumePreview = () => {
       const name = document.getElementById('rName').value || 'Your Name';
       const title = document.getElementById('rTitle').value || 'Professional Title';
@@ -841,100 +877,100 @@
 
       if (window.activeResumeTemplate === 'modern') {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-lg overflow-hidden flex min-h-[460px] text-slate-800" style="font-family: sans-serif;">
-            <div class="w-1/3 text-white p-3 sm:p-4 flex flex-col justify-between" style="background-color: ${color}">
-              <div class="space-y-3">
+          <div class="w-full bg-white shadow-md rounded-lg overflow-hidden flex min-h-[500px] text-slate-800" style="font-family: sans-serif;">
+            <div class="w-1/3 text-white p-4 flex flex-col justify-start" style="background-color: ${color}">
+              <div class="space-y-4">
                 <div>
-                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Contact</h5>
-                  <div class="space-y-1 text-[8.5px] text-white/90">
+                  <h5 class="text-[10px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Contact</h5>
+                  <div class="space-y-1.5 text-[9px] text-white/90">
                     <p class="break-all">📞 ${phone}</p>
                     <p class="break-all">✉️ ${email}</p>
                     <p>📍 ${address}</p>
                   </div>
                 </div>
                 <div>
-                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Skills</h5>
+                  <h5 class="text-[10px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Skills</h5>
                   <div class="flex flex-wrap gap-1">${skillPills}</div>
                 </div>
                 <div>
-                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Languages</h5>
-                  <p class="text-[8.5px] text-white/90">${languages}</p>
+                  <h5 class="text-[10px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Languages</h5>
+                  <p class="text-[9px] text-white/90">${languages}</p>
                 </div>
               </div>
-              <div class="text-[7.5px] text-white/50 pt-2">PrimeAstra Suite</div>
             </div>
-            <div class="w-2/3 p-4 sm:p-5 flex flex-col justify-between space-y-3">
+            <div class="w-2/3 p-5 flex flex-col justify-start space-y-4">
               <div>
-                <div class="border-b pb-2 mb-2">
-                  <h2 class="text-base sm:text-lg font-black" style="color: ${color}">${name}</h2>
-                  <p class="text-[10px] font-bold text-slate-500 uppercase">${title}</p>
-                  <p class="text-[9px] text-slate-600 mt-1 leading-relaxed">${summary}</p>
+                <div class="border-b pb-2 mb-3">
+                  <h2 class="text-lg font-black" style="color: ${color}">${name}</h2>
+                  <p class="text-[11px] font-bold text-slate-500 uppercase">${title}</p>
+                  <p class="text-[9.5px] text-slate-600 mt-1 leading-relaxed">${summary}</p>
                 </div>
-                <div class="mb-2">
-                  <h4 class="text-[10px] font-bold uppercase mb-0.5 pb-0.5 border-b border-slate-200" style="color: ${color}">Experience</h4>
-                  <div class="text-[9.5px] flex justify-between font-bold"><span>Computer Operator</span><span class="text-slate-400 font-normal">2021 - Present</span></div>
-                  <p class="text-[8.5px] text-slate-500">Digital Seva Center</p>
+                <div class="mb-3">
+                  <h4 class="text-[10px] font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style="color: ${color}">Experience</h4>
+                  <div class="text-[10px] flex justify-between font-bold"><span>Computer Operator</span><span class="text-slate-400 font-normal">2021 - Present</span></div>
+                  <p class="text-[9px] text-slate-500">Digital Seva Center</p>
                 </div>
                 <div>
-                  <h4 class="text-[10px] font-bold uppercase mb-0.5 pb-0.5 border-b border-slate-200" style="color: ${color}">Education</h4>
-                  <div class="text-[9.5px] flex justify-between font-bold"><span>12th (Commerce)</span><span class="text-slate-400 font-normal">2016</span></div>
-                  <p class="text-[8.5px] text-slate-500">DAV Inter College, UP Board | First Division</p>
+                  <h4 class="text-[10px] font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style="color: ${color}">Education</h4>
+                  <div class="text-[10px] flex justify-between font-bold"><span>12th (Commerce)</span><span class="text-slate-400 font-normal">2016</span></div>
+                  <p class="text-[9px] text-slate-500">DAV Inter College, UP Board | First Division</p>
                 </div>
               </div>
-              <div class="border-t pt-1.5 text-[8px] text-slate-400 text-center">Verified Client Document</div>
             </div>
           </div>
         `;
       } else if (window.activeResumeTemplate === 'classic') {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-lg p-5 flex flex-col justify-between min-h-[460px] text-slate-800" style="font-family: serif;">
+          <div class="w-full bg-white shadow-md rounded-lg p-6 flex flex-col justify-start min-h-[500px] text-slate-800" style="font-family: serif;">
             <div>
-              <div class="text-center border-b pb-2.5 mb-2.5">
-                <h2 class="text-lg font-bold tracking-tight text-slate-900">${name}</h2>
-                <p class="text-[10px] font-semibold text-slate-600 uppercase mt-0.5">${title}</p>
-                <p class="text-[8.5px] text-slate-500 mt-0.5">${phone} | ${email} | ${address}</p>
+              <div class="text-center border-b pb-3 mb-3">
+                <h2 class="text-xl font-bold tracking-tight text-slate-900">${name}</h2>
+                <p class="text-[11px] font-semibold text-slate-600 uppercase mt-0.5">${title}</p>
+                <p class="text-[9.5px] text-slate-500 mt-1">${phone} | ${email} | ${address}</p>
               </div>
-              <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Summary</h4>
-                <p class="text-[8.5px] text-slate-600 leading-relaxed">${summary}</p>
+              <div class="mb-3">
+                <h4 class="text-[10.5px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Summary</h4>
+                <p class="text-[9.5px] text-slate-600 leading-relaxed">${summary}</p>
               </div>
-              <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Experience</h4>
-                <p class="text-[8.5px] font-bold">Computer Operator - Digital Seva Center (2021 - Present)</p>
+              <div class="mb-3">
+                <h4 class="text-[10.5px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Experience</h4>
+                <p class="text-[9.5px] font-bold">Computer Operator - Digital Seva Center (2021 - Present)</p>
               </div>
-              <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Education</h4>
-                <p class="text-[8.5px]"><strong>12th Commerce</strong> - DAV Inter College (First Division)</p>
+              <div class="mb-3">
+                <h4 class="text-[10.5px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Education</h4>
+                <p class="text-[9.5px]"><strong>12th Commerce</strong> - DAV Inter College (First Division)</p>
               </div>
               <div>
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Skills</h4>
-                <p class="text-[8.5px] text-slate-700">${skills}</p>
+                <h4 class="text-[10.5px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Skills</h4>
+                <p class="text-[9.5px] text-slate-700">${skills}</p>
               </div>
             </div>
-            <div class="border-t pt-1 text-[8px] text-slate-400 text-center">PrimeAstra Classic Template</div>
           </div>
         `;
       } else {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-lg overflow-hidden flex flex-col justify-between min-h-[460px] text-slate-800" style="font-family: sans-serif;">
+          <div class="w-full bg-white shadow-md rounded-lg overflow-hidden flex flex-col justify-start min-h-[500px] text-slate-800" style="font-family: sans-serif;">
             <div>
-              <div class="p-3.5 text-white" style="background-color: ${color}">
-                <h2 class="text-base font-black">${name}</h2>
-                <p class="text-[10px] font-medium text-white/90">${title}</p>
-                <p class="text-[8px] text-white/80 mt-1">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
+              <div class="p-4 text-white" style="background-color: ${color}">
+                <h2 class="text-lg font-black">${name}</h2>
+                <p class="text-[11px] font-medium text-white/90">${title}</p>
+                <p class="text-[9px] text-white/80 mt-1">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
               </div>
-              <div class="p-3.5 space-y-2.5">
+              <div class="p-4 space-y-3">
                 <div>
-                  <h4 class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Profile</h4>
-                  <p class="text-[8.5px] text-slate-600 leading-relaxed">${summary}</p>
+                  <h4 class="text-[9.5px] font-bold uppercase tracking-wider text-slate-400">Profile</h4>
+                  <p class="text-[9px] text-slate-600 leading-relaxed">${summary}</p>
                 </div>
                 <div>
-                  <h4 class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Experience</h4>
-                  <p class="text-[8.5px] font-bold text-slate-800">Computer Operator - Digital Seva Center</p>
+                  <h4 class="text-[9.5px] font-bold uppercase tracking-wider text-slate-400">Experience</h4>
+                  <p class="text-[9px] font-bold text-slate-800">Computer Operator - Digital Seva Center</p>
+                </div>
+                <div>
+                  <h4 class="text-[9.5px] font-bold uppercase tracking-wider text-slate-400">Skills</h4>
+                  <p class="text-[9px] text-slate-700">${skills}</p>
                 </div>
               </div>
             </div>
-            <div class="p-2 border-t text-[8px] text-slate-400 text-center">Executive Template</div>
           </div>
         `;
       }

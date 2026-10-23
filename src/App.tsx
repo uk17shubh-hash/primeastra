@@ -11,6 +11,8 @@ import {
   X,
   User as UserIcon,
   LogIn,
+  FileText,
+  Wrench,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -25,6 +27,9 @@ import {
   User,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+
+// ResumeMaker tool import kara
+import ResumeMaker from './components/ResumeMaker';
 
 // === PRIMEASTRA 3D SHIELD LOGO ===
 const PrimeAstraLogo: React.FC<{ className?: string }> = ({ className = 'w-10 h-10' }) => (
@@ -58,7 +63,8 @@ const PrimeAstraLogo: React.FC<{ className?: string }> = ({ className = 'w-10 h-
 );
 
 export default function App() {
-  const [activeNav, setActiveNav] = useState('home');
+  // Navigation State ('home' kivha 'resume-maker')
+  const [activeNav, setActiveNav] = useState('resume-maker');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Firebase Auth & User Data
@@ -70,7 +76,7 @@ export default function App() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
 
-  // Auth Form State (Login / Register)
+  // Auth Form State
   const [isRegistering, setIsRegistering] = useState(false);
   const [authName, setAuthName] = useState('');
   const [authEmail, setAuthEmail] = useState('');
@@ -78,7 +84,7 @@ export default function App() {
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
 
-  // Settings Form State (Password change & Photo upload)
+  // Settings Form State
   const [newPassword, setNewPassword] = useState('');
   const [settingsMsg, setSettingsMsg] = useState('');
   const [settingsError, setSettingsError] = useState('');
@@ -86,7 +92,6 @@ export default function App() {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Outside click detector to close dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -97,7 +102,6 @@ export default function App() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Auth State Listener
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -121,7 +125,6 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  // ⌘K Keyboard Shortcut
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -133,7 +136,6 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Login / Register Submit
   const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
@@ -166,7 +168,6 @@ export default function App() {
     }
   };
 
-  // Profile Photo Change (Base64 file format)
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && currentUser) {
@@ -185,7 +186,6 @@ export default function App() {
     }
   };
 
-  // Password Change
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser) return;
@@ -199,7 +199,7 @@ export default function App() {
       setNewPassword('');
     } catch (err: unknown) {
       const errorObj = err as { message?: string };
-      setSettingsError(errorObj.message || 'Error updating password. Re-login might be required.');
+      setSettingsError(errorObj.message || 'Error updating password.');
     } finally {
       setSettingsLoading(false);
     }
@@ -221,9 +221,9 @@ export default function App() {
         <div className="absolute -bottom-16 right-16 w-60 h-60 rounded-full border-[28px] border-purple-200/50 clay-torus opacity-40 animate-float-delayed" />
       </div>
 
-      {/* Master Application Shell Container */}
+      {/* Master Application Shell */}
       <main
-        className="relative z-10 w-full max-w-[1360px] bg-white/75 backdrop-blur-2xl rounded-[36px] shadow-floating border border-white/95 p-4 md:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[580px] max-h-[720px]"
+        className="relative z-10 w-full max-w-[1360px] bg-white/75 backdrop-blur-2xl rounded-[36px] shadow-floating border border-white/95 p-4 md:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[620px] max-h-[820px]"
         data-purpose="app-root"
       >
         {/* === Left Navigation Sidebar === */}
@@ -231,7 +231,7 @@ export default function App() {
           className="lg:col-span-3 xl:col-span-3 flex flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm"
           data-purpose="sidebar"
         >
-          <div className="space-y-7">
+          <div className="space-y-6">
             {/* Logo */}
             <div className="flex items-center gap-3 px-2 pt-1 cursor-pointer" onClick={() => setActiveNav('home')}>
               <PrimeAstraLogo className="w-10 h-10" />
@@ -246,10 +246,11 @@ export default function App() {
             </div>
 
             {/* Navigation Links */}
-            <nav aria-label="Main Navigation" className="space-y-1.5">
+            <nav aria-label="Main Navigation" className="space-y-4">
+              {/* Home Button */}
               <button
                 onClick={() => setActiveNav('home')}
-                className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 text-left ${
+                className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${
                   activeNav === 'home'
                     ? 'bg-white text-purple-700 shadow-clay-sm border border-purple-100/80'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -261,26 +262,26 @@ export default function App() {
                 <span>Home</span>
               </button>
 
-              <button
-                onClick={() => {
-                  if (currentUser) {
-                    setShowSettingsModal(true);
-                  } else {
-                    setShowAuthModal(true);
-                  }
-                }}
-                className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm transition-all duration-200 text-left ${
-                  activeNav === 'settings'
-                    ? 'bg-white text-purple-700 shadow-clay-sm border border-purple-100/80'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-                }`}
-              >
-                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span>Settings</span>
-              </button>
+              {/* === FREE TOOLS SECTION === */}
+              <div className="pt-2">
+                <span className="px-4 text-[10px] font-extrabold tracking-wider text-slate-400 uppercase flex items-center gap-1.5 mb-2">
+                  <Wrench className="w-3 h-3 text-purple-500" />
+                  Free Tools
+                </span>
+
+                {/* AI Resume Maker Tool */}
+                <button
+                  onClick={() => setActiveNav('resume-maker')}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl font-semibold text-xs transition-all duration-200 text-left cursor-pointer ${
+                    activeNav === 'resume-maker'
+                      ? 'bg-purple-600 text-white shadow-md'
+                      : 'text-slate-600 hover:text-purple-700 hover:bg-purple-50/70'
+                  }`}
+                >
+                  <FileText className={`w-4 h-4 ${activeNav === 'resume-maker' ? 'text-white' : 'text-purple-600'}`} />
+                  <span>AI Resume Maker</span>
+                </button>
+              </div>
             </nav>
           </div>
 
@@ -308,9 +309,9 @@ export default function App() {
         </aside>
 
         {/* === Right Content Area === */}
-        <section className="lg:col-span-9 xl:col-span-9 flex flex-col justify-start space-y-6 h-full" data-purpose="main-dashboard">
+        <section className="lg:col-span-9 xl:col-span-9 flex flex-col justify-start space-y-4 h-full overflow-hidden" data-purpose="main-dashboard">
           {/* Header */}
-          <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1" data-purpose="top-header">
+          <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1 shrink-0" data-purpose="top-header">
             <div>
               <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                 Prime<span className="text-purple-600">Astra</span>
@@ -324,7 +325,7 @@ export default function App() {
               </p>
             </div>
 
-            {/* Search Bar, Notification, Auth Button / Profile Icon */}
+            {/* Search Bar, Notification, Profile Area */}
             <div className="flex items-center gap-3">
               <div className="relative w-full sm:w-80">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -335,7 +336,7 @@ export default function App() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for a tool (e.g. PDF, Resume, Image)..."
+                  placeholder="Search for a tool..."
                   className="w-full pl-10 pr-12 py-2.5 bg-white border border-slate-200/90 rounded-2xl text-xs font-medium placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
                 />
                 <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center">
@@ -354,14 +355,12 @@ export default function App() {
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-violet-600 ring-2 ring-white" />
               </button>
 
-              {/* === DYNAMIC AUTH AREA === */}
+              {/* Dynamic Profile Area */}
               {currentUser ? (
-                /* 1. AGAR USER LOGIN HAI: Photo ya Initials + Dropdown */
                 <div className="relative" ref={dropdownRef}>
                   <div
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-400/50 transition flex items-center justify-center overflow-hidden"
-                    title="Click for Profile & Settings"
                   >
                     {userData?.photoUrl ? (
                       <img src={userData.photoUrl} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
@@ -372,7 +371,6 @@ export default function App() {
                     )}
                   </div>
 
-                  {/* Dropdown Menu */}
                   {isDropdownOpen && (
                     <div className="absolute right-0 mt-2.5 w-52 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-floating p-2 z-50 text-xs animate-in fade-in slide-in-from-top-2 duration-150">
                       <div className="px-3 py-2 border-b border-slate-100 mb-1">
@@ -405,7 +403,6 @@ export default function App() {
                   )}
                 </div>
               ) : (
-                /* 2. AGAR LOGOUT HAI: "SH" NAHI AAYEGA, "Login / Register" BUTTON AAYEGA */
                 <button
                   onClick={() => setShowAuthModal(true)}
                   className="flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-2xl text-xs font-bold shadow-md hover:shadow-lg transition cursor-pointer"
@@ -417,28 +414,18 @@ export default function App() {
             </div>
           </header>
 
-          {/* Main Clean Workspace Canvas */}
-          <div className="flex-1 w-full rounded-[28px] bg-white/45 border border-white/80 backdrop-blur-md p-6 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-clay-sm">
-            {currentUser ? (
-              <div className="p-6 max-w-md bg-white/80 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+          {/* === Main Workspace Area: Active Nav Tool Display === */}
+          <div className="flex-1 w-full rounded-[28px] bg-white/50 border border-white/80 backdrop-blur-md p-4 flex flex-col items-center justify-start text-center relative overflow-hidden shadow-clay-sm">
+            {activeNav === 'resume-maker' ? (
+              <ResumeMaker />
+            ) : (
+              <div className="m-auto p-6 max-w-md bg-white/80 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
                 <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl mx-auto flex items-center justify-center">
                   <UserIcon className="w-6 h-6" />
                 </div>
-                <h3 className="text-base font-bold text-slate-800">
-                  Hello, {userData?.name || currentUser.email}!
-                </h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Aapka personal account aur database space create ho chuka hai. Yahan par aapke personalized tools aur converted files save hongi.
-                </p>
-              </div>
-            ) : (
-              <div className="p-6 max-w-md bg-white/70 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
-                <div className="w-12 h-12 bg-slate-100 text-slate-500 rounded-2xl mx-auto flex items-center justify-center">
-                  <PrimeAstraLogo className="w-6 h-6" />
-                </div>
                 <h3 className="text-base font-bold text-slate-800">Welcome to PrimeAstra</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                  Apne personal tools, saved files aur custom workspace access karne ke liye top-right se <strong>Login / Register</strong> karein.
+                  Sidebar madhun <strong>Free Tools &gt; AI Resume Maker</strong> var click karun resume tayar kara.
                 </p>
               </div>
             )}
@@ -446,9 +433,7 @@ export default function App() {
         </section>
       </main>
 
-      {/* ========================================================
-          MODAL 1: LOGIN / REGISTER POPUP
-          ======================================================== */}
+      {/* Auth Modal */}
       {showAuthModal && !currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="relative w-full max-w-[390px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7">
@@ -462,20 +447,20 @@ export default function App() {
             <div className="text-center mb-5">
               <PrimeAstraLogo className="w-12 h-12 mx-auto mb-2" />
               <h3 className="text-xl font-bold text-slate-900">
-                {isRegistering ? 'Create PrimeAstra Account' : 'Welcome Back'}
+                {isRegistering ? 'Create Account' : 'Welcome Back'}
               </h3>
               <p className="text-xs text-slate-500 mt-1">
-                {isRegistering ? 'Sign up to sync your workspace & tools' : 'Sign in to access your profile'}
+                {isRegistering ? 'Sign up to sync your resume & tools' : 'Sign in to access your profile'}
               </p>
             </div>
 
             {authError && (
-              <div className="mb-4 p-2.5 bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-xl">
+              <div className="mb-4 p-2.5 bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-xl text-left">
                 {authError}
               </div>
             )}
 
-            <form onSubmit={handleAuthSubmit} className="space-y-3.5">
+            <form onSubmit={handleAuthSubmit} className="space-y-3.5 text-left">
               {isRegistering && (
                 <div>
                   <label className="block text-[11px] font-bold text-slate-600 mb-1">Full Name</label>
@@ -484,8 +469,8 @@ export default function App() {
                     required
                     value={authName}
                     onChange={(e) => setAuthName(e.target.value)}
-                    placeholder="e.g. Shubham"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500"
+                    placeholder="e.g. Shubham Singh"
+                    className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30"
                   />
                 </div>
               )}
@@ -498,7 +483,7 @@ export default function App() {
                   value={authEmail}
                   onChange={(e) => setAuthEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500"
+                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30"
                 />
               </div>
 
@@ -510,14 +495,14 @@ export default function App() {
                   value={authPassword}
                   onChange={(e) => setAuthPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500"
+                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={authLoading}
-                className="w-full py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition cursor-pointer disabled:opacity-70 mt-2"
+                className="w-full py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 text-white font-bold text-xs rounded-xl shadow-md transition cursor-pointer disabled:opacity-70 mt-2"
               >
                 {authLoading ? 'Please wait...' : isRegistering ? 'Register Account' : 'Sign In'}
               </button>
@@ -540,12 +525,10 @@ export default function App() {
         </div>
       )}
 
-      {/* ========================================================
-          MODAL 2: SETTINGS (Photo Upload & Password Change)
-          ======================================================== */}
+      {/* Settings Modal (Photo & Password update) */}
       {showSettingsModal && currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative w-full max-w-[420px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7">
+          <div className="relative w-full max-w-[420px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7 text-left">
             <button
               onClick={() => {
                 setShowSettingsModal(false);
@@ -573,7 +556,7 @@ export default function App() {
               </div>
             )}
 
-            {/* 1. Profile Photo Lagana */}
+            {/* Photo Upload */}
             <div className="mb-6 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm overflow-hidden shrink-0 flex items-center justify-center">
                 {userData?.photoUrl ? (
@@ -595,7 +578,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* 2. Password Change */}
+            {/* Password Change */}
             <form onSubmit={handlePasswordChange} className="space-y-3.5">
               <div>
                 <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-1">
@@ -608,7 +591,7 @@ export default function App() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Enter new password"
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30"
                 />
               </div>
 

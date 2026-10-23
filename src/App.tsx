@@ -10,6 +10,7 @@ import {
   Camera,
   X,
   User as UserIcon,
+  LogIn,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -176,7 +177,7 @@ export default function App() {
           await updateDoc(doc(db, 'users', currentUser.uid), { photoUrl: base64String });
           setUserData((prev) => ({ ...prev, photoUrl: base64String }));
           setSettingsMsg('Profile photo updated successfully!');
-        } catch (err) {
+        } catch {
           setSettingsError('Failed to update photo.');
         }
       };
@@ -207,7 +208,7 @@ export default function App() {
   const getInitials = () => {
     if (userData?.name) return userData.name.slice(0, 2).toUpperCase();
     if (currentUser?.email) return currentUser.email.slice(0, 2).toUpperCase();
-    return 'SH';
+    return 'U';
   };
 
   return (
@@ -323,7 +324,7 @@ export default function App() {
               </p>
             </div>
 
-            {/* Search Bar, Notification, SH Profile Icon */}
+            {/* Search Bar, Notification, Auth Button / Profile Icon */}
             <div className="flex items-center gap-3">
               <div className="relative w-full sm:w-80">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -353,72 +354,100 @@ export default function App() {
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-violet-600 ring-2 ring-white" />
               </button>
 
-              {/* === SH Profile Avatar & Dropdown === */}
-              <div className="relative" ref={dropdownRef}>
-                <div
-                  onClick={() => {
-                    if (currentUser) {
-                      setIsDropdownOpen(!isDropdownOpen);
-                    } else {
-                      setShowAuthModal(true);
-                    }
-                  }}
-                  className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-400/50 transition flex items-center justify-center overflow-hidden"
-                  title={currentUser ? 'Click for Profile & Settings' : 'Click to Login'}
-                >
-                  {userData?.photoUrl ? (
-                    <img src={userData.photoUrl} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
-                  ) : (
-                    <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center text-purple-700 font-extrabold text-xs uppercase tracking-wider">
-                      {getInitials()}
+              {/* === DYNAMIC AUTH AREA === */}
+              {currentUser ? (
+                /* 1. AGAR USER LOGIN HAI: Photo ya Initials + Dropdown */
+                <div className="relative" ref={dropdownRef}>
+                  <div
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-400/50 transition flex items-center justify-center overflow-hidden"
+                    title="Click for Profile & Settings"
+                  >
+                    {userData?.photoUrl ? (
+                      <img src={userData.photoUrl} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
+                    ) : (
+                      <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center text-purple-700 font-extrabold text-xs uppercase tracking-wider">
+                        {getInitials()}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Dropdown Menu */}
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-2.5 w-52 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-floating p-2 z-50 text-xs animate-in fade-in slide-in-from-top-2 duration-150">
+                      <div className="px-3 py-2 border-b border-slate-100 mb-1">
+                        <p className="font-bold text-slate-800 truncate">{userData?.name || 'User'}</p>
+                        <p className="text-[11px] text-slate-400 truncate">{currentUser.email}</p>
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          setShowSettingsModal(true);
+                          setIsDropdownOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3 py-2 text-slate-700 hover:bg-purple-50 hover:text-purple-700 rounded-xl transition cursor-pointer text-left font-semibold"
+                      >
+                        <Settings className="w-4 h-4 text-purple-600" />
+                        <span>Settings &amp; Profile</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          signOut(auth);
+                          setIsDropdownOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3 py-2 text-rose-600 hover:bg-rose-50 rounded-xl transition cursor-pointer text-left font-semibold mt-1"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Log out</span>
+                      </button>
                     </div>
                   )}
                 </div>
-
-                {/* Dropdown Menu when clicking SH */}
-                {isDropdownOpen && currentUser && (
-                  <div className="absolute right-0 mt-2.5 w-52 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-floating p-2 z-50 text-xs animate-in fade-in slide-in-from-top-2 duration-150">
-                    <div className="px-3 py-2 border-b border-slate-100 mb-1">
-                      <p className="font-bold text-slate-800 truncate">{userData?.name || 'User'}</p>
-                      <p className="text-[11px] text-slate-400 truncate">{currentUser.email}</p>
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        setShowSettingsModal(true);
-                        setIsDropdownOpen(false);
-                      }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 text-slate-700 hover:bg-purple-50 hover:text-purple-700 rounded-xl transition cursor-pointer text-left font-semibold"
-                    >
-                      <Settings className="w-4 h-4 text-purple-600" />
-                      <span>Settings &amp; Profile</span>
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        signOut(auth);
-                        setIsDropdownOpen(false);
-                      }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 text-rose-600 hover:bg-rose-50 rounded-xl transition cursor-pointer text-left font-semibold mt-1"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Log out</span>
-                    </button>
-                  </div>
-                )}
-              </div>
+              ) : (
+                /* 2. AGAR LOGOUT HAI: "SH" NAHI AAYEGA, "Login / Register" BUTTON AAYEGA */
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-2xl text-xs font-bold shadow-md hover:shadow-lg transition cursor-pointer"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  <span>Login / Register</span>
+                </button>
+              )}
             </div>
           </header>
 
           {/* Main Clean Workspace Canvas */}
           <div className="flex-1 w-full rounded-[28px] bg-white/45 border border-white/80 backdrop-blur-md p-6 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-clay-sm">
-            {/* Aapka workspace bilkul pehle jaisa clean rahega */}
+            {currentUser ? (
+              <div className="p-6 max-w-md bg-white/80 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+                <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl mx-auto flex items-center justify-center">
+                  <UserIcon className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-bold text-slate-800">
+                  Hello, {userData?.name || currentUser.email}!
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Aapka personal account aur database space create ho chuka hai. Yahan par aapke personalized tools aur converted files save hongi.
+                </p>
+              </div>
+            ) : (
+              <div className="p-6 max-w-md bg-white/70 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+                <div className="w-12 h-12 bg-slate-100 text-slate-500 rounded-2xl mx-auto flex items-center justify-center">
+                  <PrimeAstraLogo className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-bold text-slate-800">Welcome to PrimeAstra</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Apne personal tools, saved files aur custom workspace access karne ke liye top-right se <strong>Login / Register</strong> karein.
+                </p>
+              </div>
+            )}
           </div>
         </section>
       </main>
 
       {/* ========================================================
-          MODAL 1: LOGIN / REGISTER (Jab SH par bina login ke click ho)
+          MODAL 1: LOGIN / REGISTER POPUP
           ======================================================== */}
       {showAuthModal && !currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
@@ -512,7 +541,7 @@ export default function App() {
       )}
 
       {/* ========================================================
-          MODAL 2: SETTINGS (Photo lagana & Password change option)
+          MODAL 2: SETTINGS (Photo Upload & Password Change)
           ======================================================== */}
       {showSettingsModal && currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
@@ -544,7 +573,7 @@ export default function App() {
               </div>
             )}
 
-            {/* 1. Photo Lagane Ka Option */}
+            {/* 1. Profile Photo Lagana */}
             <div className="mb-6 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm overflow-hidden shrink-0 flex items-center justify-center">
                 {userData?.photoUrl ? (
@@ -566,7 +595,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* 2. Password Change Ka Option */}
+            {/* 2. Password Change */}
             <form onSubmit={handlePasswordChange} className="space-y-3.5">
               <div>
                 <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-1">

@@ -234,15 +234,15 @@
 
             <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-center max-w-lg mx-auto">
               <div>
-                <div class="text-base sm:lg:text-lg font-extrabold">1+</div>
+                <div class="text-base sm:text-lg font-extrabold">1+</div>
                 <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">Live Tools</div>
               </div>
               <div>
-                <div class="text-base sm:lg:text-lg font-extrabold">Zero</div>
+                <div class="text-base sm:text-lg font-extrabold">Zero</div>
                 <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">Ads or Limits</div>
               </div>
               <div>
-                <div class="text-base sm:lg:text-lg font-extrabold">Instant</div>
+                <div class="text-base sm:text-lg font-extrabold">Instant</div>
                 <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">PDF Download</div>
               </div>
             </div>
@@ -346,8 +346,7 @@
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-            
-            <!-- Left Form Controls (Original 7 cols) -->
+            <!-- Left Form Controls -->
             <div class="lg:col-span-7 space-y-4">
               <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
                 <div class="flex items-center justify-between flex-wrap gap-2">
@@ -373,27 +372,27 @@
                 <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Personal Details</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Full Name</label>
+                    <label class="text-[10px] font-semibold text-slate-500">Full Name *</label>
                     <input type="text" id="rName" value="" placeholder="e.g. Rahul Sharma" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-purple-500" />
                   </div>
                   <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Job Title / Post</label>
+                    <label class="text-[10px] font-semibold text-slate-500">Job Title / Post *</label>
                     <input type="text" id="rTitle" value="" placeholder="e.g. Web Developer" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-purple-500" />
                   </div>
                   <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Mobile</label>
+                    <label class="text-[10px] font-semibold text-slate-500">Mobile *</label>
                     <input type="text" id="rPhone" value="" placeholder="e.g. +91 9876543210" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-purple-500" />
                   </div>
                   <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Email</label>
+                    <label class="text-[10px] font-semibold text-slate-500">Email *</label>
                     <input type="email" id="rEmail" value="" placeholder="e.g. name@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-purple-500" />
                   </div>
                   <div class="sm:col-span-2">
-                    <label class="text-[10px] font-semibold text-slate-500">Address</label>
+                    <label class="text-[10px] font-semibold text-slate-500">Address *</label>
                     <input type="text" id="rAddress" value="" placeholder="e.g. City, State" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-purple-500" />
                   </div>
                   <div class="sm:col-span-2">
-                    <label class="text-[10px] font-semibold text-slate-500">Profile Summary</label>
+                    <label class="text-[10px] font-semibold text-slate-500">Profile Summary *</label>
                     <textarea rows="2" id="rSummary" placeholder="Short description about your professional experience..." oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-purple-500"></textarea>
                   </div>
                 </div>
@@ -403,7 +402,7 @@
               <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 text-xs">
                 <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Skills &amp; Languages</h3>
                 <div>
-                  <label class="text-[10px] font-semibold text-slate-500">Skills (comma separated)</label>
+                  <label class="text-[10px] font-semibold text-slate-500">Skills (comma separated) *</label>
                   <input type="text" id="rSkills" value="" placeholder="e.g. HTML, CSS, JavaScript, Excel" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-purple-500" />
                 </div>
                 <div>
@@ -413,9 +412,9 @@
               </div>
             </div>
 
-            <!-- Right Preview Container (Original 5 cols) -->
+            <!-- Right Preview Container -->
             <div class="lg:col-span-5 bg-slate-200/80 p-2 sm:p-3 rounded-2xl border border-slate-300 w-full overflow-hidden flex justify-center lg:sticky lg:top-4">
-              <div class="w-full max-w-full overflow-hidden">
+              <div class="w-full max-w-full overflow-hidden flex justify-center">
                 <div id="resumePreviewContainer" class="w-full max-w-full bg-white shadow-md rounded-xl overflow-hidden"></div>
               </div>
             </div>
@@ -587,7 +586,7 @@
     const profilePhotoInitial = document.getElementById('profilePhotoInitial');
     const profileAuthBtn = document.getElementById('profileAuthBtn');
 
-    // Instant local cache recovery
+    // Restore cached name & photo immediately
     const cachedName = localStorage.getItem('pa_cached_name');
     const cachedPhoto = localStorage.getItem('pa_cached_photo');
     if (cachedName) {
@@ -843,20 +842,63 @@
       window.renderResumePreview();
     };
 
-    // DIRECT PERFECT A4 PDF GENERATION (UI remains unchanged)
+    // STRICT VALIDATION ON DOWNLOAD: Form must be filled
     window.downloadResumePdfDirect = () => {
+      const nameInput = document.getElementById('rName');
+      const titleInput = document.getElementById('rTitle');
+      const phoneInput = document.getElementById('rPhone');
+      const emailInput = document.getElementById('rEmail');
+      const addressInput = document.getElementById('rAddress');
+      const summaryInput = document.getElementById('rSummary');
+      const skillsInput = document.getElementById('rSkills');
+
+      if (!nameInput.value.trim()) {
+        alert("Please enter your Full Name before downloading!");
+        nameInput.focus();
+        return;
+      }
+      if (!titleInput.value.trim()) {
+        alert("Please enter your Job Title / Profession!");
+        titleInput.focus();
+        return;
+      }
+      if (!phoneInput.value.trim()) {
+        alert("Please enter your Mobile Number!");
+        phoneInput.focus();
+        return;
+      }
+      if (!emailInput.value.trim()) {
+        alert("Please enter your Email Address!");
+        emailInput.focus();
+        return;
+      }
+      if (!addressInput.value.trim()) {
+        alert("Please enter your Address!");
+        addressInput.focus();
+        return;
+      }
+      if (!summaryInput.value.trim()) {
+        alert("Please enter your Profile Summary!");
+        summaryInput.focus();
+        return;
+      }
+      if (!skillsInput.value.trim()) {
+        alert("Please enter your Skills!");
+        skillsInput.focus();
+        return;
+      }
+
       const container = document.getElementById('resumePreviewContainer');
       const innerContent = container.firstElementChild;
       if (!innerContent) return;
 
-      const name = (document.getElementById('rName').value || 'Resume').trim().replace(/\s+/g, '_');
+      const fileName = nameInput.value.trim().replace(/\s+/g, '_');
       const btnText = document.getElementById('downloadBtnText');
       btnText.innerText = "Generating PDF...";
 
-      // Standard A4 options
       const opt = {
         margin:       [5, 5, 5, 5],
-        filename:     `${name}_Resume.pdf`,
+        filename:     `${fileName}_Resume.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { 
           scale: 2, 
@@ -875,7 +917,7 @@
       });
     };
 
-    // Live Resume Renderer (Original exact HTML & styling restored)
+    // Live Resume Renderer
     window.renderResumePreview = () => {
       const name = document.getElementById('rName').value.trim() || 'Your Full Name';
       const title = document.getElementById('rTitle').value.trim() || 'Your Profession / Job Title';
@@ -993,15 +1035,16 @@
 
     // Initial render
     window.renderResumePreview();
-  </script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7554193434783825"
-     crossorigin="anonymous"></script>
-<!-- PRIMEASTRABOTTOM -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-7554193434783825"
-     data-ad-slot="9890089929"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+  </script>
+
+  <!-- Google AdSense Bottom Ad -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7554193434783825" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:728px;height:90px"
+       data-ad-client="ca-pub-7554193434783825"
+       data-ad-slot="9890089929"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 </body>
 </html>

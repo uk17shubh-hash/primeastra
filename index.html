@@ -208,6 +208,7 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .btn-nav-primary:hover {
@@ -223,12 +224,12 @@
     }
 
     .profile-avatar-img {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid var(--accent-cyan);
-      box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.45);
       transition: transform 0.2s ease;
     }
 
@@ -239,12 +240,12 @@
     .user-dropdown-menu {
       position: absolute;
       right: 0;
-      top: 50px;
-      width: 200px;
+      top: 48px;
+      width: 210px;
       background: #0d111c;
       border: 1px solid var(--border-glass-hover);
       border-radius: var(--radius-md);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
       padding: 10px;
       display: none;
       flex-direction: column;
@@ -300,7 +301,7 @@
     }
 
     .mobile-toggle span {
-      width: 26px;
+      width: 24px;
       height: 2.5px;
       background: #ffffff;
       border-radius: 2px;
@@ -360,7 +361,7 @@
 
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(42px, 7.5vw, 94px);
+      font-size: clamp(38px, 7.5vw, 94px);
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -2px;
@@ -729,9 +730,19 @@
       opacity: 1;
     }
 
+    /* RESPONSIVE STYLES (Header Slot Visible on Mobile) */
     @media (max-width: 900px) {
-      .site-nav { padding: 12px 20px; }
-      .brand-vector-mark { height: 50px; width: 50px; }
+      .site-nav { 
+        padding: 12px 18px; 
+      }
+      .brand-logo {
+        font-size: 22px;
+        gap: 10px;
+      }
+      .brand-vector-mark { 
+        height: 44px; 
+        width: 44px; 
+      }
       .nav-links {
         position: fixed; top: 0; right: -100%; width: 80%; max-width: 320px; height: 100vh;
         background: rgba(6, 8, 13, 0.98); border: none; flex-direction: column; align-items: flex-start;
@@ -740,8 +751,22 @@
       .nav-links.open { right: 0; }
       .mobile-auth-slot { display: block; }
       .mobile-toggle { display: flex; }
-      #desktopAuthSlot { display: none !important; }
-      .hero-section { min-height: auto; padding: 100px 20px 50px; }
+      
+      /* Mobile header auth slot adjustments */
+      #navRightAuthSlot {
+        display: flex !important;
+        align-items: center;
+      }
+      #navRightAuthSlot .btn-nav-primary {
+        padding: 6px 14px;
+        font-size: 12px;
+      }
+      #navRightAuthSlot .profile-avatar-img {
+        width: 34px;
+        height: 34px;
+      }
+
+      .hero-section { min-height: auto; padding: 110px 18px 50px; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
     }
@@ -794,10 +819,11 @@
       </ul>
     </nav>
 
-    <div style="display: flex; align-items: center; gap: 16px;">
-      <div id="desktopAuthSlot">
-        <button id="desktopLoginBtn" class="btn-nav-primary">
-          Login / Register
+    <!-- RIGHT HEADER SLOT (Profile Icon directly on left of hamburger) -->
+    <div style="display: flex; align-items: center; gap: 12px; z-index: 103;">
+      <div id="navRightAuthSlot">
+        <button id="headerLoginBtn" class="btn-nav-primary">
+          Login
         </button>
       </div>
       
@@ -907,7 +933,7 @@
             <div class="detail-icon">📧</div>
             <div>
               <div style="font-size: 13px; color: var(--text-muted);">Direct Email</div>
-              <strong></strong>
+              <strong>contact@primeastra.com</strong>
             </div>
           </div>
           <div class="detail-item">
@@ -920,16 +946,16 @@
         </div>
       </div>
 
-      <!-- CONTACT FORM (ID based direct listener) -->
+      <!-- CONTACT FORM -->
       <form class="contact-form" id="contactForm">
         <div class="form-group">
           <label class="form-label">Your Name</label>
-          <input type="text" class="form-input" id="cName" placeholder="e.g. Alex Johnson" required />
+          <input type="text" class="form-input" id="cName" placeholder="e.g. Rahul Sharma" required />
         </div>
 
         <div class="form-group">
           <label class="form-label">Email Address</label>
-          <input type="email" class="form-input" id="cEmail" placeholder="alex@domain.com" required />
+          <input type="email" class="form-input" id="cEmail" placeholder="name@domain.com" required />
         </div>
 
         <div class="form-group">
@@ -960,7 +986,7 @@
         <span>Prime<b>Astra</b></span>
       </div>
 
-      <p class="footer-copy">&copy; <span id="year"></span> PrimeAstra . All rights reserved.</p>
+      <p class="footer-copy">&copy; <span id="year"></span> PrimeAstra. All rights reserved.</p>
 
       <ul class="footer-links">
         <li><a href="#about">About Us</a></li>
@@ -992,7 +1018,6 @@
       addDoc
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Firebase Credentials
     const firebaseConfig = {
       apiKey: "AIzaSyA4mMH0LMAvN_vuCLCdYR3tGZHdmbq7iMM",
       authDomain: "primeastra-643ac.firebaseapp.com",
@@ -1008,10 +1033,31 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    const desktopAuthSlot = document.getElementById('desktopAuthSlot');
+    const navRightAuthSlot = document.getElementById('navRightAuthSlot');
     const mobileAuthSlot = document.getElementById('mobileAuthSlot');
 
-    // Google Sign In Handler
+    // Restore cached avatar instantly on reload
+    const cachedPhoto = localStorage.getItem('pa_cached_photo');
+    const cachedName = localStorage.getItem('pa_cached_name');
+    if (cachedPhoto && navRightAuthSlot) {
+      navRightAuthSlot.innerHTML = `
+        <div class="profile-trigger" onclick="toggleProfileDropdown(event)">
+          <img src="${cachedPhoto}" alt="Profile" class="profile-avatar-img" />
+          <div class="user-dropdown-menu" id="userDropdownMenu">
+            <div class="user-dropdown-info">
+              <strong>${cachedName || 'User'}</strong>
+            </div>
+            <a href="app.html" style="padding: 8px 10px; font-size: 13px; color: #fff; font-weight: 500;">
+              Open Workspace
+            </a>
+            <button onclick="handleLogout()" class="btn-dropdown-logout">
+              Log out
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     const handleGoogleAuth = async () => {
       try {
         const result = await signInWithPopup(auth, provider);
@@ -1035,12 +1081,12 @@
       }
     };
 
-    // Global Logout Handler
     window.handleLogout = () => {
+      localStorage.removeItem('pa_cached_photo');
+      localStorage.removeItem('pa_cached_name');
       signOut(auth);
     };
 
-    // Dropdown toggle
     window.toggleProfileDropdown = (e) => {
       e.stopPropagation();
       const menu = document.getElementById('userDropdownMenu');
@@ -1052,16 +1098,16 @@
       if (menu) menu.classList.remove('active');
     });
 
-    // Auth State Observer
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        let photo = user.photoURL;
+        let photo = user.photoURL || user.providerData?.[0]?.photoURL || '';
         let displayName = user.displayName || user.email.split('@')[0];
 
         try {
           const userDoc = await getDoc(doc(db, "users", user.uid));
-          if (userDoc.exists() && userDoc.data().photoUrl) {
-            photo = userDoc.data().photoUrl;
+          if (userDoc.exists()) {
+            if (userDoc.data().photoUrl) photo = userDoc.data().photoUrl;
+            if (userDoc.data().name) displayName = userDoc.data().name;
           }
         } catch (e) {}
 
@@ -1070,8 +1116,11 @@
           photo = `https://ui-avatars.com/api/?name=${encodeURIComponent(initial)}&background=00f2fe&color=06080d&bold=true&rounded=true`;
         }
 
-        // 1. Desktop Profile View
-        desktopAuthSlot.innerHTML = `
+        localStorage.setItem('pa_cached_photo', photo);
+        localStorage.setItem('pa_cached_name', displayName);
+
+        // Header Avatar (Visible on both PC & Mobile right next to hamburger)
+        navRightAuthSlot.innerHTML = `
           <div class="profile-trigger" onclick="toggleProfileDropdown(event)">
             <img src="${photo}" alt="Profile" class="profile-avatar-img" title="${displayName}" />
             <div class="user-dropdown-menu" id="userDropdownMenu">
@@ -1089,7 +1138,7 @@
           </div>
         `;
 
-        // 2. Mobile Drawer Profile View
+        // Mobile Drawer Info Card
         mobileAuthSlot.innerHTML = `
           <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: var(--radius-md);">
             <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
@@ -1106,9 +1155,12 @@
         `;
 
       } else {
-        desktopAuthSlot.innerHTML = `
-          <button id="desktopLoginBtn" class="btn-nav-primary">
-            Login / Register
+        localStorage.removeItem('pa_cached_photo');
+        localStorage.removeItem('pa_cached_name');
+
+        navRightAuthSlot.innerHTML = `
+          <button id="headerLoginBtn" class="btn-nav-primary">
+            Login
           </button>
         `;
         mobileAuthSlot.innerHTML = `
@@ -1117,14 +1169,11 @@
           </button>
         `;
 
-        document.getElementById('desktopLoginBtn')?.addEventListener('click', handleGoogleAuth);
+        document.getElementById('headerLoginBtn')?.addEventListener('click', handleGoogleAuth);
         document.getElementById('mobileLoginBtn')?.addEventListener('click', handleGoogleAuth);
       }
     });
 
-    // ==========================================
-    // CONTACT FORM DIRECT FIRESTORE LISTENER
-    // ==========================================
     const contactForm = document.getElementById('contactForm');
     const contactSubmitBtn = document.getElementById('contactSubmitBtn');
     const toast = document.getElementById('toastNotice');
@@ -1145,7 +1194,6 @@
             contactSubmitBtn.innerHTML = "<span>Transmitting...</span>";
           }
 
-          // Direct addDoc into Firestore collection "contact_messages"
           await addDoc(collection(db, "contact_messages"), {
             name: name,
             email: email,

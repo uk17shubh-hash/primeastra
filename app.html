@@ -36,31 +36,42 @@
   <!-- Ambient background glow for PC -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div class="absolute -top-12 -right-8 w-72 h-72 rounded-full bg-purple-500/15 blur-3xl"></div>
-    <div class="absolute bottom-6 -left-12 w-64 h-64 rounded-full bg-indigo-500/15 blur-3xl"></div>
+    <div class="absolute bottom-6 -left-12 w-64 h-64 rounded-full bg-cyan-500/15 blur-3xl"></div>
   </div>
 
-  <!-- SVG Symbol Definition (Original PrimeAstra Crest & Star Logo) -->
+  <!-- EXACT PRIMEASTRA CYAN/BLUE EMBLEM SVG SYMBOL -->
   <svg class="hidden" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="paGradMain" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#00f2fe" />
-        <stop offset="50%" stop-color="#8b5cf6" />
-        <stop offset="100%" stop-color="#6d28d9" />
+      <!-- Vibrant Cyan & Blue Gradients matching the provided image -->
+      <linearGradient id="paNeonCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#38bdf8" />
+        <stop offset="60%" stop-color="#0284c7" />
+        <stop offset="100%" stop-color="#0369a1" />
       </linearGradient>
-      <linearGradient id="paStarMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <linearGradient id="paStarSparkle" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#ffffff" />
-        <stop offset="60%" stop-color="#a78bfa" />
-        <stop offset="100%" stop-color="#7c3aed" />
+        <stop offset="50%" stop-color="#38bdf8" />
+        <stop offset="100%" stop-color="#0284c7" />
       </linearGradient>
+
+      <!-- Exact Vector Shape of PrimeAstra Logo (Diamond Star + Outer Loop + Inner Sharp A) -->
       <g id="primeAstraLogo">
-        <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#paStarMain)" />
-        <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#paGradMain)" />
-        <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#paGradMain)" />
-        <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#paGradMain)" />
-        <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#paGradMain)" />
-        <polygon points="380,55 305,108 335,122 360,170" fill="url(#paStarMain)" />
-        <polygon points="380,55 335,122 360,170" fill="#6d28d9" />
-        <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#paGradMain)" />
+        <!-- 4-point Diamond Star on top-left -->
+        <path d="M125 45 Q125 78 150 78 Q125 78 125 110 Q125 78 100 78 Q125 78 125 45 Z" fill="url(#paStarSparkle)" filter="drop-shadow(0 0 6px rgba(56, 189, 248, 0.9))" />
+        
+        <!-- Outer Curving Wing / Shield Loop -->
+        <path d="M110 95 C60 105 35 145 35 220 C35 320 100 410 170 460 C110 405 75 315 75 225 C75 160 95 125 145 105 Z" fill="url(#paNeonCyan)" />
+        
+        <!-- Angular Wing on Upper-Right -->
+        <path d="M205 90 C232 98 260 115 272 130 L248 152 C236 140 218 126 205 120 Z" fill="url(#paNeonCyan)" />
+        <polygon points="275,65 210,118 238,130 260,175" fill="url(#paStarSparkle)" opacity="0.9" />
+
+        <!-- Lower-Right Accent Slash -->
+        <path d="M170 460 C205 420 250 365 272 295 L242 278 C224 330 190 380 170 420 Z" fill="url(#paNeonCyan)" />
+        
+        <!-- Central Sharp Angular "A" Core Dynamic Cross -->
+        <path d="M175 145 L100 330 L130 330 L175 210 L198 270 L225 270 Z" fill="url(#paNeonCyan)" />
+        <path d="M110 395 C118 300 175 240 225 208 C268 178 295 125 310 65 L330 130 C308 175 278 215 235 245 C180 290 135 340 110 395 Z" fill="url(#paNeonCyan)" />
       </g>
     </defs>
   </svg>
@@ -71,11 +82,13 @@
     <!-- === DESKTOP SIDEBAR === -->
     <aside class="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm">
       <div class="space-y-6">
-        <!-- Logo -->
+        <!-- Logo with exact Cyan Symbol -->
         <a href="index.html" class="flex items-center gap-3 px-2 pt-1 cursor-pointer">
-          <svg class="w-10 h-10 drop-shadow-[0_0_12px_rgba(99,102,241,0.5)] shrink-0" viewBox="0 0 500 500">
-            <use href="#primeAstraLogo" />
-          </svg>
+          <div class="w-10 h-10 rounded-2xl bg-slate-900 flex items-center justify-center p-1.5 shadow-md shadow-sky-500/20">
+            <svg class="w-full h-full drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]" viewBox="0 0 350 480">
+              <use href="#primeAstraLogo" />
+            </svg>
+          </div>
           <div>
             <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
               Prime<span class="text-purple-600">Astra</span>
@@ -117,12 +130,12 @@
     <!-- === MAIN RIGHT AREA === -->
     <section class="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col justify-start space-y-4 h-full relative">
       
-      <!-- Top Bar Header with Real Star SVG Logo on Mobile -->
+      <!-- Top Bar Header with Cyan Logo on Mobile -->
       <header class="flex items-center justify-between gap-3 pt-1 pb-2 border-b md:border-b-0 border-slate-200/60">
         <div class="flex items-center gap-2.5">
-          <!-- Real Star Vector Logo on Mobile -->
-          <div class="md:hidden">
-            <svg class="w-9 h-9 drop-shadow-[0_0_10px_rgba(99,102,241,0.5)] shrink-0" viewBox="0 0 500 500">
+          <!-- Mobile Exact Cyan Logo -->
+          <div class="md:hidden w-10 h-10 rounded-2xl bg-slate-900 flex items-center justify-center p-1.5 shadow-md shadow-sky-500/20">
+            <svg class="w-full h-full drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]" viewBox="0 0 350 480">
               <use href="#primeAstraLogo" />
             </svg>
           </div>
@@ -615,7 +628,6 @@
 
     // View Navigation Controller
     window.switchTab = (tab) => {
-      // Hide all panels
       document.getElementById('homeFeedView').classList.add('hidden');
       document.getElementById('toolsDirectoryView').classList.add('hidden');
       document.getElementById('resumeMakerView').classList.add('hidden');
@@ -623,19 +635,18 @@
       document.getElementById('profileView').classList.add('hidden');
       document.getElementById('notifPanel').classList.add('hidden');
 
-      // Reset desktop styles
+      // Desktop nav button reset
       ['deskHomeBtn', 'deskToolsBtn', 'deskSavedBtn', 'deskProfileBtn'].forEach(id => {
         const btn = document.getElementById(id);
         if (btn) btn.className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/60 text-left cursor-pointer";
       });
 
-      // Reset mobile styles
+      // Mobile bottom bar reset
       ['navHomeTab', 'navToolsTab', 'navSavedTab', 'navProfileTab'].forEach(id => {
         const tabEl = document.getElementById(id);
         if (tabEl) tabEl.className = "flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer";
       });
 
-      // Activate chosen view
       if (tab === 'home') {
         document.getElementById('homeFeedView').classList.remove('hidden');
         document.getElementById('deskHomeBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-purple-700 shadow-sm border border-purple-100/80 text-left cursor-pointer";
@@ -668,7 +679,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // Template Selector
+    // Template Switcher
     window.activeResumeTemplate = 'modern';
     window.setResumeTemplate = (tmpl) => {
       window.activeResumeTemplate = tmpl;
@@ -754,19 +765,19 @@
                 <p class="text-[8.5px] text-slate-500 mt-0.5">${phone} | ${email} | ${address}</p>
               </div>
               <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Summary</h4>
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style={{ color: color }}>Summary</h4>
                 <p class="text-[8.5px] text-slate-600 leading-relaxed">${summary}</p>
               </div>
               <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Experience</h4>
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style={{ color: color }}>Experience</h4>
                 <p class="text-[8.5px] font-bold">Computer Operator - Digital Seva Center (2021 - Present)</p>
               </div>
               <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Education</h4>
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style={{ color: color }}>Education</h4>
                 <p class="text-[8.5px]"><strong>12th Commerce</strong> - DAV Inter College (First Division)</p>
               </div>
               <div>
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Skills</h4>
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style={{ color: color }}>Skills</h4>
                 <p class="text-[8.5px] text-slate-700">${skills}</p>
               </div>
             </div>

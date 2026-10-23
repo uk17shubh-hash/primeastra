@@ -345,10 +345,9 @@
             </button>
           </div>
 
-          <!-- Balanced Responsive Grid: Form on Left, Form-Fitted Preview on Right -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
             
-            <!-- Left Form Controls (Blank Inputs with Placeholders) -->
+            <!-- Left Form Controls -->
             <div class="lg:col-span-7 space-y-4">
               <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
                 <div class="flex items-center justify-between flex-wrap gap-2">
@@ -369,7 +368,7 @@
                 </div>
               </div>
 
-              <!-- Personal Details (Completely Blank by Default) -->
+              <!-- Personal Details -->
               <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
                 <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Personal Details</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -400,7 +399,7 @@
                 </div>
               </div>
 
-              <!-- Skills & Languages (Completely Blank by Default) -->
+              <!-- Skills & Languages -->
               <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 text-xs">
                 <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Skills &amp; Languages</h3>
                 <div>
@@ -417,7 +416,7 @@
             <!-- Right Preview Container -->
             <div class="lg:col-span-5 bg-slate-200/80 p-2 sm:p-3 rounded-2xl border border-slate-300 w-full overflow-hidden flex justify-center lg:sticky lg:top-4">
               <div class="w-full max-w-full overflow-hidden">
-                <div id="resumePreviewContainer" class="w-full max-w-full"></div>
+                <div id="resumePreviewContainer" class="w-full max-w-full bg-white shadow-md rounded-xl overflow-hidden"></div>
               </div>
             </div>
 
@@ -588,7 +587,7 @@
     const profilePhotoInitial = document.getElementById('profilePhotoInitial');
     const profileAuthBtn = document.getElementById('profileAuthBtn');
 
-    // Restore cached name & photo immediately
+    // Instant local cache recovery
     const cachedName = localStorage.getItem('pa_cached_name');
     const cachedPhoto = localStorage.getItem('pa_cached_photo');
     if (cachedName) {
@@ -844,30 +843,64 @@
       window.renderResumePreview();
     };
 
-    // DIRECT INSTANT PDF DOWNLOAD FUNCTION
+    // DIRECT INSTANT FULL-PAGE A4 PDF GENERATION ENGINE
     window.downloadResumePdfDirect = () => {
-      const element = document.getElementById('resumePreviewContainer');
+      const container = document.getElementById('resumePreviewContainer');
       const name = (document.getElementById('rName').value || 'Resume').trim().replace(/\s+/g, '_');
       const btnText = document.getElementById('downloadBtnText');
       
-      btnText.innerText = "Downloading...";
+      btnText.innerText = "Generating PDF...";
+
+      // Clone element to render off-screen with pure A4 resolution (794px x 1123px)
+      const clone = container.cloneNode(true);
+      clone.style.width = '794px';
+      clone.style.minHeight = '1122px';
+      clone.style.height = '1122px';
+      clone.style.position = 'fixed';
+      clone.style.left = '-9999px';
+      clone.style.top = '0';
+      clone.style.zIndex = '999999';
+      clone.style.borderRadius = '0';
+      clone.style.boxShadow = 'none';
+      clone.style.background = '#ffffff';
+
+      // Inner resume card full stretch
+      const innerCard = clone.querySelector('div');
+      if (innerCard) {
+        innerCard.style.width = '100%';
+        innerCard.style.minHeight = '1122px';
+        innerCard.style.height = '1122px';
+        innerCard.style.borderRadius = '0';
+        innerCard.style.boxShadow = 'none';
+      }
+
+      document.body.appendChild(clone);
 
       const opt = {
-        margin: [5, 5, 5, 5],
+        margin: 0,
         filename: `${name}_Resume.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+        html2canvas: { 
+          scale: 2, 
+          useCORS: true, 
+          letterRendering: true,
+          width: 794,
+          height: 1122
+        },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
-      html2pdf().set(opt).from(element).save().then(() => {
+      html2pdf().set(opt).from(clone).save().then(() => {
+        document.body.removeChild(clone);
         btnText.innerText = "Download PDF";
-      }).catch(() => {
+      }).catch((err) => {
+        console.error(err);
+        if (clone.parentNode) document.body.removeChild(clone);
         btnText.innerText = "Download PDF";
       });
     };
 
-    // Live Resume Renderer (Handles blank states with placeholder preview)
+    // Live Resume Renderer
     window.renderResumePreview = () => {
       const name = document.getElementById('rName').value.trim() || 'Your Full Name';
       const title = document.getElementById('rTitle').value.trim() || 'Your Profession / Job Title';
@@ -880,47 +913,47 @@
       const color = document.getElementById('resumeThemeColor').value || '#1e3a8a';
       const container = document.getElementById('resumePreviewContainer');
 
-      const skillPills = skills.split(',').map(s => `<span style="background: rgba(255,255,255,0.2); padding: 2px 5px; border-radius: 4px; font-size: 8px; display: inline-block;">${s.trim()}</span>`).join(' ');
+      const skillPills = skills.split(',').map(s => `<span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 4px; font-size: 10px; display: inline-block;">${s.trim()}</span>`).join(' ');
 
       if (window.activeResumeTemplate === 'modern') {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-xl overflow-hidden flex min-h-[480px] text-slate-800" style="font-family: sans-serif;">
-            <div class="w-[36%] text-white p-3.5 flex flex-col justify-start shrink-0" style="background-color: ${color}">
-              <div class="space-y-3.5">
+          <div class="w-full bg-white flex min-h-[520px] text-slate-800" style="font-family: sans-serif;">
+            <div class="w-[36%] text-white p-5 flex flex-col justify-start shrink-0" style="background-color: ${color}">
+              <div class="space-y-5">
                 <div>
-                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Contact</h5>
-                  <div class="space-y-1 text-[8.5px] text-white/90">
+                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Contact</h5>
+                  <div class="space-y-1.5 text-[10px] text-white/90">
                     <p class="break-all">📞 ${phone}</p>
                     <p class="break-all">✉️ ${email}</p>
                     <p class="break-words">📍 ${address}</p>
                   </div>
                 </div>
                 <div>
-                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Skills</h5>
-                  <div class="flex flex-wrap gap-1">${skillPills}</div>
+                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Skills</h5>
+                  <div class="flex flex-wrap gap-1.5">${skillPills}</div>
                 </div>
                 <div>
-                  <h5 class="text-[9px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-0.5 mb-1.5">Languages</h5>
-                  <p class="text-[8.5px] text-white/90 break-words">${languages}</p>
+                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">Languages</h5>
+                  <p class="text-[10px] text-white/90 break-words">${languages}</p>
                 </div>
               </div>
             </div>
-            <div class="w-[64%] p-4 flex flex-col justify-start space-y-3.5 min-w-0">
+            <div class="w-[64%] p-6 flex flex-col justify-start space-y-4 min-w-0">
               <div>
-                <div class="border-b pb-2 mb-2.5">
-                  <h2 class="text-base font-black truncate" style="color: ${color}">${name}</h2>
-                  <p class="text-[10px] font-bold text-slate-500 uppercase truncate">${title}</p>
-                  <p class="text-[9px] text-slate-600 mt-1 leading-relaxed">${summary}</p>
+                <div class="border-b pb-3 mb-3">
+                  <h2 class="text-xl font-black truncate" style="color: ${color}">${name}</h2>
+                  <p class="text-xs font-bold text-slate-500 uppercase truncate mt-0.5">${title}</p>
+                  <p class="text-[10.5px] text-slate-600 mt-2 leading-relaxed">${summary}</p>
                 </div>
-                <div class="mb-2.5">
-                  <h4 class="text-[9.5px] font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style="color: ${color}">Experience</h4>
-                  <div class="text-[9.5px] flex justify-between font-bold"><span>Your Role</span><span class="text-slate-400 font-normal">2022 - Present</span></div>
-                  <p class="text-[8.5px] text-slate-500">Company Name / Organization</p>
+                <div class="mb-4">
+                  <h4 class="text-[11px] font-bold uppercase mb-1.5 pb-1 border-b border-slate-200" style="color: ${color}">Experience</h4>
+                  <div class="text-[10.5px] flex justify-between font-bold"><span>Your Role</span><span class="text-slate-400 font-normal">2022 - Present</span></div>
+                  <p class="text-[9.5px] text-slate-500 mt-0.5">Company Name / Organization</p>
                 </div>
                 <div>
-                  <h4 class="text-[9.5px] font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style="color: ${color}">Education</h4>
-                  <div class="text-[9.5px] flex justify-between font-bold"><span>Degree / Course</span><span class="text-slate-400 font-normal">Year</span></div>
-                  <p class="text-[8.5px] text-slate-500">College or University Name</p>
+                  <h4 class="text-[11px] font-bold uppercase mb-1.5 pb-1 border-b border-slate-200" style="color: ${color}">Education</h4>
+                  <div class="text-[10.5px] flex justify-between font-bold"><span>Degree / Course</span><span class="text-slate-400 font-normal">Year</span></div>
+                  <p class="text-[9.5px] text-slate-500 mt-0.5">College or University Name</p>
                 </div>
               </div>
             </div>
@@ -928,53 +961,53 @@
         `;
       } else if (window.activeResumeTemplate === 'classic') {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-xl p-5 flex flex-col justify-start min-h-[480px] text-slate-800" style="font-family: serif;">
+          <div class="w-full bg-white p-7 flex flex-col justify-start min-h-[520px] text-slate-800" style="font-family: serif;">
             <div>
-              <div class="text-center border-b pb-2.5 mb-2.5">
-                <h2 class="text-lg font-bold tracking-tight text-slate-900 truncate">${name}</h2>
-                <p class="text-[10px] font-semibold text-slate-600 uppercase mt-0.5 truncate">${title}</p>
-                <p class="text-[8.5px] text-slate-500 mt-1 break-words">${phone} | ${email} | ${address}</p>
+              <div class="text-center border-b pb-3.5 mb-3.5">
+                <h2 class="text-2xl font-bold tracking-tight text-slate-900 truncate">${name}</h2>
+                <p class="text-xs font-semibold text-slate-600 uppercase mt-1 truncate">${title}</p>
+                <p class="text-[10px] text-slate-500 mt-1 break-words">${phone} | ${email} | ${address}</p>
               </div>
-              <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Summary</h4>
-                <p class="text-[9px] text-slate-600 leading-relaxed">${summary}</p>
+              <div class="mb-3.5">
+                <h4 class="text-[11.5px] font-bold uppercase border-b pb-1 mb-1.5" style="color: ${color}">Summary</h4>
+                <p class="text-[10px] text-slate-600 leading-relaxed">${summary}</p>
               </div>
-              <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Experience</h4>
-                <p class="text-[9px] font-bold">Your Role - Company Name (Year)</p>
+              <div class="mb-3.5">
+                <h4 class="text-[11.5px] font-bold uppercase border-b pb-1 mb-1.5" style="color: ${color}">Experience</h4>
+                <p class="text-[10.5px] font-bold">Your Role - Company Name (Year)</p>
               </div>
-              <div class="mb-2.5">
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Education</h4>
-                <p class="text-[9px]"><strong>Your Degree</strong> - School or College</p>
+              <div class="mb-3.5">
+                <h4 class="text-[11.5px] font-bold uppercase border-b pb-1 mb-1.5" style="color: ${color}">Education</h4>
+                <p class="text-[10px]"><strong>Your Degree</strong> - School or College</p>
               </div>
               <div>
-                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Skills</h4>
-                <p class="text-[9px] text-slate-700">${skills}</p>
+                <h4 class="text-[11.5px] font-bold uppercase border-b pb-1 mb-1.5" style="color: ${color}">Skills</h4>
+                <p class="text-[10px] text-slate-700">${skills}</p>
               </div>
             </div>
           </div>
         `;
       } else {
         container.innerHTML = `
-          <div class="w-full bg-white shadow-md rounded-xl overflow-hidden flex flex-col justify-start min-h-[480px] text-slate-800" style="font-family: sans-serif;">
+          <div class="w-full bg-white flex flex-col justify-start min-h-[520px] text-slate-800" style="font-family: sans-serif;">
             <div>
-              <div class="p-4 text-white" style="background-color: ${color}">
-                <h2 class="text-base font-black truncate">${name}</h2>
-                <p class="text-[10.5px] font-medium text-white/90 truncate">${title}</p>
-                <p class="text-[8px] text-white/80 mt-1 break-words">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
+              <div class="p-5 text-white" style="background-color: ${color}">
+                <h2 class="text-xl font-black truncate">${name}</h2>
+                <p class="text-xs font-medium text-white/90 truncate mt-0.5">${title}</p>
+                <p class="text-[9px] text-white/80 mt-1.5 break-words">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
               </div>
-              <div class="p-4 space-y-3">
+              <div class="p-6 space-y-4">
                 <div>
-                  <h4 class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Profile</h4>
-                  <p class="text-[8.5px] text-slate-600 leading-relaxed">${summary}</p>
+                  <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Profile</h4>
+                  <p class="text-[10px] text-slate-600 leading-relaxed mt-1">${summary}</p>
                 </div>
                 <div>
-                  <h4 class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Experience</h4>
-                  <p class="text-[8.5px] font-bold text-slate-800">Your Role - Company Name</p>
+                  <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Experience</h4>
+                  <p class="text-[10.5px] font-bold text-slate-800 mt-1">Your Role - Company Name</p>
                 </div>
                 <div>
-                  <h4 class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Skills</h4>
-                  <p class="text-[8.5px] text-slate-700">${skills}</p>
+                  <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Skills</h4>
+                  <p class="text-[10px] text-slate-700 mt-1">${skills}</p>
                 </div>
               </div>
             </div>
@@ -982,6 +1015,9 @@
         `;
       }
     };
+
+    // Initial render
+    window.renderResumePreview();
   </script>
 </body>
 </html>

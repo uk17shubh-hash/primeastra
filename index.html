@@ -307,7 +307,6 @@
       transition: all 0.3s ease;
     }
 
-    /* MOBILE DRAWER AUTH BOX */
     .mobile-auth-slot {
       display: none;
       width: 100%;
@@ -797,7 +796,7 @@
       </ul>
     </nav>
 
-    <!-- Desktop Right: Start Your Work replaced with Login/Register & Profile -->
+    <!-- Desktop Right: Login/Register & Profile -->
     <div style="display: flex; align-items: center; gap: 16px;">
       <div id="desktopAuthSlot">
         <button id="desktopLoginBtn" class="btn-nav-primary">
@@ -924,7 +923,8 @@
         </div>
       </div>
 
-      <form class="contact-form" onsubmit="handleContactSubmit(event)">
+      <!-- CONTACT FORM (FIRESTORE DATABASE CONNECTED) -->
+      <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
         <div class="form-group">
           <label class="form-label">Your Name</label>
           <input type="text" class="form-input" id="cName" placeholder="e.g. Alex Johnson" required />
@@ -940,7 +940,7 @@
           <textarea class="form-textarea" id="cMsg" placeholder="Tell us about your project or tool idea..." required></textarea>
         </div>
 
-        <button type="submit" class="btn-submit-contact">
+        <button type="submit" class="btn-submit-contact" id="contactSubmitBtn">
           <span>Send Message</span>
         </button>
       </form>
@@ -976,7 +976,7 @@
     <span>⚡ Message transmitted to PrimeAstra desk!</span>
   </div>
 
-  <!-- FIREBASE AUTHENTICATION SCRIPT -->
+  <!-- FIREBASE AUTH & FIRESTORE SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
@@ -990,7 +990,9 @@
       getFirestore, 
       doc, 
       setDoc, 
-      getDoc 
+      getDoc,
+      collection,
+      addDoc
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // Firebase Credentials
@@ -1056,7 +1058,6 @@
     // Auth State Observer
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // User logged in: Check Firestore for custom photo or fallback to Gmail photo or initial avatar
         let photo = user.photoURL;
         let displayName = user.displayName || user.email.split('@')[0];
 
@@ -1091,7 +1092,7 @@
           </div>
         `;
 
-        // 2. Mobile Drawer Profile View (Sabse Upar)
+        // 2. Mobile Drawer Profile View
         mobileAuthSlot.innerHTML = `
           <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: var(--radius-md);">
             <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
@@ -1108,7 +1109,6 @@
         `;
 
       } else {
-        // User Logged Out: Normal "Login / Register" Buttons
         desktopAuthSlot.innerHTML = `
           <button id="desktopLoginBtn" class="btn-nav-primary">
             Login / Register
@@ -1124,6 +1124,45 @@
         document.getElementById('mobileLoginBtn')?.addEventListener('click', handleGoogleAuth);
       }
     });
+
+    // ==========================================
+    // CONTACT FORM FIRESTORE HANDLER
+    // ==========================================
+    window.handleContactSubmit = async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('cName').value.trim();
+      const email = document.getElementById('cEmail').value.trim();
+      const message = document.getElementById('cMsg').value.trim();
+      const toast = document.getElementById('toastNotice');
+      const submitBtn = document.getElementById('contactSubmitBtn');
+
+      if (!name || !email || !message) return;
+
+      try {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "<span>Transmitting...</span>";
+
+        // Firestore ke "contact_messages" collection me add hoga
+        await addDoc(collection(db, "contact_messages"), {
+          name: name,
+          email: email,
+          message: message,
+          createdAt: new Date().toISOString()
+        });
+
+        toast.innerHTML = "<span>⚡ Message transmitted to PrimeAstra desk!</span>";
+        toast.classList.add('show');
+        document.getElementById('contactForm').reset();
+
+        setTimeout(() => toast.classList.remove('show'), 4000);
+      } catch (err) {
+        console.error("Firestore Save Error:", err);
+        alert("Failed to send message: " + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "<span>Send Message</span>";
+      }
+    };
   </script>
 
   <!-- SCRIPT FOR UI & CANVAS -->
@@ -1270,14 +1309,6 @@
       requestAnimationFrame(render3DWave);
     }
     requestAnimationFrame(render3DWave);
-
-    function handleContactSubmit(e) {
-      e.preventDefault();
-      const toast = document.getElementById('toastNotice');
-      toast.classList.add('show');
-      e.target.reset();
-      setTimeout(() => toast.classList.remove('show'), 4000);
-    }
   </script>
 </body>
 </html>

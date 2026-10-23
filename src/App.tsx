@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  Crown,
-  ChevronRight,
   Search,
   Bell,
   LogOut,
@@ -19,12 +17,13 @@ import {
   Sparkles,
   Home,
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 // Firebase imports
 import { auth, db } from './firebase';
 import {
   onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -119,7 +118,6 @@ function ResumeMakerTool() {
 
   return (
     <div className="w-full flex flex-col gap-4 text-left">
-      {/* Top Banner */}
       <div className="p-3.5 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-sm">
         <div>
           <h2 className="text-base font-bold flex items-center gap-2">
@@ -137,9 +135,7 @@ function ResumeMakerTool() {
         </button>
       </div>
 
-      {/* Grid: Form & Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-        {/* Left Side: Inputs */}
         <div className="lg:col-span-6 space-y-4">
           <div className="bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
@@ -383,7 +379,6 @@ function ResumeMakerTool() {
             className="w-full min-w-[340px] bg-white shadow-md rounded-lg overflow-hidden flex min-h-[520px] text-slate-800"
             style={{ fontFamily: 'sans-serif' }}
           >
-            {/* Color Sidebar */}
             <div className="w-1/3 text-white p-3 sm:p-4 flex flex-col justify-between" style={{ backgroundColor: themeColor }}>
               <div className="space-y-4">
                 <div>
@@ -420,7 +415,6 @@ function ResumeMakerTool() {
               <div className="text-[8px] text-white/50 pt-3">PrimeAstra Suite</div>
             </div>
 
-            {/* Content Area */}
             <div className="w-2/3 p-4 sm:p-5 flex flex-col justify-between space-y-4">
               <div>
                 <div className="border-b pb-2 mb-3">
@@ -486,7 +480,7 @@ function ResumeMakerTool() {
   );
 }
 
-// === MAIN APP EXPORT ===
+// === MAIN APP COMPONENT ===
 export default function App() {
   const [activeNav, setActiveNav] = useState('resume-maker');
   const [searchQuery, setSearchQuery] = useState('');
@@ -535,10 +529,10 @@ export default function App() {
           if (userDoc.exists()) {
             setUserData(userDoc.data() as { name?: string; email?: string; photoUrl?: string });
           } else {
-            setUserData({ email: user.email || '' });
+            setUserData({ name: user.displayName || '', email: user.email || '', photoUrl: user.photoURL || '' });
           }
         } catch {
-          setUserData({ email: user.email || '' });
+          setUserData({ name: user.displayName || '', email: user.email || '', photoUrl: user.photoURL || '' });
         }
       } else {
         setCurrentUser(null);
@@ -560,6 +554,39 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Google Sign-In Handler
+  const handleGoogleAuth = async () => {
+    setAuthError('');
+    setAuthLoading(true);
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        const newProfile = {
+          uid: user.uid,
+          name: user.displayName || 'User',
+          email: user.email || '',
+          photoUrl: user.photoURL || '',
+          createdAt: new Date().toISOString(),
+        };
+        await setDoc(userRef, newProfile);
+        setUserData(newProfile);
+      }
+      setShowAuthModal(false);
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setAuthError(errorObj.message || 'Google sign-in failed');
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  // Email / Password Form Submit
   const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
@@ -592,6 +619,7 @@ export default function App() {
     }
   };
 
+  // Profile Photo Upload (Base64)
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && currentUser) {
@@ -610,6 +638,21 @@ export default function App() {
     }
   };
 
+  // Profile Photo Remove Handler
+  const handleRemovePhoto = async () => {
+    if (!currentUser) return;
+    setSettingsError('');
+    setSettingsMsg('');
+    try {
+      await updateDoc(doc(db, 'users', currentUser.uid), { photoUrl: '' });
+      setUserData((prev) => ({ ...prev, photoUrl: '' }));
+      setSettingsMsg('Profile photo removed!');
+    } catch {
+      setSettingsError('Failed to remove photo.');
+    }
+  };
+
+  // Password Change Handler
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser) return;
@@ -629,33 +672,34 @@ export default function App() {
     }
   };
 
-  const getInitials = () => {
-    if (userData?.name) return userData.name.slice(0, 2).toUpperCase();
-    if (currentUser?.email) return currentUser.email.slice(0, 2).toUpperCase();
-    return 'U';
+  // Avatar Photo / Initial Image Resolution
+  const getAvatarImage = () => {
+    if (userData?.photoUrl) return userData.photoUrl;
+    if (currentUser?.photoURL) return currentUser.photoURL;
+    const initial = (userData?.name || currentUser?.displayName || currentUser?.email || 'U')[0].toUpperCase();
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(initial)}&background=7c3aed&color=fff&bold=true&rounded=true`;
   };
 
   return (
     <div className="bg-[#ECEEF3] text-slate-800 antialiased min-h-screen relative overflow-x-hidden selection:bg-purple-600 selection:text-white flex items-center justify-center p-2 sm:p-4 md:p-6 pb-20 md:pb-6">
-      {/* Ambient Background 3D Elements */}
+      {/* Background 3D Bubbles */}
       <div aria-hidden="true" className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute -top-12 -right-8 w-72 h-72 rounded-full clay-sphere opacity-45 blur-[1px] animate-float" />
         <div className="absolute top-28 right-24 w-44 h-44 rounded-full glass-disc opacity-60 animate-float-delayed" />
         <div className="absolute bottom-6 -left-12 w-64 h-64 rounded-full clay-sphere opacity-50 blur-[1.5px] animate-float" />
       </div>
 
-      {/* Master Application Shell */}
+      {/* Main Shell */}
       <main
         className="relative z-10 w-full max-w-[1360px] bg-white/80 backdrop-blur-2xl rounded-[28px] md:rounded-[36px] shadow-floating border border-white/95 p-3.5 sm:p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[600px]"
         data-purpose="app-root"
       >
-        {/* === Left Navigation Sidebar (Desktop pe dikhega, Mobile pe bottom bar banega) === */}
+        {/* === Left Sidebar (Without Premium Card) === */}
         <aside
-          className="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm"
+          className="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-start bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm"
           data-purpose="sidebar"
         >
           <div className="space-y-6">
-            {/* Logo */}
             <div className="flex items-center gap-3 px-2 pt-1 cursor-pointer" onClick={() => setActiveNav('home')}>
               <PrimeAstraLogo className="w-10 h-10" />
               <div>
@@ -668,7 +712,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Navigation Links */}
             <nav aria-label="Main Navigation" className="space-y-4">
               <button
                 onClick={() => setActiveNav('home')}
@@ -682,7 +725,6 @@ export default function App() {
                 <span>Home</span>
               </button>
 
-              {/* FREE TOOLS SECTION */}
               <div className="pt-2">
                 <span className="px-4 text-[10px] font-extrabold tracking-wider text-slate-400 uppercase flex items-center gap-1.5 mb-2">
                   <Wrench className="w-3 h-3 text-purple-500" />
@@ -703,33 +745,10 @@ export default function App() {
               </div>
             </nav>
           </div>
-
-          {/* Bottom Premium Card */}
-          <div className="mt-8 pt-4">
-            <div
-              onClick={() => {
-                confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
-                alert('PrimeAstra Pro unlocked!');
-              }}
-              className="relative overflow-hidden bg-gradient-to-br from-amber-500/10 via-white to-purple-500/5 p-4 rounded-2xl border border-amber-200/80 shadow-sm group hover:border-amber-300 transition-all cursor-pointer"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-400 to-amber-200 text-amber-900 flex items-center justify-center shadow-sm shrink-0 font-bold">
-                  <Crown className="w-5 h-5 text-amber-950" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-bold text-slate-900 leading-snug truncate">Go Premium</h4>
-                  <p className="text-[11px] text-slate-500 truncate">Unlock unlimited &amp; AI tools</p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
-              </div>
-            </div>
-          </div>
         </aside>
 
         {/* === Right Content Area === */}
         <section className="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col justify-start space-y-4 h-full" data-purpose="main-dashboard">
-          {/* Header */}
           <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1 shrink-0" data-purpose="top-header">
             <div className="flex items-center justify-between">
               <div>
@@ -738,20 +757,18 @@ export default function App() {
                 </h2>
                 <p className="text-[11px] sm:text-xs text-slate-500 font-medium">
                   {currentUser ? (
-                    <>Welcome back, <span className="font-semibold text-purple-700">{userData?.name || currentUser.email}</span></>
+                    <>Welcome back, <span className="font-semibold text-purple-700">{userData?.name || currentUser.displayName || currentUser.email}</span></>
                   ) : (
                     'All tools. One place.'
                   )}
                 </p>
               </div>
 
-              {/* Mobile-only Quick Logo */}
               <div className="md:hidden">
                 <PrimeAstraLogo className="w-8 h-8" />
               </div>
             </div>
 
-            {/* Search Bar, Notification, Profile Area */}
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="relative flex-1 sm:w-72">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -774,26 +791,19 @@ export default function App() {
                 <Bell className="w-4 h-4" />
               </button>
 
-              {/* Dynamic Profile Area */}
               {currentUser ? (
                 <div className="relative" ref={dropdownRef}>
                   <div
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-400/50 transition flex items-center justify-center overflow-hidden"
                   >
-                    {userData?.photoUrl ? (
-                      <img src={userData.photoUrl} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
-                    ) : (
-                      <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center text-purple-700 font-extrabold text-xs uppercase tracking-wider">
-                        {getInitials()}
-                      </div>
-                    )}
+                    <img src={getAvatarImage()} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
                   </div>
 
                   {isDropdownOpen && (
                     <div className="absolute right-0 mt-2.5 w-52 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-floating p-2 z-50 text-xs">
                       <div className="px-3 py-2 border-b border-slate-100 mb-1">
-                        <p className="font-bold text-slate-800 truncate">{userData?.name || 'User'}</p>
+                        <p className="font-bold text-slate-800 truncate">{userData?.name || currentUser.displayName || 'User'}</p>
                         <p className="text-[11px] text-slate-400 truncate">{currentUser.email}</p>
                       </div>
 
@@ -834,7 +844,6 @@ export default function App() {
             </div>
           </header>
 
-          {/* === Main Workspace: Directly Opens Resume Maker === */}
           <div className="flex-1 w-full rounded-[24px] md:rounded-[28px] bg-white/60 border border-white/90 backdrop-blur-md p-3 sm:p-5 flex flex-col items-center justify-start text-center relative shadow-clay-sm min-h-0">
             {activeNav === 'resume-maker' ? (
               <ResumeMakerTool />
@@ -843,7 +852,7 @@ export default function App() {
                 <PrimeAstraLogo className="w-12 h-12 mx-auto" />
                 <h3 className="text-base font-bold text-slate-800">Welcome to PrimeAstra</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                  Neeche navbar se <strong>Resume Maker</strong> select karein.
+                  Sidebar ya bottom navbar se <strong>AI Resume Maker</strong> select karein.
                 </p>
               </div>
             )}
@@ -851,9 +860,7 @@ export default function App() {
         </section>
       </main>
 
-      {/* ========================================================
-          MOBILE BOTTOM NAVBAR (Phone par screen ke neeche dikhega)
-          ======================================================== */}
+      {/* === Mobile Floating Bottom Bar (Premium Removed) === */}
       <div className="fixed bottom-3 left-4 right-4 z-40 md:hidden bg-white/90 backdrop-blur-xl border border-slate-200/90 rounded-2xl p-2 shadow-floating flex items-center justify-around">
         <button
           onClick={() => setActiveNav('home')}
@@ -875,17 +882,6 @@ export default function App() {
           <span className="text-[10px]">Resume Maker</span>
         </button>
 
-        <button
-          onClick={() => {
-            confetti({ particleCount: 40, spread: 60 });
-            alert('PrimeAstra Pro unlocked!');
-          }}
-          className="flex flex-col items-center gap-1 p-1.5 text-amber-600 rounded-xl transition cursor-pointer"
-        >
-          <Crown className="w-4 h-4" />
-          <span className="text-[10px]">Premium</span>
-        </button>
-
         {currentUser && (
           <button
             onClick={() => setShowSettingsModal(true)}
@@ -897,13 +893,13 @@ export default function App() {
         )}
       </div>
 
-      {/* Auth Modal */}
+      {/* === Auth Modal === */}
       {showAuthModal && !currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="relative w-full max-w-[390px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7 text-left">
             <button
               onClick={() => setShowAuthModal(false)}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition"
+              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -924,7 +920,28 @@ export default function App() {
               </div>
             )}
 
-            <form onSubmit={handleAuthSubmit} className="space-y-3.5">
+            <button
+              type="button"
+              onClick={handleGoogleAuth}
+              disabled={authLoading}
+              className="w-full py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 font-bold text-xs rounded-xl flex items-center justify-center gap-2 mb-4 shadow-sm transition cursor-pointer"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+
+            <div className="flex items-center gap-2 my-3 text-slate-400 text-[10px]">
+              <div className="flex-1 border-t border-slate-200" />
+              <span>OR EMAIL</span>
+              <div className="flex-1 border-t border-slate-200" />
+            </div>
+
+            <form onSubmit={handleAuthSubmit} className="space-y-3">
               {isRegistering && (
                 <div>
                   <label className="block text-[11px] font-bold text-slate-600 mb-1">Full Name</label>
@@ -980,7 +997,7 @@ export default function App() {
                   setIsRegistering(!isRegistering);
                   setAuthError('');
                 }}
-                className="text-purple-600 font-bold hover:underline"
+                className="text-purple-600 font-bold hover:underline cursor-pointer"
               >
                 {isRegistering ? 'Log in' : 'Create one'}
               </button>
@@ -989,7 +1006,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Settings Modal */}
+      {/* === Settings Modal (With Remove Photo Option) === */}
       {showSettingsModal && currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="relative w-full max-w-[420px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7 text-left">
@@ -999,7 +1016,7 @@ export default function App() {
                 setSettingsMsg('');
                 setSettingsError('');
               }}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition"
+              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -1020,29 +1037,38 @@ export default function App() {
               </div>
             )}
 
-            {/* Photo Upload */}
+            {/* Profile Photo Upload / Remove Box */}
             <div className="mb-6 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm overflow-hidden shrink-0 flex items-center justify-center">
-                {userData?.photoUrl ? (
-                  <img src={userData.photoUrl} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
-                ) : (
-                  <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center text-purple-700 font-extrabold text-base uppercase">
-                    {getInitials()}
-                  </div>
-                )}
+                <img src={getAvatarImage()} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
               </div>
               <div className="flex-1">
                 <p className="text-xs font-bold text-slate-800">Profile Photo</p>
-                <p className="text-[11px] text-slate-500 mb-2">Upload picture for your account</p>
-                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] font-semibold text-purple-700 hover:bg-purple-50 cursor-pointer transition shadow-2xs">
-                  <Camera className="w-3.5 h-3.5" />
-                  <span>Upload Image</span>
-                  <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
-                </label>
+                <p className="text-[11px] text-slate-500 mb-2">Change or remove your profile picture</p>
+                
+                <div className="flex items-center gap-2">
+                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] font-semibold text-purple-700 hover:bg-purple-50 cursor-pointer transition shadow-2xs">
+                    <Camera className="w-3.5 h-3.5" />
+                    <span>Upload</span>
+                    <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
+                  </label>
+
+                  {/* Remove Photo Button */}
+                  {(userData?.photoUrl || currentUser?.photoURL) && (
+                    <button
+                      type="button"
+                      onClick={handleRemovePhoto}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-rose-50 border border-rose-200 rounded-xl text-[11px] font-semibold text-rose-600 hover:bg-rose-100 cursor-pointer transition"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      <span>Remove</span>
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Password Change */}
+            {/* Change Password */}
             <form onSubmit={handlePasswordChange} className="space-y-3.5">
               <div>
                 <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-1">

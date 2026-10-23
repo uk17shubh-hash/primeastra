@@ -2,10 +2,7 @@ import React from 'react';
 import { ResumeData } from '../ResumeMaker';
 
 export const ExecutiveTemplate: React.FC<{ data: ResumeData; themeColor: string }> = ({ data, themeColor }) => (
-  <div
-    className="w-full min-w-[340px] bg-white shadow-md rounded-lg overflow-hidden flex flex-col justify-between min-h-[520px] text-slate-800"
-    style={{ fontFamily: 'sans-serif' }}
-  >
+  <div className="w-full min-w-[340px] bg-white shadow-md rounded-lg overflow-hidden flex flex-col justify-between min-h-[520px] text-slate-800" style={{ fontFamily: 'sans-serif' }}>
     <div>
       <div className="p-4 text-white" style={{ backgroundColor: themeColor }}>
         <h1 className="text-lg font-black">{data.name}</h1>
@@ -16,7 +13,6 @@ export const ExecutiveTemplate: React.FC<{ data: ResumeData; themeColor: string 
           <span>📍 {data.address}</span>
         </div>
       </div>
-
       <div className="p-4 space-y-3">
         {data.summary && (
           <div>
@@ -24,7 +20,6 @@ export const ExecutiveTemplate: React.FC<{ data: ResumeData; themeColor: string 
             <p className="text-[10px] text-slate-600 leading-relaxed">{data.summary}</p>
           </div>
         )}
-
         {data.experience.length > 0 && (
           <div>
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Experience</h3>
@@ -41,7 +36,6 @@ export const ExecutiveTemplate: React.FC<{ data: ResumeData; themeColor: string 
             </div>
           </div>
         )}
-
         {data.education.length > 0 && (
           <div>
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Education</h3>
@@ -55,16 +49,8 @@ export const ExecutiveTemplate: React.FC<{ data: ResumeData; themeColor: string 
             </div>
           </div>
         )}
-
-        <div className="pt-1 border-t border-slate-100 flex justify-between text-[9px] text-slate-600">
-          <span><strong>Skills:</strong> {data.skills}</span>
-          <span><strong>Languages:</strong> {data.languages}</span>
-        </div>
       </div>
     </div>
-
-    <div className="p-3 border-t text-[8px] text-slate-400 text-center">
-      Verified &amp; Certified
-    </div>
+    <div className="p-3 border-t text-[8px] text-slate-400 text-center">Executive Template</div>
   </div>
 );

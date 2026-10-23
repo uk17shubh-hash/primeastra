@@ -9,10 +9,15 @@ import {
   Lock,
   Camera,
   X,
-  User as UserIcon,
   LogIn,
   FileText,
   Wrench,
+  Download,
+  RotateCcw,
+  Plus,
+  Trash2,
+  Sparkles,
+  Home,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -27,9 +32,6 @@ import {
   User,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-
-// ResumeMaker tool import kara
-import ResumeMaker from './components/ResumeMaker';
 
 // === PRIMEASTRA 3D SHIELD LOGO ===
 const PrimeAstraLogo: React.FC<{ className?: string }> = ({ className = 'w-10 h-10' }) => (
@@ -62,8 +64,430 @@ const PrimeAstraLogo: React.FC<{ className?: string }> = ({ className = 'w-10 h-
   </svg>
 );
 
+// === RESUME MAKER TOOL COMPONENT ===
+function ResumeMakerTool() {
+  const [formData, setFormData] = useState({
+    name: 'Shubham Singh',
+    title: 'Computer Operator & Executive',
+    phone: '+91 9876543210',
+    email: 'shubham@example.com',
+    address: 'Roorkee, Uttarakhand',
+    summary: 'Dedicated professional with hands-on experience in computer operations, digital documentation, and online client management.',
+    education: [
+      { degree: '12th (Commerce)', board: 'DAV Inter College, UP Board', year: '2016', marks: 'First Division' }
+    ],
+    experience: [
+      { role: 'Computer Operator', company: 'Digital Seva Center', period: '2021 - Present', desc: 'Managed online forms, customer documentation, digital services, and record keeping.' }
+    ],
+    skills: 'MS Office, Data Entry, Computer Operations, Typing, Documentation',
+    languages: 'Hindi, English',
+  });
+
+  const [themeColor, setThemeColor] = useState('#1e3a8a');
+
+  const addEducation = () => {
+    setFormData(prev => ({
+      ...prev,
+      education: [...prev.education, { degree: '', board: '', year: '', marks: '' }]
+    }));
+  };
+
+  const removeEducation = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      education: prev.education.filter((_, i) => i !== index)
+    }));
+  };
+
+  const addExperience = () => {
+    setFormData(prev => ({
+      ...prev,
+      experience: [...prev.experience, { role: '', company: '', period: '', desc: '' }]
+    }));
+  };
+
+  const removeExperience = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      experience: prev.experience.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  return (
+    <div className="w-full flex flex-col gap-4 text-left">
+      {/* Top Banner */}
+      <div className="p-3.5 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-sm">
+        <div>
+          <h2 className="text-base font-bold flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            AI Resume Maker
+          </h2>
+          <p className="text-[11px] text-purple-100">Live preview & printable PDF ready</p>
+        </div>
+        <button
+          onClick={handlePrint}
+          className="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-white text-indigo-900 rounded-xl text-xs font-bold shadow hover:bg-slate-100 transition cursor-pointer w-full sm:w-auto"
+        >
+          <Download className="w-3.5 h-3.5" />
+          <span>Download PDF / Print</span>
+        </button>
+      </div>
+
+      {/* Grid: Form & Preview */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        {/* Left Side: Inputs */}
+        <div className="lg:col-span-6 space-y-4">
+          <div className="bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-700">Theme Color:</span>
+              <input
+                type="color"
+                value={themeColor}
+                onChange={(e) => setThemeColor(e.target.value)}
+                className="w-7 h-7 rounded border-0 cursor-pointer"
+              />
+            </div>
+            <button
+              onClick={() => window.location.reload()}
+              className="flex items-center gap-1 text-slate-500 hover:text-slate-800 transition cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset</span>
+            </button>
+          </div>
+
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
+            <h3 className="text-xs font-bold text-slate-800 border-b pb-1">Personal Details</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Full Name</label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Job Title / Post</label>
+                <input
+                  type="text"
+                  value={formData.title}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Mobile</label>
+                <input
+                  type="text"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Email</label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="text-[10px] font-semibold text-slate-500">Address</label>
+                <input
+                  type="text"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="text-[10px] font-semibold text-slate-500">Profile Summary</label>
+                <textarea
+                  rows={2}
+                  value={formData.summary}
+                  onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Education */}
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
+            <div className="flex items-center justify-between border-b pb-1">
+              <h3 className="text-xs font-bold text-slate-800">Education</h3>
+              <button onClick={addEducation} className="text-[11px] text-purple-700 font-bold flex items-center gap-1 cursor-pointer">
+                <Plus className="w-3 h-3" /> Add
+              </button>
+            </div>
+            {formData.education.map((edu, index) => (
+              <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs relative p-2.5 bg-slate-50 rounded-xl border border-slate-200/70">
+                {formData.education.length > 1 && (
+                  <button onClick={() => removeEducation(index)} className="absolute top-2 right-2 text-rose-500">
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                )}
+                <div>
+                  <label className="text-[10px] text-slate-500">Degree</label>
+                  <input
+                    type="text"
+                    value={edu.degree}
+                    onChange={(e) => {
+                      const updated = [...formData.education];
+                      updated[index].degree = e.target.value;
+                      setFormData({ ...formData, education: updated });
+                    }}
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500">Board / College</label>
+                  <input
+                    type="text"
+                    value={edu.board}
+                    onChange={(e) => {
+                      const updated = [...formData.education];
+                      updated[index].board = e.target.value;
+                      setFormData({ ...formData, education: updated });
+                    }}
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500">Year</label>
+                  <input
+                    type="text"
+                    value={edu.year}
+                    onChange={(e) => {
+                      const updated = [...formData.education];
+                      updated[index].year = e.target.value;
+                      setFormData({ ...formData, education: updated });
+                    }}
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500">Marks</label>
+                  <input
+                    type="text"
+                    value={edu.marks}
+                    onChange={(e) => {
+                      const updated = [...formData.education];
+                      updated[index].marks = e.target.value;
+                      setFormData({ ...formData, education: updated });
+                    }}
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Experience */}
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
+            <div className="flex items-center justify-between border-b pb-1">
+              <h3 className="text-xs font-bold text-slate-800">Experience</h3>
+              <button onClick={addExperience} className="text-[11px] text-purple-700 font-bold flex items-center gap-1 cursor-pointer">
+                <Plus className="w-3 h-3" /> Add
+              </button>
+            </div>
+            {formData.experience.map((exp, index) => (
+              <div key={index} className="space-y-2 text-xs relative p-2.5 bg-slate-50 rounded-xl border border-slate-200/70">
+                {formData.experience.length > 1 && (
+                  <button onClick={() => removeExperience(index)} className="absolute top-2 right-2 text-rose-500">
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-[10px] text-slate-500">Role</label>
+                    <input
+                      type="text"
+                      value={exp.role}
+                      onChange={(e) => {
+                        const updated = [...formData.experience];
+                        updated[index].role = e.target.value;
+                        setFormData({ ...formData, experience: updated });
+                      }}
+                      className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] text-slate-500">Company</label>
+                    <input
+                      type="text"
+                      value={exp.company}
+                      onChange={(e) => {
+                        const updated = [...formData.experience];
+                        updated[index].company = e.target.value;
+                        setFormData({ ...formData, experience: updated });
+                      }}
+                      className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500">Period</label>
+                  <input
+                    type="text"
+                    value={exp.period}
+                    onChange={(e) => {
+                      const updated = [...formData.experience];
+                      updated[index].period = e.target.value;
+                      setFormData({ ...formData, experience: updated });
+                    }}
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Skills */}
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-2">
+            <h3 className="text-xs font-bold text-slate-800 border-b pb-1">Skills & Languages</h3>
+            <div className="space-y-2 text-xs">
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Skills (comma separated)</label>
+                <input
+                  type="text"
+                  value={formData.skills}
+                  onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Languages</label>
+                <input
+                  type="text"
+                  value={formData.languages}
+                  onChange={(e) => setFormData({ ...formData, languages: e.target.value })}
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side: Live A4 Sheet Preview */}
+        <div className="lg:col-span-6 bg-slate-200/70 p-2 sm:p-3 rounded-2xl border border-slate-300 flex justify-center lg:sticky lg:top-0 w-full overflow-x-auto">
+          <div
+            className="w-full min-w-[340px] bg-white shadow-md rounded-lg overflow-hidden flex min-h-[520px] text-slate-800"
+            style={{ fontFamily: 'sans-serif' }}
+          >
+            {/* Color Sidebar */}
+            <div className="w-1/3 text-white p-3 sm:p-4 flex flex-col justify-between" style={{ backgroundColor: themeColor }}>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">
+                    Contact
+                  </h4>
+                  <div className="space-y-1.5 text-[9px] sm:text-[10px] text-white/90">
+                    <p className="break-all">📞 {formData.phone}</p>
+                    <p className="break-all">✉️ {formData.email}</p>
+                    <p>📍 {formData.address}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">
+                    Skills
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {formData.skills.split(',').map((s, i) => (
+                      <span key={i} className="text-[8px] sm:text-[9px] bg-white/20 px-1 py-0.5 rounded text-white font-medium">
+                        {s.trim()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white/80 border-b border-white/20 pb-1 mb-2">
+                    Languages
+                  </h4>
+                  <p className="text-[9px] sm:text-[10px] text-white/90">{formData.languages}</p>
+                </div>
+              </div>
+              <div className="text-[8px] text-white/50 pt-3">PrimeAstra Suite</div>
+            </div>
+
+            {/* Content Area */}
+            <div className="w-2/3 p-4 sm:p-5 flex flex-col justify-between space-y-4">
+              <div>
+                <div className="border-b pb-2 mb-3">
+                  <h1 className="text-base sm:text-xl font-black" style={{ color: themeColor }}>
+                    {formData.name || 'Your Name'}
+                  </h1>
+                  <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase">{formData.title}</p>
+                  {formData.summary && (
+                    <p className="text-[9px] sm:text-[10px] text-slate-600 mt-1.5 leading-relaxed">{formData.summary}</p>
+                  )}
+                </div>
+
+                {formData.experience.length > 0 && (
+                  <div className="mb-3">
+                    <h3 className="text-[10px] sm:text-xs font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style={{ color: themeColor }}>
+                      Experience
+                    </h3>
+                    <div className="space-y-1.5">
+                      {formData.experience.map((exp, i) => (
+                        <div key={i} className="text-[9px] sm:text-[10px]">
+                          <div className="flex justify-between font-bold">
+                            <span>{exp.role}</span>
+                            <span className="text-slate-400 font-normal">{exp.period}</span>
+                          </div>
+                          <p className="text-slate-500">{exp.company}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {formData.education.length > 0 && (
+                  <div>
+                    <h3 className="text-[10px] sm:text-xs font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style={{ color: themeColor }}>
+                      Education
+                    </h3>
+                    <div className="space-y-1.5">
+                      {formData.education.map((edu, i) => (
+                        <div key={i} className="text-[9px] sm:text-[10px] flex justify-between">
+                          <div>
+                            <p className="font-bold">{edu.degree}</p>
+                            <p className="text-slate-500">{edu.board}</p>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-slate-400">{edu.year}</span>
+                            {edu.marks && <p className="text-slate-600">{edu.marks}</p>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="border-t pt-2 text-[8px] text-slate-400">
+                I hereby declare that all information stated above is true and complete.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// === MAIN APP EXPORT ===
 export default function App() {
-  // Navigation State ('home' kivha 'resume-maker')
   const [activeNav, setActiveNav] = useState('resume-maker');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -212,23 +636,22 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#ECEEF3] text-slate-800 antialiased min-h-screen relative overflow-x-hidden selection:bg-purple-600 selection:text-white flex items-center justify-center p-3 md:p-6 lg:p-8">
+    <div className="bg-[#ECEEF3] text-slate-800 antialiased min-h-screen relative overflow-x-hidden selection:bg-purple-600 selection:text-white flex items-center justify-center p-2 sm:p-4 md:p-6 pb-20 md:pb-6">
       {/* Ambient Background 3D Elements */}
       <div aria-hidden="true" className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute -top-12 -right-8 w-72 h-72 rounded-full clay-sphere opacity-45 blur-[1px] animate-float" />
         <div className="absolute top-28 right-24 w-44 h-44 rounded-full glass-disc opacity-60 animate-float-delayed" />
         <div className="absolute bottom-6 -left-12 w-64 h-64 rounded-full clay-sphere opacity-50 blur-[1.5px] animate-float" />
-        <div className="absolute -bottom-16 right-16 w-60 h-60 rounded-full border-[28px] border-purple-200/50 clay-torus opacity-40 animate-float-delayed" />
       </div>
 
       {/* Master Application Shell */}
       <main
-        className="relative z-10 w-full max-w-[1360px] bg-white/75 backdrop-blur-2xl rounded-[36px] shadow-floating border border-white/95 p-4 md:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[620px] max-h-[820px]"
+        className="relative z-10 w-full max-w-[1360px] bg-white/80 backdrop-blur-2xl rounded-[28px] md:rounded-[36px] shadow-floating border border-white/95 p-3.5 sm:p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[600px]"
         data-purpose="app-root"
       >
-        {/* === Left Navigation Sidebar === */}
+        {/* === Left Navigation Sidebar (Desktop pe dikhega, Mobile pe bottom bar banega) === */}
         <aside
-          className="lg:col-span-3 xl:col-span-3 flex flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm"
+          className="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm"
           data-purpose="sidebar"
         >
           <div className="space-y-6">
@@ -247,7 +670,6 @@ export default function App() {
 
             {/* Navigation Links */}
             <nav aria-label="Main Navigation" className="space-y-4">
-              {/* Home Button */}
               <button
                 onClick={() => setActiveNav('home')}
                 className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${
@@ -256,20 +678,17 @@ export default function App() {
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
                 }`}
               >
-                <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <Home className="w-5 h-5 text-purple-600" />
                 <span>Home</span>
               </button>
 
-              {/* === FREE TOOLS SECTION === */}
+              {/* FREE TOOLS SECTION */}
               <div className="pt-2">
                 <span className="px-4 text-[10px] font-extrabold tracking-wider text-slate-400 uppercase flex items-center gap-1.5 mb-2">
                   <Wrench className="w-3 h-3 text-purple-500" />
                   Free Tools
                 </span>
 
-                {/* AI Resume Maker Tool */}
                 <button
                   onClick={() => setActiveNav('resume-maker')}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl font-semibold text-xs transition-all duration-200 text-left cursor-pointer ${
@@ -285,7 +704,7 @@ export default function App() {
             </nav>
           </div>
 
-          {/* Bottom Card */}
+          {/* Bottom Premium Card */}
           <div className="mt-8 pt-4">
             <div
               onClick={() => {
@@ -309,50 +728,50 @@ export default function App() {
         </aside>
 
         {/* === Right Content Area === */}
-        <section className="lg:col-span-9 xl:col-span-9 flex flex-col justify-start space-y-4 h-full overflow-hidden" data-purpose="main-dashboard">
+        <section className="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col justify-start space-y-4 h-full" data-purpose="main-dashboard">
           {/* Header */}
-          <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1 shrink-0" data-purpose="top-header">
-            <div>
-              <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                Prime<span className="text-purple-600">Astra</span>
-              </h2>
-              <p className="text-xs text-slate-500 font-medium">
-                {currentUser ? (
-                  <>Welcome back, <span className="font-semibold text-purple-700">{userData?.name || currentUser.email}</span></>
-                ) : (
-                  'All tools. One place. Unlimited possibilities.'
-                )}
-              </p>
+          <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1 shrink-0" data-purpose="top-header">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                  Prime<span className="text-purple-600">Astra</span>
+                </h2>
+                <p className="text-[11px] sm:text-xs text-slate-500 font-medium">
+                  {currentUser ? (
+                    <>Welcome back, <span className="font-semibold text-purple-700">{userData?.name || currentUser.email}</span></>
+                  ) : (
+                    'All tools. One place.'
+                  )}
+                </p>
+              </div>
+
+              {/* Mobile-only Quick Logo */}
+              <div className="md:hidden">
+                <PrimeAstraLogo className="w-8 h-8" />
+              </div>
             </div>
 
             {/* Search Bar, Notification, Profile Area */}
-            <div className="flex items-center gap-3">
-              <div className="relative w-full sm:w-80">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Search className="w-4 h-4" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="relative flex-1 sm:w-72">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <Search className="w-3.5 h-3.5" />
                 </div>
                 <input
                   id="globalSearchInput"
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for a tool..."
-                  className="w-full pl-10 pr-12 py-2.5 bg-white border border-slate-200/90 rounded-2xl text-xs font-medium placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
+                  placeholder="Search tools..."
+                  className="w-full pl-9 pr-8 py-2 bg-white border border-slate-200/90 rounded-2xl text-xs font-medium placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                 />
-                <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center">
-                  <kbd className="px-1.5 py-0.5 text-[10px] font-bold text-slate-400 bg-slate-100 border border-slate-200 rounded-md">
-                    ⌘K
-                  </kbd>
-                </div>
               </div>
 
-              {/* Notification Bell */}
               <button
                 type="button"
-                className="relative p-2.5 bg-white rounded-2xl border border-slate-200/90 text-slate-500 hover:text-slate-800 hover:bg-slate-50 transition shadow-sm"
+                className="p-2 sm:p-2.5 bg-white rounded-2xl border border-slate-200/90 text-slate-500 hover:text-slate-800 shadow-sm"
               >
                 <Bell className="w-4 h-4" />
-                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-violet-600 ring-2 ring-white" />
               </button>
 
               {/* Dynamic Profile Area */}
@@ -360,7 +779,7 @@ export default function App() {
                 <div className="relative" ref={dropdownRef}>
                   <div
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-400/50 transition flex items-center justify-center overflow-hidden"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 p-0.5 border border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-purple-400/50 transition flex items-center justify-center overflow-hidden"
                   >
                     {userData?.photoUrl ? (
                       <img src={userData.photoUrl} alt="Profile" className="w-full h-full object-cover rounded-[14px]" />
@@ -372,7 +791,7 @@ export default function App() {
                   </div>
 
                   {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2.5 w-52 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-floating p-2 z-50 text-xs animate-in fade-in slide-in-from-top-2 duration-150">
+                    <div className="absolute right-0 mt-2.5 w-52 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-floating p-2 z-50 text-xs">
                       <div className="px-3 py-2 border-b border-slate-100 mb-1">
                         <p className="font-bold text-slate-800 truncate">{userData?.name || 'User'}</p>
                         <p className="text-[11px] text-slate-400 truncate">{currentUser.email}</p>
@@ -405,27 +824,26 @@ export default function App() {
               ) : (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-2xl text-xs font-bold shadow-md hover:shadow-lg transition cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 text-white rounded-2xl text-xs font-bold shadow-md cursor-pointer shrink-0"
                 >
                   <LogIn className="w-3.5 h-3.5" />
-                  <span>Login / Register</span>
+                  <span className="hidden sm:inline">Login / Register</span>
+                  <span className="sm:hidden">Login</span>
                 </button>
               )}
             </div>
           </header>
 
-          {/* === Main Workspace Area: Active Nav Tool Display === */}
-          <div className="flex-1 w-full rounded-[28px] bg-white/50 border border-white/80 backdrop-blur-md p-4 flex flex-col items-center justify-start text-center relative overflow-hidden shadow-clay-sm">
+          {/* === Main Workspace: Directly Opens Resume Maker === */}
+          <div className="flex-1 w-full rounded-[24px] md:rounded-[28px] bg-white/60 border border-white/90 backdrop-blur-md p-3 sm:p-5 flex flex-col items-center justify-start text-center relative shadow-clay-sm min-h-0">
             {activeNav === 'resume-maker' ? (
-              <ResumeMaker />
+              <ResumeMakerTool />
             ) : (
               <div className="m-auto p-6 max-w-md bg-white/80 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
-                <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl mx-auto flex items-center justify-center">
-                  <UserIcon className="w-6 h-6" />
-                </div>
+                <PrimeAstraLogo className="w-12 h-12 mx-auto" />
                 <h3 className="text-base font-bold text-slate-800">Welcome to PrimeAstra</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                  Sidebar madhun <strong>Free Tools &gt; AI Resume Maker</strong> var click karun resume tayar kara.
+                  Neeche navbar se <strong>Resume Maker</strong> select karein.
                 </p>
               </div>
             )}
@@ -433,10 +851,56 @@ export default function App() {
         </section>
       </main>
 
+      {/* ========================================================
+          MOBILE BOTTOM NAVBAR (Phone par screen ke neeche dikhega)
+          ======================================================== */}
+      <div className="fixed bottom-3 left-4 right-4 z-40 md:hidden bg-white/90 backdrop-blur-xl border border-slate-200/90 rounded-2xl p-2 shadow-floating flex items-center justify-around">
+        <button
+          onClick={() => setActiveNav('home')}
+          className={`flex flex-col items-center gap-1 p-1.5 rounded-xl transition cursor-pointer ${
+            activeNav === 'home' ? 'text-purple-700 font-bold' : 'text-slate-500'
+          }`}
+        >
+          <Home className="w-4 h-4" />
+          <span className="text-[10px]">Home</span>
+        </button>
+
+        <button
+          onClick={() => setActiveNav('resume-maker')}
+          className={`flex flex-col items-center gap-1 p-1.5 rounded-xl transition cursor-pointer ${
+            activeNav === 'resume-maker' ? 'text-purple-700 font-bold bg-purple-50 px-3' : 'text-slate-500'
+          }`}
+        >
+          <FileText className="w-4 h-4 text-purple-600" />
+          <span className="text-[10px]">Resume Maker</span>
+        </button>
+
+        <button
+          onClick={() => {
+            confetti({ particleCount: 40, spread: 60 });
+            alert('PrimeAstra Pro unlocked!');
+          }}
+          className="flex flex-col items-center gap-1 p-1.5 text-amber-600 rounded-xl transition cursor-pointer"
+        >
+          <Crown className="w-4 h-4" />
+          <span className="text-[10px]">Premium</span>
+        </button>
+
+        {currentUser && (
+          <button
+            onClick={() => setShowSettingsModal(true)}
+            className="flex flex-col items-center gap-1 p-1.5 text-slate-500 rounded-xl transition cursor-pointer"
+          >
+            <Settings className="w-4 h-4" />
+            <span className="text-[10px]">Settings</span>
+          </button>
+        )}
+      </div>
+
       {/* Auth Modal */}
       {showAuthModal && !currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative w-full max-w-[390px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7">
+          <div className="relative w-full max-w-[390px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7 text-left">
             <button
               onClick={() => setShowAuthModal(false)}
               className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition"
@@ -455,12 +919,12 @@ export default function App() {
             </div>
 
             {authError && (
-              <div className="mb-4 p-2.5 bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-xl text-left">
+              <div className="mb-4 p-2.5 bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-xl">
                 {authError}
               </div>
             )}
 
-            <form onSubmit={handleAuthSubmit} className="space-y-3.5 text-left">
+            <form onSubmit={handleAuthSubmit} className="space-y-3.5">
               {isRegistering && (
                 <div>
                   <label className="block text-[11px] font-bold text-slate-600 mb-1">Full Name</label>
@@ -525,7 +989,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Settings Modal (Photo & Password update) */}
+      {/* Settings Modal */}
       {showSettingsModal && currentUser && (
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="relative w-full max-w-[420px] bg-white rounded-3xl shadow-floating border border-slate-100 p-6 md:p-7 text-left">

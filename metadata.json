@@ -1,0 +1,6 @@
+{
+  "name": "Universal Tools - All-in-One AI & WASM Suite",
+  "description": "Fast, free, and reliable client-side tools and AI suite for everyday tasks. Clean, secure, WebAssembly powered, and always improving.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

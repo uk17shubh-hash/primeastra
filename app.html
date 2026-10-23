@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>PrimeAstra - Workspace Hub</title>
   
-  <!-- Exact 3D Shield Vector Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='mainShieldGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300f2fe'/%3E%3Cstop offset='45%25' stop-color='%230099ff'/%3E%3Cstop offset='100%25' stop-color='%23004cd8'/%3E%3C/linearGradient%3E%3ClinearGradient id='brightStarGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='60%25' stop-color='%2300f2fe'/%3E%3Cstop offset='100%25' stop-color='%230088ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z' fill='url(%23brightStarGrad)'/%3E%3Cpath d='M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z' fill='url(%23mainShieldGrad)'/%3E%3Cpath d='M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z' fill='url(%23mainShieldGrad)'/%3E%3Cpath d='M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z' fill='url(%23mainShieldGrad)'/%3E%3Cpath d='M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z' fill='url(%23mainShieldGrad)'/%3E%3Cpolygon points='380,55 305,108 335,122 360,170' fill='url(%23brightStarGrad)'/%3E%3Cpolygon points='380,55 335,122 360,170' fill='%230055ff'/%3E%3Cpath d='M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z' fill='url(%23mainShieldGrad)'/%3E%3C/svg%3E">
+  <!-- Direct 3D Shield Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='fShield' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300f2fe'/%3E%3Cstop offset='45%25' stop-color='%230099ff'/%3E%3Cstop offset='100%25' stop-color='%23004cd8'/%3E%3C/linearGradient%3E%3ClinearGradient id='fStar' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='60%25' stop-color='%2300f2fe'/%3E%3Cstop offset='100%25' stop-color='%230088ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z' fill='url(%23fStar)'/%3E%3Cpath d='M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z' fill='url(%23fShield)'/%3E%3Cpath d='M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z' fill='url(%23fShield)'/%3E%3Cpath d='M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z' fill='url(%23fShield)'/%3E%3Cpath d='M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z' fill='url(%23fShield)'/%3E%3Cpolygon points='380,55 305,108 335,122 360,170' fill='url(%23fStar)'/%3E%3Cpolygon points='380,55 335,122 360,170' fill='%230055ff'/%3E%3Cpath d='M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z' fill='url(%23fShield)'/%3E%3C/svg%3E">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
     }
   </style>
 </head>
-<body class="text-slate-800 min-h-screen p-2 sm:p-4 md:p-6 pb-24 md:pb-6 flex flex-col items-center justify-start">
+<body class="text-slate-800 min-h-screen p-2.5 sm:p-4 md:p-6 pb-24 md:pb-6 flex flex-col items-center justify-start">
 
   <!-- Ambient background glow for PC -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -35,42 +35,35 @@
     <div class="absolute bottom-6 -left-12 w-64 h-64 rounded-full bg-cyan-500/15 blur-3xl"></div>
   </div>
 
-  <!-- EXACT 3D SHIELD VECTOR LOGO SYMBOL -->
-  <svg class="hidden" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="mainShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#00f2fe"/>
-        <stop offset="45%" stop-color="#0099ff"/>
-        <stop offset="100%" stop-color="#004cd8"/>
-      </linearGradient>
-      <linearGradient id="brightStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#ffffff"/>
-        <stop offset="60%" stop-color="#00f2fe"/>
-        <stop offset="100%" stop-color="#0088ff"/>
-      </linearGradient>
-      <g id="primeAstraLogo">
-        <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#brightStarGrad)"/>
-        <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#mainShieldGrad)"/>
-        <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#mainShieldGrad)"/>
-        <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#mainShieldGrad)"/>
-        <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#mainShieldGrad)"/>
-        <polygon points="380,55 305,108 335,122 360,170" fill="url(#brightStarGrad)"/>
-        <polygon points="380,55 335,122 360,170" fill="#0055ff"/>
-        <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#mainShieldGrad)"/>
-      </g>
-    </defs>
-  </svg>
-
-  <!-- Master Application Container -->
-  <main class="relative z-10 w-full max-w-[1360px] bg-white/80 md:backdrop-blur-2xl rounded-[28px] md:rounded-[36px] md:shadow-2xl md:border md:border-white/95 p-3 sm:p-5 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[620px]">
+  <!-- Master Application Container (Full Height Stretch on Mobile) -->
+  <main class="relative z-10 w-full max-w-[1360px] bg-white/95 md:backdrop-blur-2xl rounded-[32px] md:rounded-[36px] shadow-xl md:shadow-2xl border border-white/95 p-4 sm:p-6 md:p-8 flex flex-col md:grid md:grid-cols-12 gap-6 min-h-[calc(100vh-7rem)] md:min-h-[640px]">
     
     <!-- === DESKTOP SIDEBAR === -->
     <aside class="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-between bg-[#F8FAFC]/90 rounded-[28px] p-5 border border-slate-200/70 shadow-sm">
       <div class="space-y-6">
-        <!-- Logo -->
+        <!-- Desktop Logo -->
         <a href="index.html" class="flex items-center gap-3 px-2 pt-1 cursor-pointer">
-          <svg class="w-10 h-10 drop-shadow-[0_0_12px_rgba(0,153,255,0.45)] shrink-0" viewBox="0 0 500 500">
-            <use href="#primeAstraLogo" />
+          <svg class="w-11 h-11 shrink-0 drop-shadow-[0_0_12px_rgba(0,153,255,0.45)]" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="deskShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f2fe"/>
+                <stop offset="45%" stop-color="#0099ff"/>
+                <stop offset="100%" stop-color="#004cd8"/>
+              </linearGradient>
+              <linearGradient id="deskStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="60%" stop-color="#00f2fe"/>
+                <stop offset="100%" stop-color="#0088ff"/>
+              </linearGradient>
+            </defs>
+            <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#deskStarGrad)"/>
+            <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#deskShieldGrad)"/>
+            <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#deskShieldGrad)"/>
+            <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#deskShieldGrad)"/>
+            <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#deskShieldGrad)"/>
+            <polygon points="380,55 305,108 335,122 360,170" fill="url(#deskStarGrad)"/>
+            <polygon points="380,55 335,122 360,170" fill="#0055ff"/>
+            <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#deskShieldGrad)"/>
           </svg>
           <div>
             <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
@@ -110,396 +103,415 @@
       </div>
     </aside>
 
-    <!-- === MAIN RIGHT AREA === -->
-    <section class="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col justify-start space-y-4 h-full relative">
+    <!-- === MAIN RIGHT / MOBILE DASHBOARD AREA === -->
+    <section class="flex-1 w-full flex flex-col justify-between space-y-4 md:col-span-8 lg:col-span-9 relative">
       
-      <!-- Top Bar Header with 3D Shield Logo on Mobile -->
-      <header class="flex items-center justify-between gap-3 pt-1 pb-2 border-b md:border-b-0 border-slate-200/60">
-        <div class="flex items-center gap-2.5">
-          <div class="md:hidden">
-            <svg class="w-10 h-10 drop-shadow-[0_0_10px_rgba(0,153,255,0.4)] shrink-0" viewBox="0 0 500 500">
-              <use href="#primeAstraLogo" />
-            </svg>
-          </div>
-          <div>
-            <h2 class="text-base sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-none">
-              Prime<span class="text-purple-600">Astra</span>
-            </h2>
-            <div class="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium mt-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              <span>Workspace Hub</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Header Items -->
-        <div class="flex items-center gap-2 sm:gap-3">
-          <div class="relative">
-            <button type="button" onclick="toggleNotifications()" class="w-9 h-9 rounded-full bg-white border border-slate-200/80 shadow-xs flex items-center justify-center text-slate-600 hover:text-purple-600 cursor-pointer transition">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+      <!-- Top Bar Header (With Full Visible Responsive 3D SVG) -->
+      <div>
+        <header class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200/60">
+          <div class="flex items-center gap-2.5">
+            <!-- Mobile 3D Shield Logo (Fixed Sizing & Visible Viewbox) -->
+            <div class="md:hidden w-11 h-11 flex items-center justify-center shrink-0">
+              <svg class="w-11 h-11 drop-shadow-[0_0_10px_rgba(0,153,255,0.45)]" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="mobShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00f2fe"/>
+                    <stop offset="45%" stop-color="#0099ff"/>
+                    <stop offset="100%" stop-color="#004cd8"/>
+                  </linearGradient>
+                  <linearGradient id="mobStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="60%" stop-color="#00f2fe"/>
+                    <stop offset="100%" stop-color="#0088ff"/>
+                  </linearGradient>
+                </defs>
+                <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#mobStarGrad)"/>
+                <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#mobShieldGrad)"/>
+                <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#mobShieldGrad)"/>
+                <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#mobShieldGrad)"/>
+                <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#mobShieldGrad)"/>
+                <polygon points="380,55 305,108 335,122 360,170" fill="url(#mobStarGrad)"/>
+                <polygon points="380,55 335,122 360,170" fill="#0055ff"/>
+                <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#mobShieldGrad)"/>
               </svg>
-              <span class="w-2 h-2 rounded-full bg-rose-500 absolute top-1.5 right-1.5"></span>
-            </button>
-
-            <!-- Notifications Dropdown -->
-            <div id="notifPanel" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 text-xs text-left space-y-2">
-              <div class="flex items-center justify-between border-b pb-2">
-                <span class="font-extrabold text-slate-800">Notifications</span>
-                <span class="text-[10px] text-purple-600 font-bold">1 New</span>
-              </div>
-              <div class="p-2 bg-purple-50/70 rounded-xl space-y-0.5">
-                <p class="font-bold text-slate-800 text-[11px]">✨ AI Resume Maker Live!</p>
-                <p class="text-[10px] text-slate-500">Build job-ready resumes in 3 modern formats instantly.</p>
+            </div>
+            <div>
+              <h2 class="text-base sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-none">
+                Prime<span class="text-purple-600">Astra</span>
+              </h2>
+              <div class="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium mt-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span>Workspace Hub</span>
               </div>
             </div>
           </div>
 
-          <!-- Dynamic Auth Slot -->
-          <div id="authSlot">
-            <button onclick="handleGoogleLogin()" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200/90 rounded-full shadow-xs text-xs font-bold text-slate-700 cursor-pointer">
-              <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[11px]">G</span>
-              <span class="text-purple-600 font-bold">Login</span>
+          <!-- Right Header Items -->
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="relative">
+              <button type="button" onclick="toggleNotifications()" class="w-9 h-9 rounded-full bg-white border border-slate-200/80 shadow-xs flex items-center justify-center text-slate-600 hover:text-purple-600 cursor-pointer transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                <span class="w-2 h-2 rounded-full bg-rose-500 absolute top-1.5 right-1.5"></span>
+              </button>
+
+              <!-- Notifications Dropdown -->
+              <div id="notifPanel" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 text-xs text-left space-y-2">
+                <div class="flex items-center justify-between border-b pb-2">
+                  <span class="font-extrabold text-slate-800">Notifications</span>
+                  <span class="text-[10px] text-purple-600 font-bold">1 New</span>
+                </div>
+                <div class="p-2 bg-purple-50/70 rounded-xl space-y-0.5">
+                  <p class="font-bold text-slate-800 text-[11px]">✨ AI Resume Maker Live!</p>
+                  <p class="text-[10px] text-slate-500">Build job-ready resumes in 3 modern formats instantly.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Auth Slot -->
+            <div id="authSlot">
+              <button onclick="handleGoogleLogin()" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200/90 rounded-full shadow-xs text-xs font-bold text-slate-700 cursor-pointer">
+                <span class="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center text-[11px] font-bold">G</span>
+                <span class="text-purple-600 font-bold">Login</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- ==============================================
+             VIEW 1: HOME WORKSPACE HUB FEED
+             ============================================== -->
+        <div id="homeFeedView" class="space-y-4 w-full pt-3">
+          <div class="flex items-center justify-between pt-1">
+            <div>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">GOOD DAY 👋</span>
+              <h3 class="text-sm sm:text-base font-extrabold text-slate-800">
+                Welcome back, <span class="text-purple-600" id="userGreetingName">User</span>
+              </h3>
+            </div>
+            <span class="px-2.5 py-1 bg-purple-100/80 text-purple-700 font-extrabold text-[10px] rounded-lg tracking-wide">
+              PRO Account
+            </span>
+          </div>
+
+          <div class="relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              placeholder="Search tools, utilities &amp; AI prompts..."
+              class="w-full pl-10 pr-10 py-3 bg-white border border-slate-200/90 rounded-2xl text-xs font-semibold placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/25"
+            />
+          </div>
+
+          <div class="hero-gradient text-white rounded-3xl p-6 sm:p-8 text-center space-y-4 shadow-xl shadow-purple-600/25 relative overflow-hidden">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[10px] font-extrabold tracking-wide uppercase border border-white/20">
+              <span class="text-amber-300">★</span>
+              <span>All-in-One Utility Suite</span>
+            </div>
+
+            <div>
+              <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight">
+                Welcome to PrimeAstra Hub
+              </h3>
+              <p class="text-xs sm:text-sm text-purple-100/90 mt-2 max-w-md mx-auto leading-relaxed font-normal">
+                Explore your curated collection of free digital utilities, dev helpers, and AI power tools.
+              </p>
+            </div>
+
+            <button
+              onclick="switchTab('tools')"
+              class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-purple-800 font-extrabold text-xs rounded-xl shadow-md hover:bg-slate-50 transition active:scale-95 cursor-pointer"
+            >
+              <span>Explore Free Tools</span>
+              <span>&rarr;</span>
+            </button>
+
+            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-center max-w-lg mx-auto">
+              <div>
+                <div class="text-base sm:text-lg font-extrabold">1+</div>
+                <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">Live Tools</div>
+              </div>
+              <div>
+                <div class="text-base sm:text-lg font-extrabold">Zero</div>
+                <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">Ads or Limits</div>
+              </div>
+              <div>
+                <div class="text-base sm:text-lg font-extrabold">Instant</div>
+                <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">PDF Export</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trending Tools Section -->
+          <div class="space-y-3 pt-1">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <h4 class="text-xs sm:text-sm font-extrabold text-slate-800">Trending Tools</h4>
+                <span class="px-2 py-0.5 bg-amber-100 text-amber-700 font-extrabold text-[9px] rounded-md">Hot</span>
+              </div>
+              <button onclick="switchTab('tools')" class="text-[11px] font-bold text-purple-600 hover:underline">View All Tools</button>
+            </div>
+
+            <div onclick="openResumeMakerTool()" class="p-4 bg-white rounded-2xl border border-purple-200 card-shadow flex items-center justify-between gap-3 cursor-pointer hover:border-purple-400 hover:shadow-md transition active:scale-[0.99]">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center text-xl shadow-sm shrink-0">
+                  📝
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5">
+                    <h5 class="text-sm font-extrabold text-slate-800 truncate">AI Resume Maker</h5>
+                    <span class="px-1.5 py-0.2 bg-emerald-100 text-emerald-700 font-extrabold text-[9px] rounded">Live &amp; Ready</span>
+                  </div>
+                  <p class="text-[11px] text-slate-500 truncate mt-0.5">Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.</p>
+                </div>
+              </div>
+              <button class="px-4 py-2 bg-purple-50 text-purple-700 hover:bg-purple-600 hover:text-white rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer">
+                Open &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             VIEW 2: FREE TOOLS DIRECTORY (Card View)
+             ============================================== -->
+        <div id="toolsDirectoryView" class="hidden space-y-4 w-full text-left pt-3">
+          <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-slate-800">Free Tools</h3>
+              <p class="text-xs text-slate-500">Fast, local, and 100% free client-side utilities.</p>
+            </div>
+            <span class="px-2.5 py-1 bg-purple-100 text-purple-700 font-bold text-[11px] rounded-lg">
+              1 Tool Live
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-1">
+            <div onclick="openResumeMakerTool()" class="group bg-white p-4 rounded-2xl border border-slate-200/90 hover:border-purple-300 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between">
+              <div class="flex items-start gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm font-bold text-slate-800 leading-snug group-hover:text-purple-600 transition truncate">
+                    AI Resume Maker
+                  </h4>
+                  <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
+                    Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-3 mt-3 border-t border-slate-100 text-[10px]">
+                <span class="px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md font-semibold">
+                  Career &amp; Docs
+                </span>
+                <span class="text-purple-600 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
+                  Open Tool &rarr;
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             VIEW 3: RESUME MAKER WORKSPACE VIEW
+             ============================================== -->
+        <div id="resumeMakerView" class="hidden space-y-4 w-full text-left pt-3">
+          <div class="p-3.5 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+              <button onclick="switchTab('tools')" class="p-1.5 bg-white/20 hover:bg-white/30 rounded-xl transition cursor-pointer" title="Back to Tools">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              </button>
+              <div>
+                <h2 class="text-base font-bold flex items-center gap-2">
+                  <span>✨</span> AI Resume Maker
+                </h2>
+                <p class="text-[11px] text-purple-100">Live preview &amp; printable PDF ready</p>
+              </div>
+            </div>
+
+            <button onclick="window.print()" class="flex items-center justify-center gap-1.5 px-4 py-2 bg-white text-indigo-900 rounded-xl text-xs font-bold shadow hover:bg-slate-100 transition cursor-pointer w-full sm:w-auto">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <span>Download PDF / Print</span>
             </button>
           </div>
-        </div>
-      </header>
 
-      <!-- ==============================================
-           VIEW 1: HOME WORKSPACE HUB FEED
-           ============================================== -->
-      <div id="homeFeedView" class="space-y-4 w-full">
-        <div class="flex items-center justify-between pt-1">
-          <div>
-            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">GOOD DAY 👋</span>
-            <h3 class="text-sm sm:text-base font-extrabold text-slate-800">
-              Welcome back, <span class="text-purple-600" id="userGreetingName">User</span>
-            </h3>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <div class="lg:col-span-6 space-y-4">
+              <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                  <span class="font-bold text-slate-700">Select Template:</span>
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="setResumeTemplate('modern')" id="tmplBtnModern" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow-xs cursor-pointer">Modern</button>
+                    <button type="button" onclick="setResumeTemplate('classic')" id="tmplBtnClassic" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">Classic</button>
+                    <button type="button" onclick="setResumeTemplate('executive')" id="tmplBtnExecutive" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">Executive</button>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+                  <div class="flex items-center gap-2">
+                    <span class="font-semibold text-slate-600">Theme Color:</span>
+                    <input type="color" id="resumeThemeColor" value="#1e3a8a" onchange="renderResumePreview()" class="w-7 h-7 rounded-lg border-0 cursor-pointer" />
+                  </div>
+                  <button type="button" onclick="location.reload()" class="text-slate-500 hover:text-slate-800 text-xs cursor-pointer">Reset</button>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
+                <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Personal Details</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <div>
+                    <label class="text-[10px] font-semibold text-slate-500">Full Name</label>
+                    <input type="text" id="rName" value="Shubham Singh" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                  </div>
+                  <div>
+                    <label class="text-[10px] font-semibold text-slate-500">Job Title / Post</label>
+                    <input type="text" id="rTitle" value="Computer Operator & Executive" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                  </div>
+                  <div>
+                    <label class="text-[10px] font-semibold text-slate-500">Mobile</label>
+                    <input type="text" id="rPhone" value="+91 9876543210" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                  </div>
+                  <div>
+                    <label class="text-[10px] font-semibold text-slate-500">Email</label>
+                    <input type="email" id="rEmail" value="shubham@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label class="text-[10px] font-semibold text-slate-500">Address</label>
+                    <input type="text" id="rAddress" value="Roorkee, Uttarakhand" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label class="text-[10px] font-semibold text-slate-500">Profile Summary</label>
+                    <textarea rows="2" id="rSummary" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs">Dedicated professional with hands-on experience in computer operations, digital documentation, and online client management.</textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 text-xs">
+                <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Skills &amp; Languages</h3>
+                <div>
+                  <label class="text-[10px] font-semibold text-slate-500">Skills (comma separated)</label>
+                  <input type="text" id="rSkills" value="MS Office, Data Entry, Computer Operations, Typing, Documentation" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                </div>
+                <div>
+                  <label class="text-[10px] font-semibold text-slate-500">Languages</label>
+                  <input type="text" id="rLanguages" value="Hindi, English" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-6 bg-slate-200/80 p-2 sm:p-3 rounded-2xl border border-slate-300 flex justify-center lg:sticky lg:top-0 w-full overflow-x-auto">
+              <div id="resumePreviewContainer" class="w-full min-w-[320px]"></div>
+            </div>
           </div>
-          <span class="px-2.5 py-1 bg-purple-100/80 text-purple-700 font-extrabold text-[10px] rounded-lg tracking-wide">
-            PRO Account
-          </span>
         </div>
 
-        <div class="relative">
-          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input
-            type="text"
-            placeholder="Search tools, utilities &amp; AI prompts..."
-            class="w-full pl-10 pr-10 py-3 bg-white border border-slate-200/90 rounded-2xl text-xs font-semibold placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/25"
-          />
-        </div>
-
-        <div class="hero-gradient text-white rounded-3xl p-6 sm:p-8 text-center space-y-4 shadow-xl shadow-purple-600/25 relative overflow-hidden">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[10px] font-extrabold tracking-wide uppercase border border-white/20">
-            <span class="text-amber-300">★</span>
-            <span>All-in-One Utility Suite</span>
-          </div>
-
-          <div>
-            <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight">
-              Welcome to PrimeAstra Hub
-            </h3>
-            <p class="text-xs sm:text-sm text-purple-100/90 mt-2 max-w-md mx-auto leading-relaxed font-normal">
-              Explore your curated collection of free digital utilities, dev helpers, and AI power tools.
-            </p>
-          </div>
-
-          <button
-            onclick="switchTab('tools')"
-            class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-purple-800 font-extrabold text-xs rounded-xl shadow-md hover:bg-slate-50 transition active:scale-95 cursor-pointer"
-          >
-            <span>Explore Free Tools</span>
-            <span>&rarr;</span>
-          </button>
-
-          <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/15 text-center max-w-lg mx-auto">
+        <!-- ==============================================
+             VIEW 4: SAVED TOOLS VIEW
+             ============================================== -->
+        <div id="savedView" class="hidden space-y-4 w-full text-left pt-3">
+          <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
             <div>
-              <div class="text-base sm:text-lg font-extrabold">1+</div>
-              <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">Live Tools</div>
+              <h3 class="text-lg font-bold text-slate-800">Saved Tools</h3>
+              <p class="text-xs text-slate-500">Your favorite utilities for quick access.</p>
             </div>
-            <div>
-              <div class="text-base sm:text-lg font-extrabold">Zero</div>
-              <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">Ads or Limits</div>
-            </div>
-            <div>
-              <div class="text-base sm:text-lg font-extrabold">Instant</div>
-              <div class="text-[9px] sm:text-[10px] text-purple-200 font-medium">PDF Export</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Trending Tools Section -->
-        <div class="space-y-3 pt-1">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <h4 class="text-xs sm:text-sm font-extrabold text-slate-800">Trending Tools</h4>
-              <span class="px-2 py-0.5 bg-amber-100 text-amber-700 font-extrabold text-[9px] rounded-md">Hot</span>
-            </div>
-            <button onclick="switchTab('tools')" class="text-[11px] font-bold text-purple-600 hover:underline">View All Tools</button>
+            <span class="px-2.5 py-1 bg-purple-100 text-purple-700 font-bold text-[11px] rounded-lg">
+              1 Saved
+            </span>
           </div>
 
-          <div onclick="openResumeMakerTool()" class="p-4 bg-white rounded-2xl border border-purple-200 card-shadow flex items-center justify-between gap-3 cursor-pointer hover:border-purple-400 hover:shadow-md transition active:scale-[0.99]">
-            <div class="flex items-center gap-3.5 min-w-0">
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center text-xl shadow-sm shrink-0">
+          <div class="p-4 bg-white rounded-2xl border border-purple-200 card-shadow flex items-center justify-between gap-3 cursor-pointer" onclick="openResumeMakerTool()">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center text-xl shadow-sm">
                 📝
               </div>
-              <div class="min-w-0">
-                <div class="flex items-center gap-1.5">
-                  <h5 class="text-sm font-extrabold text-slate-800 truncate">AI Resume Maker</h5>
-                  <span class="px-1.5 py-0.2 bg-emerald-100 text-emerald-700 font-extrabold text-[9px] rounded">Live &amp; Ready</span>
-                </div>
-                <p class="text-[11px] text-slate-500 truncate mt-0.5">Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.</p>
-              </div>
-            </div>
-            <button class="px-4 py-2 bg-purple-50 text-purple-700 hover:bg-purple-600 hover:text-white rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer">
-              Open &rarr;
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ==============================================
-           VIEW 2: FREE TOOLS DIRECTORY (Card View)
-           ============================================== -->
-      <div id="toolsDirectoryView" class="hidden space-y-4 w-full text-left">
-        <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
-          <div>
-            <h3 class="text-lg font-bold text-slate-800">Free Tools</h3>
-            <p class="text-xs text-slate-500">Fast, local, and 100% free client-side utilities.</p>
-          </div>
-          <span class="px-2.5 py-1 bg-purple-100 text-purple-700 font-bold text-[11px] rounded-lg">
-            1 Tool Live
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-1">
-          <div onclick="openResumeMakerTool()" class="group bg-white p-4 rounded-2xl border border-slate-200/90 hover:border-purple-300 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between">
-            <div class="flex items-start gap-3.5">
-              <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-              </div>
-
-              <div class="flex-1 min-w-0">
-                <h4 class="text-sm font-bold text-slate-800 leading-snug group-hover:text-purple-600 transition truncate">
-                  AI Resume Maker
-                </h4>
-                <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
-                  Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.
-                </p>
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between pt-3 mt-3 border-t border-slate-100 text-[10px]">
-              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md font-semibold">
-                Career &amp; Docs
-              </span>
-              <span class="text-purple-600 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
-                Open Tool &rarr;
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ==============================================
-           VIEW 3: RESUME MAKER WORKSPACE VIEW
-           ============================================== -->
-      <div id="resumeMakerView" class="hidden space-y-4 w-full text-left">
-        <div class="p-3.5 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-sm">
-          <div class="flex items-center gap-3">
-            <button onclick="switchTab('tools')" class="p-1.5 bg-white/20 hover:bg-white/30 rounded-xl transition cursor-pointer" title="Back to Tools">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
-            <div>
-              <h2 class="text-base font-bold flex items-center gap-2">
-                <span>✨</span> AI Resume Maker
-              </h2>
-              <p class="text-[11px] text-purple-100">Live preview &amp; printable PDF ready</p>
-            </div>
-          </div>
-
-          <button onclick="window.print()" class="flex items-center justify-center gap-1.5 px-4 py-2 bg-white text-indigo-900 rounded-xl text-xs font-bold shadow hover:bg-slate-100 transition cursor-pointer w-full sm:w-auto">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            <span>Download PDF / Print</span>
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-          <div class="lg:col-span-6 space-y-4">
-            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
-              <div class="flex items-center justify-between flex-wrap gap-2">
-                <span class="font-bold text-slate-700">Select Template:</span>
-                <div class="flex items-center gap-1.5">
-                  <button type="button" onclick="setResumeTemplate('modern')" id="tmplBtnModern" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-600 text-white shadow-xs cursor-pointer">Modern</button>
-                  <button type="button" onclick="setResumeTemplate('classic')" id="tmplBtnClassic" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">Classic</button>
-                  <button type="button" onclick="setResumeTemplate('executive')" id="tmplBtnExecutive" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">Executive</button>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between pt-2 border-t border-slate-100">
-                <div class="flex items-center gap-2">
-                  <span class="font-semibold text-slate-600">Theme Color:</span>
-                  <input type="color" id="resumeThemeColor" value="#1e3a8a" onchange="renderResumePreview()" class="w-7 h-7 rounded-lg border-0 cursor-pointer" />
-                </div>
-                <button type="button" onclick="location.reload()" class="text-slate-500 hover:text-slate-800 text-xs cursor-pointer">Reset</button>
-              </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
-              <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Personal Details</h3>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                <div>
-                  <label class="text-[10px] font-semibold text-slate-500">Full Name</label>
-                  <input type="text" id="rName" value="Shubham Singh" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                </div>
-                <div>
-                  <label class="text-[10px] font-semibold text-slate-500">Job Title / Post</label>
-                  <input type="text" id="rTitle" value="Computer Operator & Executive" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                </div>
-                <div>
-                  <label class="text-[10px] font-semibold text-slate-500">Mobile</label>
-                  <input type="text" id="rPhone" value="+91 9876543210" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                </div>
-                <div>
-                  <label class="text-[10px] font-semibold text-slate-500">Email</label>
-                  <input type="email" id="rEmail" value="shubham@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                </div>
-                <div class="sm:col-span-2">
-                  <label class="text-[10px] font-semibold text-slate-500">Address</label>
-                  <input type="text" id="rAddress" value="Roorkee, Uttarakhand" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
-                </div>
-                <div class="sm:col-span-2">
-                  <label class="text-[10px] font-semibold text-slate-500">Profile Summary</label>
-                  <textarea rows="2" id="rSummary" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs">Dedicated professional with hands-on experience in computer operations, digital documentation, and online client management.</textarea>
-                </div>
-              </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 text-xs">
-              <h3 class="text-xs font-bold text-slate-800 border-b pb-1">Skills &amp; Languages</h3>
               <div>
-                <label class="text-[10px] font-semibold text-slate-500">Skills (comma separated)</label>
-                <input type="text" id="rSkills" value="MS Office, Data Entry, Computer Operations, Typing, Documentation" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+                <h5 class="text-sm font-extrabold text-slate-800">AI Resume Maker</h5>
+                <p class="text-[11px] text-slate-500">Bookmarked utility for instant PDF creation.</p>
               </div>
-              <div>
-                <label class="text-[10px] font-semibold text-slate-500">Languages</label>
-                <input type="text" id="rLanguages" value="Hindi, English" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs" />
+            </div>
+            <button class="px-3.5 py-1.5 bg-purple-50 text-purple-700 rounded-xl text-xs font-extrabold">Open</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             VIEW 5: PROFILE & SETTINGS VIEW (Photo Upload/Delete & Password)
+             ============================================== -->
+        <div id="profileView" class="hidden space-y-5 w-full text-left pt-3">
+          <div class="border-b border-slate-200/80 pb-3">
+            <h3 class="text-lg font-bold text-slate-800">User Profile &amp; Settings</h3>
+            <p class="text-xs text-slate-500">Manage account information, security, and profile photo.</p>
+          </div>
+
+          <div class="bg-white p-5 rounded-3xl border border-slate-200/80 card-shadow space-y-4">
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+              <div class="relative group">
+                <div id="profilePhotoWrapper" class="w-20 h-20 rounded-2xl overflow-hidden bg-slate-900 border-2 border-purple-300 shadow-md flex items-center justify-center">
+                  <span id="profilePhotoInitial" class="text-2xl font-black text-white">S</span>
+                  <img id="profilePhotoImage" class="w-full h-full object-cover hidden" alt="Profile" />
+                </div>
               </div>
+
+              <div class="flex-1 space-y-1">
+                <h4 id="profileNameDisplay" class="text-base font-extrabold text-slate-800">Shubham Singh</h4>
+                <p id="profileEmailDisplay" class="text-xs text-slate-500">shubham@example.com</p>
+                <div class="flex items-center justify-center sm:justify-start gap-2 pt-1">
+                  <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 font-bold text-[10px] rounded-md">Verified Account</span>
+                  <span class="px-2.5 py-0.5 bg-purple-100 text-purple-700 font-bold text-[10px] rounded-md">PRO Member</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 flex flex-wrap gap-2 items-center justify-center sm:justify-start">
+              <input type="file" id="customPhotoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)" />
+              
+              <button onclick="document.getElementById('customPhotoInput').click()" class="px-3.5 py-2 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5">
+                <span>📷</span> Upload Photo
+              </button>
+
+              <button onclick="handlePhotoDelete()" class="px-3.5 py-2 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5">
+                <span>🗑️</span> Remove Photo
+              </button>
             </div>
           </div>
 
-          <div class="lg:col-span-6 bg-slate-200/80 p-2 sm:p-3 rounded-2xl border border-slate-300 flex justify-center lg:sticky lg:top-0 w-full overflow-x-auto">
-            <div id="resumePreviewContainer" class="w-full min-w-[320px]"></div>
-          </div>
-        </div>
-      </div>
+          <div class="bg-white p-5 rounded-3xl border border-slate-200/80 card-shadow space-y-3">
+            <h4 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+              <span>🔒</span> Security &amp; Password
+            </h4>
+            <p class="text-xs text-slate-500">
+              Forgot or want to change your password? We will send an official password reset link directly to your registered email address.
+            </p>
 
-      <!-- ==============================================
-           VIEW 4: SAVED TOOLS VIEW
-           ============================================== -->
-      <div id="savedView" class="hidden space-y-4 w-full text-left">
-        <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
-          <div>
-            <h3 class="text-lg font-bold text-slate-800">Saved Tools</h3>
-            <p class="text-xs text-slate-500">Your favorite utilities for quick access.</p>
-          </div>
-          <span class="px-2.5 py-1 bg-purple-100 text-purple-700 font-bold text-[11px] rounded-lg">
-            1 Saved
-          </span>
-        </div>
-
-        <div class="p-4 bg-white rounded-2xl border border-purple-200 card-shadow flex items-center justify-between gap-3 cursor-pointer" onclick="openResumeMakerTool()">
-          <div class="flex items-center gap-3.5">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center text-xl shadow-sm">
-              📝
+            <div class="pt-1 flex flex-col sm:flex-row items-center gap-3">
+              <button onclick="handlePasswordReset()" class="w-full sm:w-auto px-4 py-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-xl text-xs font-bold shadow transition cursor-pointer flex items-center justify-center gap-1.5">
+                <span>Send Password Reset Email</span>
+              </button>
+              <span id="passwordResetStatus" class="text-xs font-semibold text-emerald-600 hidden">Link sent successfully!</span>
             </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 flex items-center justify-between">
             <div>
-              <h5 class="text-sm font-extrabold text-slate-800">AI Resume Maker</h5>
-              <p class="text-[11px] text-slate-500">Bookmarked utility for instant PDF creation.</p>
+              <p class="text-xs font-bold text-slate-700">Account Session</p>
+              <p class="text-[10px] text-slate-400">Sign out of this browser</p>
             </div>
+            <button id="profileAuthBtn" onclick="handleLogout()" class="px-4 py-2 bg-rose-500 text-white rounded-xl text-xs font-bold hover:bg-rose-600 transition cursor-pointer">
+              Logout
+            </button>
           </div>
-          <button class="px-3.5 py-1.5 bg-purple-50 text-purple-700 rounded-xl text-xs font-extrabold">Open</button>
         </div>
+
       </div>
 
-      <!-- ==============================================
-           VIEW 5: PROFILE & SETTINGS VIEW (Photo Upload/Delete & Password)
-           ============================================== -->
-      <div id="profileView" class="hidden space-y-5 w-full text-left">
-        <div class="border-b border-slate-200/80 pb-3">
-          <h3 class="text-lg font-bold text-slate-800">User Profile &amp; Settings</h3>
-          <p class="text-xs text-slate-500">Manage account information, security, and profile photo.</p>
-        </div>
-
-        <!-- User Information Card -->
-        <div class="bg-white p-5 rounded-3xl border border-slate-200/80 card-shadow space-y-4">
-          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
-            
-            <!-- Profile Avatar / Image Display -->
-            <div class="relative group">
-              <div id="profilePhotoWrapper" class="w-20 h-20 rounded-2xl overflow-hidden bg-slate-900 border-2 border-purple-300 shadow-md flex items-center justify-center">
-                <span id="profilePhotoInitial" class="text-2xl font-black text-white">S</span>
-                <img id="profilePhotoImage" class="w-full h-full object-cover hidden" alt="Profile" />
-              </div>
-            </div>
-
-            <div class="flex-1 space-y-1">
-              <h4 id="profileNameDisplay" class="text-base font-extrabold text-slate-800">Shubham Singh</h4>
-              <p id="profileEmailDisplay" class="text-xs text-slate-500">shubham@example.com</p>
-              <div class="flex items-center justify-center sm:justify-start gap-2 pt-1">
-                <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 font-bold text-[10px] rounded-md">Verified Account</span>
-                <span class="px-2.5 py-0.5 bg-purple-100 text-purple-700 font-bold text-[10px] rounded-md">PRO Member</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Photo Action Buttons (Upload / Delete) -->
-          <div class="pt-3 border-t border-slate-100 flex flex-wrap gap-2 items-center justify-center sm:justify-start">
-            <input type="file" id="customPhotoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)" />
-            
-            <button onclick="document.getElementById('customPhotoInput').click()" class="px-3.5 py-2 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5">
-              <span>📷</span> Upload Photo
-            </button>
-
-            <button onclick="handlePhotoDelete()" class="px-3.5 py-2 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5">
-              <span>🗑️</span> Remove Photo
-            </button>
-          </div>
-        </div>
-
-        <!-- Security & Password Reset Card -->
-        <div class="bg-white p-5 rounded-3xl border border-slate-200/80 card-shadow space-y-3">
-          <h4 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-            <span>🔒</span> Security &amp; Password
-          </h4>
-          <p class="text-xs text-slate-500">
-            Forgot or want to change your password? We will send an official password reset link directly to your registered email address.
-          </p>
-
-          <div class="pt-1 flex flex-col sm:flex-row items-center gap-3">
-            <button onclick="handlePasswordReset()" class="w-full sm:w-auto px-4 py-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-xl text-xs font-bold shadow transition cursor-pointer flex items-center justify-center gap-1.5">
-              <span>Send Password Reset Email</span>
-            </button>
-            <span id="passwordResetStatus" class="text-xs font-semibold text-emerald-600 hidden">Link sent successfully!</span>
-          </div>
-        </div>
-
-        <!-- Account Controls Footer -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 flex items-center justify-between">
-          <div>
-            <p class="text-xs font-bold text-slate-700">Account Session</p>
-            <p class="text-[10px] text-slate-400">Sign out of this browser</p>
-          </div>
-          <button id="profileAuthBtn" onclick="handleLogout()" class="px-4 py-2 bg-rose-500 text-white rounded-xl text-xs font-bold hover:bg-rose-600 transition cursor-pointer">
-            Logout
-          </button>
-        </div>
-      </div>
-
+      <!-- Bottom Padding Filler to completely eliminate gaps -->
+      <div class="w-full py-2"></div>
     </section>
   </main>
 
@@ -535,7 +547,7 @@
       signInWithPopup, 
       onAuthStateChanged, 
       signOut, 
-      sendPasswordResetEmail,
+      sendPasswordResetEmail, 
       updateProfile 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -565,7 +577,7 @@
     const profilePhotoInitial = document.getElementById('profilePhotoInitial');
     const profileAuthBtn = document.getElementById('profileAuthBtn');
 
-    // Instant local cache recovery to prevent showing "Guest" on mobile reload
+    // Instant local cache recovery so mobile refresh never shows "Guest"
     const cachedName = localStorage.getItem('pa_cached_name');
     const cachedPhoto = localStorage.getItem('pa_cached_photo');
     if (cachedName) {
@@ -608,7 +620,6 @@
       await signOut(auth);
     };
 
-    // Profile Photo Update (Local base64 storage & sync)
     window.handlePhotoUpload = (event) => {
       const file = event.target.files[0];
       if (!file) return;
@@ -616,12 +627,9 @@
       const reader = new FileReader();
       reader.onload = async (e) => {
         const base64Photo = e.target.result;
-        
-        // Show photo immediately
         profilePhotoImage.src = base64Photo;
         profilePhotoImage.classList.remove('hidden');
         profilePhotoInitial.classList.add('hidden');
-
         localStorage.setItem('pa_cached_photo', base64Photo);
 
         if (activeUser) {
@@ -637,7 +645,6 @@
       reader.readAsDataURL(file);
     };
 
-    // Remove photo and fallback to Google Photo or default initial
     window.handlePhotoDelete = async () => {
       localStorage.removeItem('pa_cached_photo');
       const fallbackPhoto = activeUser?.providerData?.[0]?.photoURL || '';
@@ -664,7 +671,6 @@
       }
     };
 
-    // Change Password link via registered email
     window.handlePasswordReset = async () => {
       if (!activeUser || !activeUser.email) {
         alert("Please login first to reset your password.");
@@ -699,7 +705,6 @@
       }
     }
 
-    // Auth State Listener with instant session restore
     onAuthStateChanged(auth, async (user) => {
       activeUser = user;
       if (user) {
@@ -756,7 +761,6 @@
       }
     });
 
-    // View Navigation Controller
     window.switchTab = (tab) => {
       document.getElementById('homeFeedView').classList.add('hidden');
       document.getElementById('toolsDirectoryView').classList.add('hidden');
@@ -898,9 +902,13 @@
                 <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Experience</h4>
                 <p class="text-[8.5px] font-bold">Computer Operator - Digital Seva Center (2021 - Present)</p>
               </div>
-              <div>
+              <div class="mb-2.5">
                 <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Education</h4>
                 <p class="text-[8.5px]"><strong>12th Commerce</strong> - DAV Inter College (First Division)</p>
+              </div>
+              <div>
+                <h4 class="text-[10px] font-bold uppercase border-b pb-0.5 mb-1" style="color: ${color}">Skills</h4>
+                <p class="text-[8.5px] text-slate-700">${skills}</p>
               </div>
             </div>
             <div class="border-t pt-1 text-[8px] text-slate-400 text-center">PrimeAstra Classic Template</div>

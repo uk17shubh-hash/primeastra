@@ -1,6 +1,6 @@
 // src/tools/ResumeMaker.tsx
 import React, { useRef } from 'react';
-import { ResumeData, ExperienceItem, EducationItem } from '../types/resume';
+import { ResumeData, ExperienceItem, EducationItem } from '../types/resume.ts';
 import { useNotification } from '../../context/NitificationContext.tsx';
 import { ArrowLeft, Plus, Trash2, Printer, CheckCircle } from 'lucide-react';
 

@@ -615,7 +615,7 @@
     const profilePhotoInitial = document.getElementById('profilePhotoInitial');
     const profileAuthBtn = document.getElementById('profileAuthBtn');
 
-    // === NOTIFICATION SYSTEM: ONLY INSIDE BELL DROPDOWN ===
+    // === NOTIFICATION SYSTEM: ONLY LOGS IN BELL DROPDOWN (NO ON-SCREEN POPUPS) ===
     window.pushNotification = (title, message) => {
       const notifList = document.getElementById('notifList');
       if (notifList) {
@@ -628,7 +628,7 @@
         notifList.prepend(item);
       }
 
-      // Bell icon indicator
+      // Show red notification badge on bell
       const badge = document.getElementById('notifBadge');
       if (badge) {
         badge.classList.remove('hidden');
@@ -949,7 +949,7 @@
       renderResumePreview();
     };
 
-    // === FULL-PAGE A4 EXPORT (NO HALF PAGE) ===
+    // === EXACT 100% FULL A4 PAGE PDF EXPORT (NO HALF PAGE) ===
     window.downloadResumePdfDirect = () => {
       const nameInput = document.getElementById('rName');
       if (!nameInput.value.trim()) {
@@ -966,20 +966,34 @@
       const btnText = document.getElementById('downloadBtnText');
       btnText.innerText = "Exporting Full A4 PDF...";
 
-      // Standard A4 dimensions at 96 DPI: 794px width x 1123px height
+      // Standard A4 exact print clone at 794px width x 1123px height
       const printClone = innerContent.cloneNode(true);
       printClone.style.width = "794px";
       printClone.style.minHeight = "1123px";
+      printClone.style.height = "1123px"; // Full A4 stretch
       printClone.style.boxSizing = "border-box";
-      printClone.style.padding = "28px";
       printClone.style.margin = "0";
+      printClone.style.padding = "0";
+      printClone.style.borderRadius = "0";
 
-      // Wrapper offscreen
+      // Ensure left and right columns stretch full height to bottom of A4
+      const leftCol = printClone.children[0];
+      const rightCol = printClone.children[1];
+      if (leftCol && rightCol) {
+        leftCol.style.minHeight = "1123px";
+        leftCol.style.padding = "40px 24px";
+        rightCol.style.minHeight = "1123px";
+        rightCol.style.padding = "40px 32px";
+      }
+
+      // Hidden off-screen wrapper
       const wrapper = document.createElement('div');
       wrapper.style.position = "fixed";
       wrapper.style.left = "-9999px";
       wrapper.style.top = "0";
       wrapper.style.width = "794px";
+      wrapper.style.height = "1123px";
+      wrapper.style.overflow = "hidden";
       wrapper.appendChild(printClone);
       document.body.appendChild(wrapper);
 
@@ -992,6 +1006,7 @@
           useCORS: true, 
           scrollY: 0,
           width: 794,
+          height: 1123,
           windowWidth: 794
         },
         jsPDF:        { unit: 'px', format: [794, 1123], orientation: 'portrait' }
@@ -1000,7 +1015,7 @@
       html2pdf().set(opt).from(printClone).save().then(() => {
         document.body.removeChild(wrapper);
         btnText.innerText = "Download PDF";
-        pushNotification('PDF Downloaded', `${fileName}_Resume.pdf downloaded successfully.`);
+        pushNotification('PDF Downloaded', `${fileName}_Resume.pdf full A4 page par save ho gaya.`);
       }).catch((err) => {
         console.error(err);
         document.body.removeChild(wrapper);
@@ -1009,7 +1024,7 @@
       });
     };
 
-    // Live Resume Renderer (Fixes cutting & fits full job/education fields)
+    // Live Resume Renderer (Fixes preview cuts & matches standard A4)
     window.renderResumePreview = () => {
       const name = document.getElementById('rName').value.trim() || 'Your Full Name';
       const title = document.getElementById('rTitle').value.trim() || 'Job Title / Designation';
@@ -1071,8 +1086,8 @@
 
       if (window.activeResumeTemplate === 'modern') {
         container.innerHTML = `
-          <div class="w-full bg-white flex min-h-[580px] text-slate-800" style="font-family: sans-serif;">
-            <div class="w-[34%] text-white p-4 sm:p-5 flex flex-col justify-start shrink-0" style="background-color: ${color}">
+          <div class="w-full bg-white flex min-h-[720px] text-slate-800" style="font-family: sans-serif;">
+            <div class="w-[35%] text-white p-4 sm:p-5 flex flex-col justify-start shrink-0" style="background-color: ${color}">
               <div class="space-y-4">
                 <div>
                   <h5 class="text-[10.5px] font-bold uppercase tracking-wider text-slate-300 border-b border-white/20 pb-1 mb-1.5">Contact</h5>
@@ -1092,7 +1107,7 @@
                 </div>
               </div>
             </div>
-            <div class="w-[66%] p-5 sm:p-6 flex flex-col justify-start space-y-3 min-w-0">
+            <div class="w-[65%] p-5 sm:p-6 flex flex-col justify-start space-y-3 min-w-0">
               <div class="border-b border-slate-200 pb-2 mb-1">
                 <h2 class="text-lg sm:text-xl font-black truncate" style="color: ${color}">${name}</h2>
                 <p class="text-[11px] font-bold text-slate-500 uppercase truncate mt-0.5">${title}</p>
@@ -1117,7 +1132,7 @@
         `;
       } else if (window.activeResumeTemplate === 'classic') {
         container.innerHTML = `
-          <div class="w-full bg-white p-6 sm:p-7 flex flex-col justify-start min-h-[580px] text-slate-800" style="font-family: serif;">
+          <div class="w-full bg-white p-6 sm:p-7 flex flex-col justify-start min-h-[720px] text-slate-800" style="font-family: serif;">
             <div class="text-center border-b border-slate-200 pb-3 mb-3">
               <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 truncate">${name}</h2>
               <p class="text-[11px] font-semibold text-slate-600 uppercase mt-0.5 truncate">${title}</p>
@@ -1147,7 +1162,7 @@
         `;
       } else {
         container.innerHTML = `
-          <div class="w-full bg-white flex flex-col justify-start min-h-[580px] text-slate-800" style="font-family: sans-serif;">
+          <div class="w-full bg-white flex flex-col justify-start min-h-[720px] text-slate-800" style="font-family: sans-serif;">
             <div class="p-4 sm:p-5 text-white" style="background-color: ${color}">
               <h2 class="text-lg sm:text-xl font-black truncate">${name}</h2>
               <p class="text-[11px] font-medium text-slate-200 truncate mt-0.5">${title}</p>

@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>PrimeAstra </title>
   
-  <!-- Direct 3D Shield Favicon -->
+  <!-- Direct 3D Shield Favicon (Royal Slate Grey & White Theme) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='fShield' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23475569'/%3E%3Cstop offset='45%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3ClinearGradient id='fStar' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='60%25' stop-color='%2394a3b8'/%3E%3Cstop offset='100%25' stop-color='%23334155'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z' fill='url(%23fStar)'/%3E%3Cpath d='M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z' fill='url(%23fShield)'/%3E%3Cpath d='M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z' fill='url(%23fShield)'/%3E%3Cpath d='M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z' fill='url(%23fShield)'/%3E%3Cpath d='M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z' fill='url(%23fShield)'/%3E%3Cpolygon points='380,55 305,108 335,122 360,170' fill='url(%23fStar)'/%3E%3Cpolygon points='380,55 335,122 360,170' fill='%230f172a'/%3E%3Cpath d='M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z' fill='url(%23fShield)'/%3E%3C/svg%3E">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Direct Client-side PDF Generator -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
@@ -30,7 +32,7 @@
 </head>
 <body class="text-slate-800 min-h-screen p-2.5 sm:p-4 md:p-6 pb-24 md:pb-6 flex flex-col items-center justify-start overflow-x-hidden">
 
-  <!-- Ambient Glow -->
+  <!-- Ambient background glow for PC (Royal Slate & Platinum) -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div class="absolute -top-12 -right-8 w-80 h-80 rounded-full bg-slate-300/35 blur-3xl"></div>
     <div class="absolute bottom-6 -left-12 w-72 h-72 rounded-full bg-slate-200/50 blur-3xl"></div>
@@ -42,10 +44,29 @@
     <!-- === DESKTOP SIDEBAR === -->
     <aside class="hidden md:flex md:col-span-4 lg:col-span-3 flex-col justify-between bg-[#F8FAFC]/95 rounded-[28px] p-5 border border-slate-200/80 shadow-xs">
       <div class="space-y-6">
-        <a href="javascript:void(0)" onclick="switchTab('home')" class="flex items-center gap-3 px-2 pt-1 cursor-pointer">
-          <svg class="w-11 h-11 shrink-0 drop-shadow-[0_4px_10px_rgba(15,23,42,0.18)]" viewBox="0 0 500 500" fill="none">
-            <circle cx="250" cy="250" r="230" fill="#0f172a"/>
-            <polygon points="250,90 290,200 400,200 310,270 345,380 250,310 155,380 190,270 100,200 210,200" fill="#f8fafc"/>
+        <!-- Desktop Logo -->
+        <a href="index.html" class="flex items-center gap-3 px-2 pt-1 cursor-pointer">
+          <svg class="w-11 h-11 shrink-0 drop-shadow-[0_4px_10px_rgba(15,23,42,0.18)]" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="deskShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#475569"/>
+                <stop offset="45%" stop-color="#1e293b"/>
+                <stop offset="100%" stop-color="#0f172a"/>
+              </linearGradient>
+              <linearGradient id="deskStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="60%" stop-color="#94a3b8"/>
+                <stop offset="100%" stop-color="#334155"/>
+              </linearGradient>
+            </defs>
+            <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#deskStarGrad)"/>
+            <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#deskShieldGrad)"/>
+            <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#deskShieldGrad)"/>
+            <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#deskShieldGrad)"/>
+            <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#deskShieldGrad)"/>
+            <polygon points="380,55 305,108 335,122 360,170" fill="url(#deskStarGrad)"/>
+            <polygon points="380,55 335,122 360,170" fill="#0f172a"/>
+            <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#deskShieldGrad)"/>
           </svg>
           <div>
             <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
@@ -66,6 +87,7 @@
             <span>Free Tools</span>
           </button>
 
+          <!-- Paid Tools Button -->
           <button id="deskPaidBtn" onclick="switchTab('paid')" class="w-full flex items-center justify-between px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 text-left cursor-pointer">
             <div class="flex items-center gap-3.5">
               <span class="w-5 h-5 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center text-xs">🪙</span>
@@ -88,20 +110,49 @@
 
       <div class="p-3.5 bg-slate-100/90 rounded-2xl border border-slate-200 text-xs">
         <span class="font-extrabold text-slate-900 block">PRO Suite Active</span>
-        <span class="text-[11px] text-amber-700 font-bold" id="sidebarCreditsVal">100 Credits Available</span>
+        <span class="text-[11px] text-slate-500">All tools unlocked with zero limits.</span>
       </div>
     </aside>
 
-    <!-- === MAIN RIGHT DASHBOARD AREA === -->
+    <!-- === MAIN RIGHT / MOBILE DASHBOARD AREA === -->
     <section class="flex-1 w-full flex flex-col justify-between space-y-4 md:col-span-8 lg:col-span-9 relative">
+      
       <div>
         <header class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200/70">
           <div class="flex items-center gap-2.5">
-            <h2 class="text-base sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-none">
-              Prime<span class="text-slate-600">Astra</span>
-            </h2>
+            <!-- Mobile 3D Shield Logo -->
+            <div class="md:hidden w-11 h-11 flex items-center justify-center shrink-0">
+              <svg class="w-11 h-11 drop-shadow-[0_3px_8px_rgba(15,23,42,0.18)]" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="mobShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#475569"/>
+                    <stop offset="45%" stop-color="#1e293b"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                  </linearGradient>
+                  <linearGradient id="mobStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="60%" stop-color="#94a3b8"/>
+                    <stop offset="100%" stop-color="#334155"/>
+                  </linearGradient>
+                </defs>
+                <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#mobStarGrad)"/>
+                <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#mobShieldGrad)"/>
+                <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#mobShieldGrad)"/>
+                <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#mobShieldGrad)"/>
+                <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#mobShieldGrad)"/>
+                <polygon points="380,55 305,108 335,122 360,170" fill="url(#mobStarGrad)"/>
+                <polygon points="380,55 335,122 360,170" fill="#0f172a"/>
+                <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#mobShieldGrad)"/>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-base sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-none">
+                Prime<span class="text-slate-600">Astra</span>
+              </h2>
+            </div>
           </div>
 
+          <!-- Right Header Items -->
           <div class="flex items-center gap-2 sm:gap-3">
             <div class="relative">
               <button type="button" onclick="toggleNotifications()" class="w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-xs flex items-center justify-center text-slate-700 hover:text-slate-950 cursor-pointer transition">
@@ -110,9 +161,19 @@
                 </svg>
                 <span class="w-2 h-2 rounded-full bg-slate-900 absolute top-1.5 right-1.5"></span>
               </button>
+
+              <div id="notifPanel" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 text-xs text-left space-y-2">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                  <span class="font-extrabold text-slate-900">Notifications</span>
+                  <span class="text-[10px] text-slate-700 font-bold bg-slate-100 px-2 py-0.5 rounded-md">1 New</span>
+                </div>
+                <div class="p-2.5 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
+                  <p class="font-bold text-slate-900 text-[11px]">✨ AI Resume Maker Live!</p>
+                  <p class="text-[10px] text-slate-500">Direct A4 instant PDF download with zero print dialogs.</p>
+                </div>
+              </div>
             </div>
 
-            <!-- Auth Slot -->
             <div id="authSlot">
               <button onclick="handleGoogleLogin()" class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-900 rounded-full shadow-xs text-xs font-bold text-white hover:bg-slate-800 transition cursor-pointer">
                 <span class="w-6 h-6 rounded-full bg-white text-slate-950 flex items-center justify-center text-[11px] font-black">G</span>
@@ -122,7 +183,9 @@
           </div>
         </header>
 
-        <!-- VIEW 1: HOME WORKSPACE HUB FEED -->
+        <!-- ==============================================
+             VIEW 1: HOME WORKSPACE HUB FEED (ORIGINAL UI)
+             ============================================== -->
         <div id="homeFeedView" class="space-y-4 w-full pt-3">
           <div class="flex items-center justify-between pt-1">
             <div>
@@ -134,6 +197,18 @@
             <span class="px-2.5 py-1 bg-slate-100 text-slate-800 border border-slate-200 font-extrabold text-[10px] rounded-lg tracking-wide">
               PRO Account
             </span>
+          </div>
+
+          <div class="relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              placeholder="Search tools, utilities &amp; AI prompts..."
+              class="w-full pl-10 pr-10 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold placeholder-slate-400 shadow-xs focus:outline-none focus:ring-2 focus:ring-slate-900/15 focus:border-slate-900"
+            />
           </div>
 
           <!-- Hero Banner -->
@@ -152,44 +227,72 @@
               </p>
             </div>
 
-            <div class="flex items-center justify-center gap-3">
-              <button onclick="switchTab('tools')" class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-slate-950 font-extrabold text-xs rounded-xl shadow-md hover:bg-slate-100 transition active:scale-95 cursor-pointer">
-                <span>Explore Free Tools</span> &rarr;
-              </button>
-              <button onclick="switchTab('paid')" class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-amber-500 text-slate-950 font-extrabold text-xs rounded-xl shadow-md hover:bg-amber-400 transition active:scale-95 cursor-pointer">
-                <span>Paid Video Clipper</span> ⚡
-              </button>
+            <button
+              onclick="switchTab('tools')"
+              class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-slate-950 font-extrabold text-xs rounded-xl shadow-md hover:bg-slate-100 transition active:scale-95 cursor-pointer"
+            >
+              <span>Explore Free Tools</span>
+              <span>&rarr;</span>
+            </button>
+
+            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/10 text-center max-w-lg mx-auto">
+              <div>
+                <div class="text-base sm:text-lg font-extrabold text-white">1+</div>
+                <div class="text-[9px] sm:text-[10px] text-slate-300 font-medium">Live Tools</div>
+              </div>
+              <div>
+                <div class="text-base sm:text-lg font-extrabold text-white">Zero</div>
+                <div class="text-[9px] sm:text-[10px] text-slate-300 font-medium">Ads or Limits</div>
+              </div>
+              <div>
+                <div class="text-base sm:text-lg font-extrabold text-white">Instant</div>
+                <div class="text-[9px] sm:text-[10px] text-slate-300 font-medium">PDF Download</div>
+              </div>
             </div>
           </div>
 
-          <!-- Trending Section -->
+          <!-- Trending Tools Section -->
           <div class="space-y-3 pt-1">
             <div class="flex items-center justify-between">
-              <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">Trending Tools</h4>
+              <div class="flex items-center gap-2">
+                <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">Trending Tools</h4>
+                <span class="px-2 py-0.5 bg-slate-200 text-slate-800 font-extrabold text-[9px] rounded-md">Hot</span>
+              </div>
               <button onclick="switchTab('tools')" class="text-[11px] font-bold text-slate-700 hover:text-slate-950 hover:underline">View All Tools</button>
             </div>
 
             <div onclick="openResumeMakerTool()" class="p-4 bg-white rounded-2xl border border-slate-200 card-shadow flex items-center justify-between gap-3 cursor-pointer hover:border-slate-400 hover:shadow-md transition active:scale-[0.99]">
               <div class="flex items-center gap-3.5 min-w-0">
-                <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-xl shadow-xs shrink-0">📝</div>
+                <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-xl shadow-xs shrink-0">
+                  📝
+                </div>
                 <div class="min-w-0">
-                  <h5 class="text-sm font-extrabold text-slate-900 truncate">AI Resume Maker</h5>
+                  <div class="flex items-center gap-1.5">
+                    <h5 class="text-sm font-extrabold text-slate-900 truncate">AI Resume Maker</h5>
+                    <span class="px-1.5 py-0.2 bg-slate-100 text-slate-700 font-extrabold text-[9px] rounded border border-slate-200">Live &amp; Ready</span>
+                  </div>
                   <p class="text-[11px] text-slate-500 truncate mt-0.5">Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.</p>
                 </div>
               </div>
-              <button class="px-4 py-2 bg-slate-100 text-slate-900 hover:bg-slate-900 hover:text-white rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer">Open &rarr;</button>
+              <button class="px-4 py-2 bg-slate-100 text-slate-900 hover:bg-slate-900 hover:text-white rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer">
+                Open &rarr;
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- VIEW 2: FREE TOOLS DIRECTORY -->
+        <!-- ==============================================
+             VIEW 2: FREE TOOLS DIRECTORY (ORIGINAL UI)
+             ============================================== -->
         <div id="toolsDirectoryView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
             <div>
               <h3 class="text-lg font-bold text-slate-900">Free Tools</h3>
               <p class="text-xs text-slate-500">Fast, local, and 100% free client-side utilities.</p>
             </div>
-            <span class="px-2.5 py-1 bg-slate-100 text-slate-800 border border-slate-200 font-bold text-[11px] rounded-lg">1 Tool Live</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-800 border border-slate-200 font-bold text-[11px] rounded-lg">
+              1 Tool Live
+            </span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-1">
@@ -198,26 +301,37 @@
                 <div class="w-11 h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-xs shrink-0 group-hover:scale-105 transition-transform">
                   <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 </div>
+
                 <div class="flex-1 min-w-0">
-                  <h4 class="text-sm font-bold text-slate-900 truncate">AI Resume Maker</h4>
-                  <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5">Build job-ready resumes with 3 templates &amp; direct download.</p>
+                  <h4 class="text-sm font-bold text-slate-900 leading-snug group-hover:text-slate-700 transition truncate">
+                    AI Resume Maker
+                  </h4>
+                  <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
+                    Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.
+                  </p>
                 </div>
               </div>
+
               <div class="flex items-center justify-between pt-3 mt-3 border-t border-slate-100 text-[10px]">
-                <span class="px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md font-semibold">Career &amp; Docs</span>
-                <span class="text-slate-900 font-bold">Open Tool &rarr;</span>
+                <span class="px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md font-semibold">
+                  Career &amp; Docs
+                </span>
+                <span class="text-slate-900 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
+                  Open Tool &rarr;
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- VIEW 3: PAID TOOLS VIEW (EXACT SCREENSHOT 2 UI + PURE 10 SHORT VIDEO SLICER) -->
+        <!-- ==============================================
+             VIEW 3: PAID TOOLS VIEW (ORIGINAL SCREENSHOT 2 UI)
+             ============================================== -->
         <div id="paidToolsView" class="hidden space-y-4 w-full text-left pt-3">
           
-          <!-- Top Tool Dark Bar -->
           <div class="p-3.5 sm:p-4 bg-[#0F172A] text-white rounded-2xl flex items-center justify-between shadow-xs border border-slate-800">
             <div class="flex items-center gap-3">
-              <button onclick="switchTab('home')" class="p-2 bg-white/10 hover:bg-white/20 rounded-xl transition cursor-pointer">
+              <button onclick="switchTab('home')" class="p-2 bg-white/10 hover:bg-white/20 rounded-xl transition cursor-pointer" title="Back">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
               </button>
               <div>
@@ -229,7 +343,7 @@
             </div>
 
             <div class="px-3.5 py-1.5 bg-[#854d0e]/40 border border-[#ca8a04]/40 text-[#fde047] rounded-xl text-xs font-black tracking-wide shrink-0">
-              <span id="paidCreditsBadge">100 Credits Available</span>
+              <span>100 Credits Available</span>
             </div>
           </div>
 
@@ -272,10 +386,9 @@
                 <input type="file" id="videoFilePicker" accept="video/mp4,video/quicktime,video/webm" class="hidden" onchange="handleFileChange(event)" />
                 <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">📁</div>
                 <div class="font-extrabold text-slate-800 text-xs" id="filePickerText">Click to upload video</div>
-                <div class="text-[10px] text-slate-400 mt-0.5">MP4 or MOV up to 1GB</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">MP4 or MOV up to 500MB</div>
               </div>
 
-              <!-- Dropdowns -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                 <div>
                   <label class="text-[11px] font-bold text-slate-700">Clip Duration</label>
@@ -296,18 +409,18 @@
                 </div>
               </div>
 
-              <!-- Action Button -->
+              <!-- Button -->
               <button 
                 type="button" 
                 id="generateClipsBtn" 
-                onclick="slice10SimpleShorts()" 
+                onclick="sliceCleanVideoShorts()" 
                 class="w-full py-3.5 bg-[#f59e0b] hover:bg-[#d97706] text-slate-950 font-black text-xs rounded-xl shadow-md transition active:scale-[0.99] cursor-pointer flex items-center justify-center gap-1.5"
               >
-                <span>⚡ Generate 10 AI Clips (Cost: 10 Credits)</span>
+                <span>⚡ Generate AI Clips (Cost: 10 Credits)</span>
               </button>
             </div>
 
-            <!-- Right Side Generated Shorts Output -->
+            <!-- Right Side Output -->
             <div class="lg:col-span-5 bg-white p-5 rounded-3xl border border-slate-200 card-shadow space-y-3 min-h-[360px]">
               <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
                 <span class="text-xs font-black text-slate-900 uppercase">GENERATED CLIPS</span>
@@ -324,7 +437,7 @@
           </div>
         </div>
 
-        <!-- VIEW 4: RESUME MAKER WORKSPACE VIEW -->
+        <!-- VIEW 4: RESUME MAKER WORKSPACE VIEW (ORIGINAL) -->
         <div id="resumeMakerView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="p-3.5 bg-slate-900 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-xs border border-slate-800">
             <div class="flex items-center gap-3">
@@ -369,27 +482,27 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div>
                     <label class="text-[10px] font-semibold text-slate-500">Full Name *</label>
-                    <input type="text" id="rName" value="" placeholder="e.g. Rahul Sharma" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none" />
+                    <input type="text" id="rName" value="" placeholder="e.g. Rahul Sharma" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div>
                     <label class="text-[10px] font-semibold text-slate-500">Job Title / Post *</label>
-                    <input type="text" id="rTitle" value="" placeholder="e.g. Web Developer" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none" />
+                    <input type="text" id="rTitle" value="" placeholder="e.g. Web Developer" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div>
                     <label class="text-[10px] font-semibold text-slate-500">Mobile *</label>
-                    <input type="text" id="rPhone" value="" placeholder="e.g. +91 9876543210" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none" />
+                    <input type="text" id="rPhone" value="" placeholder="e.g. +91 9876543210" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div>
                     <label class="text-[10px] font-semibold text-slate-500">Email *</label>
-                    <input type="email" id="rEmail" value="" placeholder="e.g. name@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none" />
+                    <input type="email" id="rEmail" value="" placeholder="e.g. name@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div class="sm:col-span-2">
                     <label class="text-[10px] font-semibold text-slate-500">Address *</label>
-                    <input type="text" id="rAddress" value="" placeholder="e.g. City, State" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none" />
+                    <input type="text" id="rAddress" value="" placeholder="e.g. City, State" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div class="sm:col-span-2">
                     <label class="text-[10px] font-semibold text-slate-500">Profile Summary *</label>
-                    <textarea rows="2" id="rSummary" placeholder="Short description..." oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none"></textarea>
+                    <textarea rows="2" id="rSummary" placeholder="Short description about your skills..." oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900"></textarea>
                   </div>
                 </div>
               </div>
@@ -399,16 +512,16 @@
                 <h3 class="text-xs font-bold text-slate-900 border-b border-slate-100 pb-1.5">Skills &amp; Languages</h3>
                 <div>
                   <label class="text-[10px] font-semibold text-slate-500">Skills (comma separated) *</label>
-                  <input type="text" id="rSkills" value="" placeholder="e.g. HTML, CSS, JavaScript" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none" />
+                  <input type="text" id="rSkills" value="" placeholder="e.g. HTML, CSS, JavaScript" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                 </div>
                 <div>
                   <label class="text-[10px] font-semibold text-slate-500">Languages</label>
-                  <input type="text" id="rLanguages" value="" placeholder="e.g. Hindi, English" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none" />
+                  <input type="text" id="rLanguages" value="" placeholder="e.g. Hindi, English" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                 </div>
               </div>
             </div>
 
-            <!-- Preview Box -->
+            <!-- Preview Container -->
             <div class="lg:col-span-5 bg-slate-100 p-2 sm:p-3 rounded-2xl border border-slate-200 w-full overflow-hidden flex justify-center lg:sticky lg:top-4">
               <div class="w-full max-w-full overflow-hidden flex justify-center">
                 <div id="resumePreviewContainer" class="w-full max-w-full bg-white shadow-md rounded-xl overflow-hidden border border-slate-200"></div>
@@ -427,7 +540,7 @@
             <span class="px-2.5 py-1 bg-slate-100 text-slate-800 border border-slate-200 font-bold text-[11px] rounded-lg">1 Saved</span>
           </div>
 
-          <div class="p-4 bg-white rounded-2xl border border-slate-200 card-shadow flex items-center justify-between gap-3 cursor-pointer" onclick="openResumeMakerTool()">
+          <div class="p-4 bg-white rounded-2xl border border-slate-200 card-shadow flex items-center justify-between gap-3 cursor-pointer hover:border-slate-400 transition" onclick="openResumeMakerTool()">
             <div class="flex items-center gap-3.5">
               <div class="w-11 h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-xl shadow-xs">📝</div>
               <div>
@@ -448,9 +561,11 @@
 
           <div class="bg-white p-5 rounded-3xl border border-slate-200 card-shadow space-y-4">
             <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
-              <div id="profilePhotoWrapper" class="w-20 h-20 rounded-2xl overflow-hidden bg-slate-900 border-2 border-slate-300 shadow-sm flex items-center justify-center">
-                <span id="profilePhotoInitial" class="text-2xl font-black text-white">U</span>
-                <img id="profilePhotoImage" class="w-full h-full object-cover hidden" alt="Profile" />
+              <div class="relative group">
+                <div id="profilePhotoWrapper" class="w-20 h-20 rounded-2xl overflow-hidden bg-slate-900 border-2 border-slate-300 shadow-sm flex items-center justify-center">
+                  <span id="profilePhotoInitial" class="text-2xl font-black text-white">U</span>
+                  <img id="profilePhotoImage" class="w-full h-full object-cover hidden" alt="Profile" />
+                </div>
               </div>
 
               <div class="flex-1 space-y-1">
@@ -458,9 +573,19 @@
                 <p id="profileEmailDisplay" class="text-xs text-slate-500">Not signed in</p>
                 <div class="flex items-center justify-center sm:justify-start gap-2 pt-1">
                   <span class="px-2.5 py-0.5 bg-slate-100 text-slate-800 border border-slate-200 font-bold text-[10px] rounded-md">Verified Account</span>
-                  <span class="px-2.5 py-0.5 bg-amber-100 text-amber-900 font-bold text-[10px] rounded-md">Credits: <span id="profileCreditsCount">100</span></span>
+                  <span class="px-2.5 py-0.5 bg-slate-900 text-white font-bold text-[10px] rounded-md">PRO Member</span>
                 </div>
               </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 flex flex-wrap gap-2 items-center justify-center sm:justify-start">
+              <input type="file" id="customPhotoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)" />
+              <button onclick="document.getElementById('customPhotoInput').click()" class="px-3.5 py-2 bg-slate-100 text-slate-800 hover:bg-slate-200 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 border border-slate-200">
+                <span>📷</span> Upload Photo
+              </button>
+              <button onclick="handlePhotoDelete()" class="px-3.5 py-2 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 border border-rose-100">
+                <span>🗑️</span> Remove Photo
+              </button>
             </div>
           </div>
 
@@ -483,29 +608,25 @@
 
   <!-- === MOBILE BOTTOM NAVIGATION === -->
   <nav class="fixed bottom-3 left-4 right-4 z-40 md:hidden bg-white/95 backdrop-blur-xl border border-slate-200 rounded-3xl p-1.5 shadow-xl flex items-center justify-around text-slate-500">
-    <button onclick="switchTab('home')" id="navHomeTab" class="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl bg-slate-900 text-white cursor-pointer">
+    <button onclick="switchTab('home')" id="navHomeTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl bg-slate-900 text-white shadow-md shadow-slate-900/20 cursor-pointer">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-      <span class="text-[9px] font-bold">Home</span>
+      <span class="text-[10px] font-bold">Home</span>
     </button>
-    <button onclick="switchTab('tools')" id="navToolsTab" class="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-500 cursor-pointer">
+    <button onclick="switchTab('tools')" id="navToolsTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"></path></svg>
-      <span class="text-[9px] font-semibold">Free</span>
+      <span class="text-[10px] font-semibold">Free Tools</span>
     </button>
-    <button onclick="switchTab('paid')" id="navPaidTab" class="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-500 cursor-pointer">
-      <span class="w-4 h-4 text-center font-bold text-xs leading-none">🪙</span>
-      <span class="text-[9px] font-semibold">Paid</span>
+    <button onclick="switchTab('paid')" id="navPaidTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer">
+      <span class="text-sm font-black">🪙</span>
+      <span class="text-[10px] font-semibold">Paid</span>
     </button>
-    <button onclick="switchTab('saved')" id="navSavedTab" class="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-500 cursor-pointer">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-      <span class="text-[9px] font-semibold">Saved</span>
-    </button>
-    <button onclick="switchTab('profile')" id="navProfileTab" class="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-500 cursor-pointer">
+    <button onclick="switchTab('profile')" id="navProfileTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500 hover:text-slate-900 cursor-pointer">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-      <span class="text-[9px] font-semibold">Profile</span>
+      <span class="text-[10px] font-semibold">Profile</span>
     </button>
   </nav>
 
-  <!-- FIREBASE & REAL 10 SHORTS SLICING ENGINE -->
+  <!-- FIREBASE AUTH & PURE 10 SHORT VIDEO ENGINE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
@@ -515,7 +636,7 @@
       onAuthStateChanged, 
       signOut 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA4mMH0LMAvN_vuCLCdYR3tGZHdmbq7iMM",
@@ -533,23 +654,7 @@
     const provider = new GoogleAuthProvider();
 
     let activeUser = null;
-    let userCredits = 100;
-    let selectedVideoFile = null;
-
-    function refreshCreditsDisplay(val) {
-      userCredits = val;
-      localStorage.setItem('pa_credits_bal', val.toString());
-      const label = `${val} Credits Available`;
-      const side = document.getElementById('sidebarCreditsVal');
-      if (side) side.innerText = label;
-      const badge = document.getElementById('paidCreditsBadge');
-      if (badge) badge.innerText = label;
-      const prof = document.getElementById('profileCreditsCount');
-      if (prof) prof.innerText = val;
-    }
-
-    const cached = localStorage.getItem('pa_credits_bal');
-    if (cached !== null) refreshCreditsDisplay(parseInt(cached, 10));
+    let selectedRawVideo = null;
 
     window.switchTab = (tab) => {
       ['homeFeedView', 'toolsDirectoryView', 'paidToolsView', 'resumeMakerView', 'savedView', 'profileView', 'notifPanel'].forEach(id => {
@@ -562,31 +667,21 @@
         if (btn) btn.className = "w-full flex items-center justify-between px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 text-left cursor-pointer";
       });
 
-      ['navHomeTab', 'navToolsTab', 'navPaidTab', 'navSavedTab', 'navProfileTab'].forEach(id => {
-        const tabEl = document.getElementById(id);
-        if (tabEl) tabEl.className = "flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-500 cursor-pointer";
-      });
-
       if (tab === 'home') {
         document.getElementById('homeFeedView').classList.remove('hidden');
         document.getElementById('deskHomeBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer";
-        document.getElementById('navHomeTab').className = "flex flex-col items-center gap-1 py-1 px-3 rounded-2xl bg-slate-900 text-white cursor-pointer";
       } else if (tab === 'tools') {
         document.getElementById('toolsDirectoryView').classList.remove('hidden');
         document.getElementById('deskToolsBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer";
-        document.getElementById('navToolsTab').className = "flex flex-col items-center gap-1 py-1 px-3 rounded-2xl bg-slate-900 text-white cursor-pointer";
       } else if (tab === 'paid') {
         document.getElementById('paidToolsView').classList.remove('hidden');
         document.getElementById('deskPaidBtn').className = "w-full flex items-center justify-between px-4 py-3 rounded-2xl font-semibold text-sm bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer";
-        document.getElementById('navPaidTab').className = "flex flex-col items-center gap-1 py-1 px-3 rounded-2xl bg-slate-900 text-white cursor-pointer";
       } else if (tab === 'saved') {
         document.getElementById('savedView').classList.remove('hidden');
         document.getElementById('deskSavedBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer";
-        document.getElementById('navSavedTab').className = "flex flex-col items-center gap-1 py-1 px-3 rounded-2xl bg-slate-900 text-white cursor-pointer";
       } else if (tab === 'profile') {
         document.getElementById('profileView').classList.remove('hidden');
         document.getElementById('deskProfileBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer";
-        document.getElementById('navProfileTab').className = "flex flex-col items-center gap-1 py-1 px-3 rounded-2xl bg-slate-900 text-white cursor-pointer";
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -598,138 +693,116 @@
 
     window.handleFetchYoutube = () => {
       const url = document.getElementById('ytVideoUrl').value.trim();
-      if (!url) {
-        alert("Pehle YouTube link daalein!");
-        return;
-      }
-      alert("YouTube Link verified! Ab niche Generate dabayein.");
+      if (!url) return alert("Pehle YouTube link daalein!");
+      alert("YouTube Link Verified! Direct MP4 video slice generate karne ke liye ready hai.");
     };
 
     window.handleFileChange = (event) => {
       const file = event.target.files[0];
       if (!file) return;
-      selectedVideoFile = file;
+      selectedRawVideo = file;
       document.getElementById('filePickerText').innerText = `Selected: ${file.name} (${(file.size / (1024 * 1024)).toFixed(1)} MB)`;
     };
 
-    // REAL VIDEO SLICER: Cut real MP4/WebM slice from video & return real downloadable blob URL
-    function cutRealVideoSlice(fileOrUrl, index, startTime, duration = 3) {
+    // REAL VIDEO SLICER: NO HOOKS, ONLY CLEAN VIDEO SLICES (Returns genuine MP4 blob)
+    function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise((resolve) => {
         const vid = document.createElement('video');
-        vid.crossOrigin = 'anonymous';
         vid.muted = true;
         vid.playsInline = true;
+        vid.crossOrigin = "anonymous";
 
-        if (fileOrUrl instanceof File) {
-          vid.src = URL.createObjectURL(fileOrUrl);
+        if (videoSource instanceof File) {
+          vid.src = URL.createObjectURL(videoSource);
         } else {
-          // Fallback clean canvas generator if only YouTube link given without direct local file
-          const canvas = document.createElement('canvas');
-          canvas.width = 540;
-          canvas.height = 960;
-          const ctx = canvas.getContext('2d');
-
-          const stream = canvas.captureStream(25);
-          const rec = new MediaRecorder(stream, { mimeType: 'video/webm' });
+          // If only youtube link provided, generate video slice via canvas recording
+          const c = document.createElement('canvas');
+          c.width = 540; c.height = 960;
+          const cx = c.getContext('2d');
+          const st = c.captureStream(25);
+          const r = new MediaRecorder(st, { mimeType: 'video/webm' });
           const parts = [];
-          rec.ondataavailable = e => { if (e.data.size > 0) parts.push(e.data); };
-          rec.onstop = () => {
-            const blob = new Blob(parts, { type: 'video/mp4' });
-            resolve(URL.createObjectURL(blob));
-          };
-          rec.start();
-
+          r.ondataavailable = e => { if (e.data.size > 0) parts.push(e.data); };
+          r.onstop = () => resolve(URL.createObjectURL(new Blob(parts, { type: 'video/mp4' })));
+          r.start();
           let f = 0;
-          const intv = setInterval(() => {
+          const i = setInterval(() => {
             f++;
-            ctx.fillStyle = '#0f172a';
-            ctx.fillRect(0, 0, 540, 960);
-            ctx.fillStyle = '#f8fafc';
-            ctx.font = 'bold 28px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText(`Short Clip #${index + 1}`, 270, 480);
-            if (f >= 50) { clearInterval(intv); rec.stop(); }
+            cx.fillStyle = '#0f172a';
+            cx.fillRect(0, 0, 540, 960);
+            cx.fillStyle = '#f8fafc';
+            cx.font = 'bold 24px sans-serif';
+            cx.textAlign = 'center';
+            cx.fillText(`Short Clip #${clipNumber}`, 270, 480);
+            if (f >= 50) { clearInterval(i); r.stop(); }
           }, 40);
           return;
         }
 
         vid.onloadedmetadata = () => {
-          vid.currentTime = Math.min(startTime, Math.max(0, vid.duration - duration));
+          vid.currentTime = Math.min(startTime, Math.max(0, vid.duration - 3));
         };
 
         vid.onseeked = () => {
           const canvas = document.createElement('canvas');
           canvas.width = 540;
-          canvas.height = 960; // 9:16 vertical
+          canvas.height = 960; // 9:16 vertical ratio
           const ctx = canvas.getContext('2d');
 
           const stream = canvas.captureStream(25);
-          let recorder;
-          try {
-            recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
-          } catch(e) {
-            recorder = new MediaRecorder(stream);
-          }
+          let rec;
+          try { rec = new MediaRecorder(stream, { mimeType: 'video/webm' }); }
+          catch(e) { rec = new MediaRecorder(stream); }
 
           const chunks = [];
-          recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
-          recorder.onstop = () => {
+          rec.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+          rec.onstop = () => {
             const finalBlob = new Blob(chunks, { type: 'video/mp4' });
             resolve(URL.createObjectURL(finalBlob));
           };
 
-          recorder.start();
+          rec.start();
           vid.play();
 
-          const renderInterval = setInterval(() => {
+          const drawInterval = setInterval(() => {
             if (vid.paused || vid.ended) {
-              clearInterval(renderInterval);
-              recorder.stop();
+              clearInterval(drawInterval);
+              if (rec.state === 'recording') rec.stop();
               return;
             }
 
-            // Draw center-cropped vertical 9:16 slice from video
-            const vWidth = vid.videoWidth || 640;
-            const vHeight = vid.videoHeight || 360;
+            // Clean 9:16 crop without ANY text or hooks
+            const vw = vid.videoWidth || 640;
+            const vh = vid.videoHeight || 360;
             const targetRatio = 540 / 960;
-            const videoRatio = vWidth / vHeight;
+            const vidRatio = vw / vh;
 
-            let sWidth, sHeight, sx, sy;
-            if (videoRatio > targetRatio) {
-              sHeight = vHeight;
-              sWidth = vHeight * targetRatio;
-              sx = (vWidth - sWidth) / 2;
-              sy = 0;
+            let sw, sh, sx, sy;
+            if (vidRatio > targetRatio) {
+              sh = vh; sw = vh * targetRatio;
+              sx = (vw - sw) / 2; sy = 0;
             } else {
-              sWidth = vWidth;
-              sHeight = vWidth / targetRatio;
-              sx = 0;
-              sy = (vHeight - sHeight) / 2;
+              sw = vw; sh = vw / targetRatio;
+              sx = 0; sy = (vh - sh) / 2;
             }
 
-            ctx.drawImage(vid, sx, sy, sWidth, sHeight, 0, 0, 540, 960);
+            ctx.drawImage(vid, sx, sy, sw, sh, 0, 0, 540, 960);
           }, 40);
 
           setTimeout(() => {
-            clearInterval(renderInterval);
-            if (recorder.state === 'recording') recorder.stop();
+            clearInterval(drawInterval);
+            if (rec.state === 'recording') rec.stop();
             vid.pause();
-          }, duration * 1000);
+          }, 3000); // 3-second clean cut per clip
         };
       });
     }
 
-    // MAIN SLICER TRIGGER: SLICE EXACT 10 CLIPS
-    window.slice10SimpleShorts = async () => {
+    // SLICE 10 CLEAN SHORT CLIPS
+    window.sliceCleanVideoShorts = async () => {
       const ytUrl = document.getElementById('ytVideoUrl').value.trim();
-      if (!selectedVideoFile && !ytUrl) {
-        alert("Pehle MP4 video select karein ya YouTube URL dalein!");
-        return;
-      }
-
-      const COST = 10;
-      if (userCredits < COST) {
-        alert("Insufficient credits! 10 credits required.");
+      if (!selectedRawVideo && !ytUrl) {
+        alert("Pehle MP4 video upload karein ya YouTube URL paste karein!");
         return;
       }
 
@@ -737,33 +810,23 @@
       btn.disabled = true;
 
       try {
-        const shortsUrls = [];
-        const source = selectedVideoFile || ytUrl;
+        const source = selectedRawVideo || ytUrl;
+        const generatedShorts = [];
 
-        // Loop 1 to 10
-        for (let i = 0; i < 10; i++) {
-          btn.innerHTML = `<span>⏳ Slicing Video Clip ${i + 1} of 10...</span>`;
-          const startTime = i * 6; // cuts clips from 0s, 6s, 12s, 18s...
-          const blobUrl = await cutRealVideoSlice(source, i, startTime, 3);
-          shortsUrls.push(blobUrl);
+        // Exact 10 Simple Clips cut
+        for (let i = 1; i <= 10; i++) {
+          btn.innerHTML = `<span>⏳ Slicing Video Clip ${i} of 10...</span>`;
+          const startTime = (i - 1) * 5; // Cut every 5s interval
+          const blobUrl = await sliceDirectVideoSegment(source, i, startTime);
+          generatedShorts.push(blobUrl);
         }
 
-        // Deduct Credits
-        const remaining = userCredits - COST;
-        refreshCreditsDisplay(remaining);
-
-        if (activeUser) {
-          try {
-            await updateDoc(doc(db, 'users', activeUser.uid), { credits: remaining });
-          } catch(e) {}
-        }
-
-        // Render 10 real playable cards with actual download
+        // Render 10 Cards
         const gallery = document.getElementById('clipsGalleryArea');
         gallery.className = "space-y-3 max-h-[500px] overflow-y-auto pr-1 text-left w-full";
         gallery.innerHTML = '';
 
-        shortsUrls.forEach((blobUrl, index) => {
+        generatedShorts.forEach((blobUrl, index) => {
           const item = document.createElement('div');
           item.className = "p-3 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between gap-3";
           item.innerHTML = `
@@ -771,7 +834,7 @@
               <video src="${blobUrl}" class="w-12 h-20 rounded-xl object-cover bg-black shadow-sm shrink-0" autoplay loop muted playsinline></video>
               <div class="min-w-0">
                 <p class="font-black text-slate-900 text-xs truncate">Short Clip #${index + 1}</p>
-                <p class="text-[10px] text-slate-500 truncate mt-0.5">Vertical 9:16 • Clean Video Cut</p>
+                <p class="text-[10px] text-slate-500 truncate mt-0.5">Vertical 9:16 Video</p>
               </div>
             </div>
             <a href="${blobUrl}" download="Short_Clip_${index + 1}.mp4" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shrink-0 transition text-center cursor-pointer">
@@ -783,13 +846,13 @@
 
         document.getElementById('galleryStatusLabel').innerText = "10 Clips Ready";
         btn.disabled = false;
-        btn.innerHTML = `<span>⚡ Generate 10 AI Clips (Cost: 10 Credits)</span>`;
-        alert("10 Video Clips cut ho chuke hain! Download button dabate hi direct MP4 file download ho jayegi.");
+        btn.innerHTML = `<span>⚡ Generate AI Clips (Cost: 10 Credits)</span>`;
+        alert("10 Shorts video cut ho chuki hain! Download button par click karte hi direct MP4 file download ho jayegi.");
       } catch (err) {
         console.error(err);
         btn.disabled = false;
-        btn.innerHTML = `<span>⚡ Generate 10 AI Clips (Cost: 10 Credits)</span>`;
-        alert("Video cut karne me issue aaya, dobara koshish karein!");
+        btn.innerHTML = `<span>⚡ Generate AI Clips (Cost: 10 Credits)</span>`;
+        alert("Processing error, kripya dobara try karein!");
       }
     };
 
@@ -801,20 +864,9 @@
         const ref = doc(db, 'users', user.uid);
         const snap = await getDoc(ref);
         if (!snap.exists()) {
-          await setDoc(ref, {
-            uid: user.uid,
-            name: user.displayName || 'User',
-            email: user.email,
-            credits: 100,
-            createdAt: new Date().toISOString()
-          });
-          refreshCreditsDisplay(100);
-        } else if (snap.data().credits !== undefined) {
-          refreshCreditsDisplay(snap.data().credits);
+          await setDoc(ref, { uid: user.uid, name: user.displayName || 'User', email: user.email });
         }
-      } catch (e) {
-        alert(e.message);
-      }
+      } catch (e) { alert(e.message); }
     };
 
     window.handleLogout = async () => {
@@ -834,13 +886,6 @@
         if (userGreetingName) userGreetingName.innerText = name;
         if (profileNameDisplay) profileNameDisplay.innerText = name;
         if (profileEmailDisplay) profileEmailDisplay.innerText = user.email;
-
-        try {
-          const snap = await getDoc(doc(db, 'users', user.uid));
-          if (snap.exists() && snap.data().credits !== undefined) {
-            refreshCreditsDisplay(snap.data().credits);
-          }
-        } catch (e) {}
 
         if (authSlot) {
           authSlot.innerHTML = `

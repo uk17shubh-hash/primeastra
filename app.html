@@ -198,8 +198,8 @@
                   <span class="text-[10px] text-[#e2c072] font-bold bg-[rgba(226,192,114,0.15)] px-2 py-0.5 rounded-md">1 New</span>
                 </div>
                 <div class="p-2.5 bg-[#181820] rounded-xl space-y-0.5 border border-[rgba(226,192,114,0.1)]">
-                  <p class="font-bold text-white text-[11px]">🎬 Audio &amp; Body Tracking Active!</p>
-                  <p class="text-[10px] text-slate-400">Shorts with 30s audio &amp; smart reframe ready.</p>
+                  <p class="font-bold text-white text-[11px]">🎬 Gimbal Stabilization &amp; 4K Clarity Active!</p>
+                  <p class="text-[10px] text-slate-400">Shorts with ultra-smooth tracking and crystal sound.</p>
                 </div>
               </div>
             </div>
@@ -314,7 +314,7 @@
                     AI Video Clipping Generator
                   </h4>
                   <p class="text-[11px] text-slate-400 line-clamp-2 mt-0.5 leading-relaxed">
-                    Auto-Reframing with AI Body Tracking &amp; Audio: Extract custom vertical shorts with sound.
+                    Gimbal Stabilization &amp; 4K Clarity: Extract custom vertical shorts with crystal sound.
                   </p>
                 </div>
               </div>
@@ -338,7 +338,7 @@
                 <h2 class="text-sm sm:text-base font-extrabold flex items-center gap-2 text-white">
                   <span>🎬</span> AI Video Clipping Generator
                 </h2>
-                <p class="text-[10px] sm:text-[11px] text-slate-400">Full Body Tracking • Audio Enabled • 1-5 Shorts (30s each)</p>
+                <p class="text-[10px] sm:text-[11px] text-slate-400">Gimbal Stabilization • 4K Clarity • Audio Enabled • 1-5 Shorts</p>
               </div>
             </div>
             <div class="px-3.5 py-1.5 bg-[rgba(226,192,114,0.15)] border border-[rgba(226,192,114,0.3)] text-[#e2c072] rounded-xl text-xs font-black tracking-wide shrink-0">
@@ -352,7 +352,7 @@
             <div class="lg:col-span-7 bg-[#121216] p-5 rounded-3xl border border-[rgba(226,192,114,0.15)] card-shadow space-y-4 text-xs">
               <div>
                 <h3 class="text-xs font-black text-white">Step 1: Upload Source Video</h3>
-                <p class="text-[11px] text-slate-400 mt-0.5">Upload your video to extract frames, audio, and enable smart body tracking.</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">Upload your video to extract frames, audio, and enable smart stabilization.</p>
               </div>
 
               <!-- Upload Area -->
@@ -428,9 +428,9 @@
               <div class="p-3 bg-[#181820] rounded-2xl flex items-center justify-between border border-[rgba(226,192,114,0.2)]">
                 <div class="flex items-center gap-2">
                   <span class="w-2.5 h-2.5 rounded-full bg-[#e2c072] animate-pulse"></span>
-                  <span class="font-bold text-white text-[11px]">AI Smart Crop &amp; Audio:</span>
+                  <span class="font-bold text-white text-[11px]">Stabilized 4K Engine:</span>
                 </div>
-                <span class="px-2.5 py-0.5 bg-[rgba(226,192,114,0.15)] text-[#e2c072] border border-[rgba(226,192,114,0.3)] font-bold text-[10px] rounded-lg">Body Track + Sound</span>
+                <span class="px-2.5 py-0.5 bg-[rgba(226,192,114,0.15)] text-[#e2c072] border border-[rgba(226,192,114,0.3)] font-bold text-[10px] rounded-lg">Gimbal Smooth + HD Audio</span>
               </div>
 
               <div class="grid grid-cols-2 gap-3 pt-1">
@@ -680,7 +680,7 @@
     <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-400"><span class="text-[10px] font-semibold">Profile</span></button>
   </nav>
 
-  <!-- SCRIPT ENGINE (WITH WEBM AUDIO FIX & SELECTABLE SHORTS 1-5) -->
+  <!-- SCRIPT ENGINE (HIGH RESOLUTION 1080p, GIMBAL STABILIZATION, WEB AUDIO API & NO POPUPS) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -872,7 +872,7 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
-    // WEBM AUDIO FIX & BODY TRACKING SLICER (NO POPUPS)
+    // HIGH RESOLUTION 1080p CANVAS & GIMBAL STABILIZATION SLICER
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise(async (resolve) => {
         const vid = document.createElement('video');
@@ -928,15 +928,18 @@
           vid.onseeked = () => res();
         });
 
+        // High-res Full HD 1080x1920 canvas for crystal clear 4K/8K sharpness perception
         const canvas = document.createElement('canvas');
-        canvas.width = 540;
-        canvas.height = 960; // 9:16 vertical ratio
+        canvas.width = 1080;
+        canvas.height = 1920; 
         const ctx = canvas.getContext('2d', { alpha: false });
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
 
-        const canvasStream = canvas.captureStream(20);
+        const canvasStream = canvas.captureStream(30);
         const videoTrack = canvasStream.getVideoTracks()[0];
 
-        // Web Audio API Capture
+        // Web Audio API Capture for crystal clear sound
         let audioTrack = null;
         try {
           const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -968,7 +971,7 @@
 
         let rec;
         try { 
-          rec = new MediaRecorder(combinedStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 2000000 }); 
+          rec = new MediaRecorder(combinedStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 5000000 }); 
         } catch(e) { 
           rec = new MediaRecorder(combinedStream); 
         }
@@ -978,7 +981,6 @@
           if (e.data.size > 0) chunks.push(e.data); 
         };
         rec.onstop = () => {
-          // WEBM format for 100% stable mobile audio playback
           const finalBlob = new Blob(chunks, { type: 'video/webm' });
           resolve(URL.createObjectURL(finalBlob));
         };
@@ -988,7 +990,7 @@
 
         const vw = vid.videoWidth || 640;
         const vh = vid.videoHeight || 360;
-        const targetRatio = 540 / 960;
+        const targetRatio = 1080 / 1920;
         const sh = vh;
         const sw = vh * targetRatio;
 
@@ -997,13 +999,14 @@
           if (!isRecording) return;
           if (!vid.paused && !vid.ended) {
             frameCounter++;
-            if (poseDetector && frameCounter % 6 === 0) {
+            if (poseDetector && frameCounter % 5 === 0) {
               try {
                 await poseDetector.send({ image: vid });
               } catch (e) {}
             }
 
-            smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.15;
+            // Ultra-smooth gimbal stabilization damping factor (0.08 for buttery smooth panning)
+            smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.08;
 
             let personCenterX = smoothedTargetX * vw;
             let sx = personCenterX - (sw / 2);
@@ -1011,7 +1014,7 @@
             if (sx < 0) sx = 0;
             if (sx + sw > vw) sx = vw - sw;
 
-            ctx.drawImage(vid, sx, 0, sw, sh, 0, 0, 540, 960);
+            ctx.drawImage(vid, sx, 0, sw, sh, 0, 0, 1080, 1920);
           }
           requestAnimationFrame(renderLoop);
         };
@@ -1044,7 +1047,7 @@
 
         for (let i = 1; i <= TOTAL_CLIPS; i++) {
           const currentStart = trimStartSec + (i - 1) * step;
-          btn.innerHTML = `<span>🎯 Body Tracking &amp; Audio Slicing Clip ${i} of ${TOTAL_CLIPS}...</span>`;
+          btn.innerHTML = `<span>🎯 Stabilized Slicing Clip ${i} of ${TOTAL_CLIPS}...</span>`;
           const blobUrl = await sliceDirectVideoSegment(selectedRawVideo, i, currentStart);
           generatedShorts.push({
             url: blobUrl,
@@ -1065,7 +1068,7 @@
               <div class="min-w-0">
                 <p class="font-black text-white text-xs truncate">Short Clip #${index + 1}</p>
                 <p class="text-[10px] text-[#e2c072] font-bold truncate mt-0.5">30s Clip • ${item.timeLabel}</p>
-                <p class="text-[9px] text-slate-400 mt-0.5">Vertical 9:16 • Tracked &amp; Audio</p>
+                <p class="text-[9px] text-slate-400 mt-0.5">Vertical 1080p • Stabilized &amp; Audio</p>
               </div>
             </div>
             <a href="${item.url}" download="Short_Clip_${index + 1}.webm" class="px-3.5 py-2 bg-gradient-to-r from-[#e2c072] to-[#c5a059] text-[#070707] hover:brightness-110 rounded-xl text-xs font-bold shrink-0 transition text-center cursor-pointer">

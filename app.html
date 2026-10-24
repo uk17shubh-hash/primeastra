@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-  <!-- MediaPipe Pose Detection for Auto-Reframing -->
+  <!-- MediaPipe Pose Detection for Full Body Tracking -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
 
@@ -680,7 +680,7 @@
     <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-400"><span class="text-[10px] font-semibold">Profile</span></button>
   </nav>
 
-  <!-- SCRIPT ENGINE (HIGH RESOLUTION 1080p, GIMBAL STABILIZATION, WEB AUDIO API & NO POPUPS) -->
+  <!-- SCRIPT ENGINE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -752,7 +752,6 @@
       document.getElementById('notifPanel').classList.toggle('hidden');
     };
 
-    // Video Selection & Filmstrip Generator
     window.handleFileChange = async (event) => {
       const file = event.target.files[0];
       if (!file) return;
@@ -872,7 +871,6 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
-    // HIGH RESOLUTION 1080p CANVAS & GIMBAL STABILIZATION SLICER
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise(async (resolve) => {
         const vid = document.createElement('video');
@@ -880,6 +878,9 @@
         vid.playsInline = true;
         vid.crossOrigin = "anonymous";
         vid.src = URL.createObjectURL(videoSource);
+        
+        vid.style.display = 'none';
+        document.body.appendChild(vid);
 
         let currentTargetX = 0.5;
         let smoothedTargetX = 0.5;
@@ -915,7 +916,7 @@
           });
         }
 
-        const CLIP_DURATION = 30; // EXACT 30 SECONDS
+        const CLIP_DURATION = 30;
 
         await new Promise((res) => {
           vid.onloadedmetadata = () => {
@@ -928,7 +929,6 @@
           vid.onseeked = () => res();
         });
 
-        // High-res Full HD 1080x1920 canvas for crystal clear 4K/8K sharpness perception
         const canvas = document.createElement('canvas');
         canvas.width = 1080;
         canvas.height = 1920; 
@@ -939,7 +939,6 @@
         const canvasStream = canvas.captureStream(30);
         const videoTrack = canvasStream.getVideoTracks()[0];
 
-        // Web Audio API Capture for crystal clear sound
         let audioTrack = null;
         try {
           const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -982,6 +981,7 @@
         };
         rec.onstop = () => {
           const finalBlob = new Blob(chunks, { type: 'video/webm' });
+          if (vid.parentNode) vid.parentNode.removeChild(vid);
           resolve(URL.createObjectURL(finalBlob));
         };
 
@@ -1005,7 +1005,6 @@
               } catch (e) {}
             }
 
-            // Ultra-smooth gimbal stabilization damping factor (0.08 for buttery smooth panning)
             smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.08;
 
             let personCenterX = smoothedTargetX * vw;
@@ -1028,7 +1027,6 @@
       });
     }
 
-    // MAIN TIMELINE SHORTS EXECUTION (NO POPUPS)
     window.sliceTimelineShorts = async () => {
       if (!selectedRawVideo) {
         alert("Pehle MP4 video upload karein!");
@@ -1088,7 +1086,6 @@
       }
     };
 
-    // Firebase Auth Handlers
     window.handleGoogleLogin = async () => {
       try {
         const res = await signInWithPopup(auth, provider);
@@ -1130,7 +1127,6 @@
       }
     });
 
-    // Resume Maker Logic
     window.openResumeMakerTool = () => {
       ['homeFeedView', 'toolsDirectoryView', 'paidToolsDirectoryView', 'videoClipperWorkspaceView', 'savedView', 'profileView'].forEach(id => {
         document.getElementById(id).classList.add('hidden');

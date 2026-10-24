@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>PrimeAstra </title>
+  <title>PrimeAstra</title>
   
-  <!-- Direct 3D Shield Favicon (Royal Slate Grey & White Theme) -->
+  <!-- Direct 3D Shield Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='fShield' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23475569'/%3E%3Cstop offset='45%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3ClinearGradient id='fStar' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='60%25' stop-color='%2394a3b8'/%3E%3Cstop offset='100%25' stop-color='%23334155'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z' fill='url(%23fStar)'/%3E%3Cpath d='M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z' fill='url(%23fShield)'/%3E%3Cpath d='M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z' fill='url(%23fShield)'/%3E%3Cpath d='M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z' fill='url(%23fShield)'/%3E%3Cpath d='M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z' fill='url(%23fShield)'/%3E%3Cpolygon points='380,55 305,108 335,122 360,170' fill='url(%23fStar)'/%3E%3Cpolygon points='380,55 335,122 360,170' fill='%230f172a'/%3E%3Cpath d='M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z' fill='url(%23fShield)'/%3E%3C/svg%3E">
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,15 +28,32 @@
     .card-shadow {
       box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
     }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
   </style>
 </head>
 <body class="text-slate-800 min-h-screen p-2.5 sm:p-4 md:p-6 pb-24 md:pb-6 flex flex-col items-center justify-start overflow-x-hidden">
 
-  <!-- Ambient background glow for PC (Royal Slate & Platinum) -->
+  <!-- Ambient background glow -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div class="absolute -top-12 -right-8 w-80 h-80 rounded-full bg-slate-300/35 blur-3xl"></div>
     <div class="absolute bottom-6 -left-12 w-72 h-72 rounded-full bg-slate-200/50 blur-3xl"></div>
   </div>
+
+  <!-- Toast Notification System Popups -->
+  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
 
   <!-- Master Application Container -->
   <main class="relative z-10 w-full max-w-[1360px] bg-white/95 md:backdrop-blur-2xl rounded-[32px] md:rounded-[36px] shadow-xl md:shadow-2xl border border-slate-200/80 p-4 sm:p-6 md:p-8 flex flex-col md:grid md:grid-cols-12 gap-6 min-h-[calc(100vh-7rem)] md:min-h-[640px]">
@@ -72,15 +89,14 @@
             <h1 class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
               Prime<span class="text-slate-600">Astra</span>
             </h1>
-            
           </div>
         </a>
 
-        <!-- Desktop Navigation Items -->
+        <!-- Desktop Navigation Items (HOME renamed from Home Hub) -->
         <nav class="space-y-2">
           <button id="deskHomeBtn" onclick="switchTab('home')" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer">
             <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-            <span>Home Hub</span>
+            <span>Home</span>
           </button>
 
           <button id="deskToolsBtn" onclick="switchTab('tools')" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 text-left cursor-pointer">
@@ -101,18 +117,16 @@
       </div>
 
       <div class="p-3.5 bg-slate-100/90 rounded-2xl border border-slate-200 text-xs">
-        <span class="font-extrabold text-slate-900 block">PRO Suite Active</span>
-        <span class="text-[11px] text-slate-500">All tools unlocked with zero limits.</span>
+        <span class="font-extrabold text-slate-900 block">PrimeAstra Suite</span>
+        <span class="text-[11px] text-slate-500">100% Free Tools with zero limits.</span>
       </div>
     </aside>
 
-    <!-- === MAIN RIGHT / MOBILE DASHBOARD AREA === -->
+    <!-- === MAIN RIGHT AREA === -->
     <section class="flex-1 w-full flex flex-col justify-between space-y-4 md:col-span-8 lg:col-span-9 relative">
-      
       <div>
         <header class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200/70">
           <div class="flex items-center gap-2.5">
-            <!-- Mobile 3D Shield Logo -->
             <div class="md:hidden w-11 h-11 flex items-center justify-center shrink-0">
               <svg class="w-11 h-11 drop-shadow-[0_3px_8px_rgba(15,23,42,0.18)]" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -141,10 +155,6 @@
               <h2 class="text-base sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-none">
                 Prime<span class="text-slate-600">Astra</span>
               </h2>
-              <div class="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium mt-1">
-               
-                
-              </div>
             </div>
           </div>
 
@@ -155,18 +165,20 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
-                <span class="w-2 h-2 rounded-full bg-slate-900 absolute top-1.5 right-1.5"></span>
+                <span id="notifBadge" class="w-2 h-2 rounded-full bg-emerald-500 absolute top-1.5 right-1.5"></span>
               </button>
 
               <!-- Notifications Dropdown -->
-              <div id="notifPanel" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 text-xs text-left space-y-2">
+              <div id="notifPanel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 text-xs text-left space-y-2">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-                  <span class="font-extrabold text-slate-900">Notifications</span>
-                  <span class="text-[10px] text-slate-700 font-bold bg-slate-100 px-2 py-0.5 rounded-md">1 New</span>
+                  <span class="font-extrabold text-slate-900">Activity &amp; Notifications</span>
+                  <span id="notifCount" class="text-[10px] text-slate-700 font-bold bg-slate-100 px-2 py-0.5 rounded-md">New</span>
                 </div>
-                <div class="p-2.5 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
-                  <p class="font-bold text-slate-900 text-[11px]">✨ AI Resume Maker Live!</p>
-                  <p class="text-[10px] text-slate-500">Direct A4 instant PDF download with zero print dialogs.</p>
+                <div id="notifList" class="space-y-1.5 max-h-56 overflow-y-auto">
+                  <div class="p-2 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
+                    <p class="font-bold text-slate-900 text-[11px]">✨ PrimeAstra Live</p>
+                    <p class="text-[10px] text-slate-500">Welcome to PrimeAstra digital utilities.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -182,34 +194,22 @@
         </header>
 
         <!-- ==============================================
-             VIEW 1: HOME WORKSPACE HUB FEED
+             VIEW 1: HOME FEED VIEW
              ============================================== -->
         <div id="homeFeedView" class="space-y-4 w-full pt-3">
           <div class="flex items-center justify-between pt-1">
             <div>
-              <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">GOOD DAY 👋</span>
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">WELCOME</span>
               <h3 class="text-sm sm:text-base font-extrabold text-slate-900">
                 Welcome back, <span class="text-slate-700 underline decoration-slate-300" id="userGreetingName">User</span>
               </h3>
             </div>
-            <span class="px-2.5 py-1 bg-slate-100 text-slate-800 border border-slate-200 font-extrabold text-[10px] rounded-lg tracking-wide">
-              PRO Account
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-800 border border-slate-200 font-bold text-[10px] rounded-lg tracking-wide">
+              Active Session
             </span>
           </div>
 
-          <div class="relative">
-            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input
-              type="text"
-              placeholder="Search tools, utilities &amp; AI prompts..."
-              class="w-full pl-10 pr-10 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold placeholder-slate-400 shadow-xs focus:outline-none focus:ring-2 focus:ring-slate-900/15 focus:border-slate-900"
-            />
-          </div>
-
-          <!-- Royal Charcoal Hero Banner -->
+          <!-- Hero Banner -->
           <div class="hero-gradient text-white rounded-3xl p-6 sm:p-8 text-center space-y-4 shadow-xl shadow-slate-900/10 relative overflow-hidden border border-slate-800">
             <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-extrabold tracking-wide uppercase border border-white/15">
               <span class="text-slate-300">★</span>
@@ -218,10 +218,10 @@
 
             <div>
               <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight">
-                Welcome to PrimeAstra Hub
+                Welcome to PrimeAstra
               </h3>
               <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-md mx-auto leading-relaxed font-normal">
-                Explore your curated collection of free digital utilities, dev helpers, and AI power tools.
+                Explore your curated collection of free digital utilities and AI power tools.
               </p>
             </div>
 
@@ -232,31 +232,16 @@
               <span>Explore Free Tools</span>
               <span>&rarr;</span>
             </button>
-
-            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/10 text-center max-w-lg mx-auto">
-              <div>
-                <div class="text-base sm:text-lg font-extrabold text-white">1+</div>
-                <div class="text-[9px] sm:text-[10px] text-slate-300 font-medium">Live Tools</div>
-              </div>
-              <div>
-                <div class="text-base sm:text-lg font-extrabold text-white">Zero</div>
-                <div class="text-[9px] sm:text-[10px] text-slate-300 font-medium">Ads or Limits</div>
-              </div>
-              <div>
-                <div class="text-base sm:text-lg font-extrabold text-white">Instant</div>
-                <div class="text-[9px] sm:text-[10px] text-slate-300 font-medium">PDF Download</div>
-              </div>
-            </div>
           </div>
 
           <!-- Trending Tools Section -->
           <div class="space-y-3 pt-1">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">Trending Tools</h4>
-                <span class="px-2 py-0.5 bg-slate-200 text-slate-800 font-extrabold text-[9px] rounded-md">Hot</span>
+                <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">Featured Tool</h4>
+                <span class="px-2 py-0.5 bg-slate-200 text-slate-800 font-extrabold text-[9px] rounded-md">100% Free</span>
               </div>
-              <button onclick="switchTab('tools')" class="text-[11px] font-bold text-slate-700 hover:text-slate-950 hover:underline">View All Tools</button>
+              <button onclick="switchTab('tools')" class="text-[11px] font-bold text-slate-700 hover:text-slate-950 hover:underline">View All &rarr;</button>
             </div>
 
             <div onclick="openResumeMakerTool()" class="p-4 bg-white rounded-2xl border border-slate-200 card-shadow flex items-center justify-between gap-3 cursor-pointer hover:border-slate-400 hover:shadow-md transition active:scale-[0.99]">
@@ -267,26 +252,26 @@
                 <div class="min-w-0">
                   <div class="flex items-center gap-1.5">
                     <h5 class="text-sm font-extrabold text-slate-900 truncate">AI Resume Maker</h5>
-                    <span class="px-1.5 py-0.2 bg-slate-100 text-slate-700 font-extrabold text-[9px] rounded border border-slate-200">Live &amp; Ready</span>
+                    <span class="px-1.5 py-0.5 bg-emerald-50 text-emerald-700 font-extrabold text-[9px] rounded border border-emerald-200">Free Tool</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 truncate mt-0.5">Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.</p>
+                  <p class="text-[11px] text-slate-500 truncate mt-0.5">Build job-ready resumes with full experience fields, live preview &amp; PDF download.</p>
                 </div>
               </div>
-              <button class="px-4 py-2 bg-slate-100 text-slate-900 hover:bg-slate-900 hover:text-white rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer">
-                Open &rarr;
+              <button class="px-4 py-2 bg-slate-900 text-white hover:bg-slate-800 rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer">
+                Open Tool &rarr;
               </button>
             </div>
           </div>
         </div>
 
         <!-- ==============================================
-             VIEW 2: FREE TOOLS DIRECTORY (Card View)
+             VIEW 2: FREE TOOLS DIRECTORY
              ============================================== -->
         <div id="toolsDirectoryView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
             <div>
               <h3 class="text-lg font-bold text-slate-900">Free Tools</h3>
-              <p class="text-xs text-slate-500">Fast, local, and 100% free client-side utilities.</p>
+              <p class="text-xs text-slate-500">Fast, local, and 100% free utilities.</p>
             </div>
             <span class="px-2.5 py-1 bg-slate-100 text-slate-800 border border-slate-200 font-bold text-[11px] rounded-lg">
               1 Tool Live
@@ -305,7 +290,7 @@
                     AI Resume Maker
                   </h4>
                   <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
-                    Build job-ready resumes with 3 templates, live preview &amp; instant PDF download.
+                    Build job-ready resumes with complete experience, education, skills, and direct PDF download.
                   </p>
                 </div>
               </div>
@@ -315,7 +300,7 @@
                   Career &amp; Docs
                 </span>
                 <span class="text-slate-900 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
-                  Open Tool &rarr;
+                  Launch &rarr;
                 </span>
               </div>
             </div>
@@ -323,19 +308,19 @@
         </div>
 
         <!-- ==============================================
-             VIEW 3: RESUME MAKER WORKSPACE VIEW
+             VIEW 3: RESUME MAKER WORKSPACE VIEW (With Full Fields & No Preview Cuts)
              ============================================== -->
         <div id="resumeMakerView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="p-3.5 bg-slate-900 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-xs border border-slate-800">
             <div class="flex items-center gap-3">
-              <button onclick="switchTab('tools')" class="p-1.5 bg-white/10 hover:bg-white/20 rounded-xl transition cursor-pointer" title="Back to Tools">
+              <button onclick="switchTab('tools')" class="p-1.5 bg-white/10 hover:bg-white/20 rounded-xl transition cursor-pointer" title="Back to Free Tools">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
               </button>
               <div>
                 <h2 class="text-base font-bold flex items-center gap-2">
-                  <span>✨</span> AI Resume Maker
+                  <span>📝</span> AI Resume Maker
                 </h2>
-                <p class="text-[11px] text-slate-300">Live preview &amp; direct PDF download ready</p>
+                <p class="text-[11px] text-slate-300">Free Tools Section • Live auto-sync preview</p>
               </div>
             </div>
 
@@ -348,11 +333,11 @@
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
             
-            <!-- Left Form Controls -->
-            <div class="lg:col-span-7 space-y-4">
+            <!-- LEFT FORM CONTROLS: Scrollable Area -->
+            <div class="lg:col-span-6 space-y-4 max-h-[82vh] overflow-y-auto pr-1.5 custom-scrollbar">
               <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
                 <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="font-bold text-slate-700">Select Template:</span>
+                  <span class="font-bold text-slate-700">Resume Template:</span>
                   <div class="flex items-center gap-1.5">
                     <button type="button" onclick="setResumeTemplate('modern')" id="tmplBtnModern" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-900 text-white shadow-xs cursor-pointer">Modern</button>
                     <button type="button" onclick="setResumeTemplate('classic')" id="tmplBtnClassic" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">Classic</button>
@@ -369,55 +354,106 @@
                 </div>
               </div>
 
-              <!-- Personal Details -->
+              <!-- 1. Personal Details -->
               <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
-                <h3 class="text-xs font-bold text-slate-900 border-b border-slate-100 pb-1.5">Personal Details</h3>
+                <h3 class="text-xs font-bold text-slate-900 border-b border-slate-100 pb-1.5 uppercase tracking-wider text-slate-600">1. Personal Information</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div>
                     <label class="text-[10px] font-semibold text-slate-500">Full Name *</label>
-                    <input type="text" id="rName" value="" placeholder="e.g. Rahul Sharma" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900" />
+                    <input type="text" id="rName" value="Shubham Singh" placeholder="Full Name" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div>
-                    <label class="text-[10px] font-semibold text-slate-500">Job Title / Post *</label>
-                    <input type="text" id="rTitle" value="" placeholder="e.g. Web Developer" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900" />
+                    <label class="text-[10px] font-semibold text-slate-500">Designation / Job Title *</label>
+                    <input type="text" id="rTitle" value="Executive &amp; Operations Specialist" placeholder="e.g. Senior Officer / Developer" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div>
                     <label class="text-[10px] font-semibold text-slate-500">Mobile *</label>
-                    <input type="text" id="rPhone" value="" placeholder="e.g. +91 9876543210" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900" />
+                    <input type="text" id="rPhone" value="+91 9876543210" placeholder="+91 00000 00000" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div>
                     <label class="text-[10px] font-semibold text-slate-500">Email *</label>
-                    <input type="email" id="rEmail" value="" placeholder="e.g. name@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900" />
+                    <input type="email" id="rEmail" value="shubham@example.com" placeholder="name@example.com" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div class="sm:col-span-2">
-                    <label class="text-[10px] font-semibold text-slate-500">Address *</label>
-                    <input type="text" id="rAddress" value="" placeholder="e.g. City, State" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900" />
+                    <label class="text-[10px] font-semibold text-slate-500">Location (City, State) *</label>
+                    <input type="text" id="rAddress" value="Roorkee, Uttarakhand" placeholder="e.g. Roorkee, Uttarakhand" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                   </div>
                   <div class="sm:col-span-2">
-                    <label class="text-[10px] font-semibold text-slate-500">Profile Summary *</label>
-                    <textarea rows="2" id="rSummary" placeholder="Short description about your professional experience..." oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"></textarea>
+                    <label class="text-[10px] font-semibold text-slate-500">Profile / Career Summary *</label>
+                    <textarea rows="2" id="rSummary" placeholder="Short description about your professional experience..." oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900">Dedicated professional with experience in business operations, documentation, production planning, and digital services management.</textarea>
                   </div>
                 </div>
               </div>
 
-              <!-- Skills & Languages -->
+              <!-- 2. Work & Job Experience Fields -->
+              <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                  <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600">2. Work &amp; Job Experience</h3>
+                  <button type="button" onclick="addExperienceField()" class="text-[11px] font-bold text-slate-900 hover:underline cursor-pointer">+ Add Experience</button>
+                </div>
+
+                <div id="experienceFieldsContainer" class="space-y-3">
+                  <!-- Experience Item 1 -->
+                  <div class="exp-card p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <input type="text" placeholder="Designation / Role" value="Senior Officer - Operations" class="exp-role p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                      <input type="text" placeholder="Company / Organization" value="Shubh Enterprises" class="exp-company p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <input type="text" placeholder="City / State" value="Roorkee" class="exp-location p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                      <input type="text" placeholder="Duration (e.g. 2023 - Present)" value="2023 - Present" class="exp-duration p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                    </div>
+                    <textarea rows="2" placeholder="Responsibilities &amp; achievements..." class="exp-desc p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()">Managed catalog management, client accounts, documentation, inventory planning, and return claim disputes with optimum efficiency.</textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. Education Fields -->
+              <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                  <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600">3. Education &amp; Qualifications</h3>
+                  <button type="button" onclick="addEducationField()" class="text-[11px] font-bold text-slate-900 hover:underline cursor-pointer">+ Add Education</button>
+                </div>
+
+                <div id="educationFieldsContainer" class="space-y-3">
+                  <!-- Education Item 1 -->
+                  <div class="edu-card p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <input type="text" placeholder="Degree / Diploma" value="Bachelor of Computer Applications (BCA)" class="edu-degree p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                      <input type="text" placeholder="Institute / University" value="University Campus" class="edu-inst p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <input type="text" placeholder="Year of Passing" value="2024" class="edu-year p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                      <input type="text" placeholder="Grade / Percentage" value="First Division" class="edu-grade p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. Skills & Languages -->
               <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 text-xs">
-                <h3 class="text-xs font-bold text-slate-900 border-b border-slate-100 pb-1.5">Skills &amp; Languages</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 border-b border-slate-100 pb-1.5">4. Skills &amp; Languages</h3>
                 <div>
                   <label class="text-[10px] font-semibold text-slate-500">Skills (comma separated) *</label>
-                  <input type="text" id="rSkills" value="" placeholder="e.g. HTML, CSS, JavaScript, Excel" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900" />
+                  <input type="text" id="rSkills" value="Catalog Management, Operations, Inventory Planning, MS Office, E-commerce Logistics" placeholder="e.g. React, Node.js, Photoshop, Excel" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                 </div>
                 <div>
                   <label class="text-[10px] font-semibold text-slate-500">Languages</label>
-                  <input type="text" id="rLanguages" value="" placeholder="e.g. Hindi, English" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900" />
+                  <input type="text" id="rLanguages" value="Hindi, English" placeholder="e.g. Hindi, English" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900" />
                 </div>
               </div>
             </div>
 
-            <!-- Right Preview Container -->
-            <div class="lg:col-span-5 bg-slate-100 p-2 sm:p-3 rounded-2xl border border-slate-200 w-full overflow-hidden flex justify-center lg:sticky lg:top-4">
-              <div class="w-full max-w-full overflow-hidden flex justify-center">
-                <div id="resumePreviewContainer" class="w-full max-w-full bg-white shadow-md rounded-xl overflow-hidden border border-slate-200"></div>
+            <!-- RIGHT PREVIEW CONTAINER: Fixed Scaling (No Preview Cuts) -->
+            <div class="lg:col-span-6 bg-slate-100/90 p-3 sm:p-4 rounded-2xl border border-slate-200 w-full overflow-y-auto max-h-[82vh] flex flex-col items-center custom-scrollbar lg:sticky lg:top-4">
+              <div class="w-full flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+                <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Live Document Preview</span>
+                <span class="text-[10px] bg-white border border-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">A4 Formatted</span>
+              </div>
+              
+              <!-- Printable & Scaled A4 Container -->
+              <div class="w-full flex justify-center overflow-x-auto">
+                <div id="resumePreviewContainer" class="w-full max-w-[540px] bg-white shadow-lg rounded-xl overflow-hidden border border-slate-200 text-slate-800 transition-all"></div>
               </div>
             </div>
 
@@ -445,7 +481,7 @@
               </div>
               <div>
                 <h5 class="text-sm font-extrabold text-slate-900">AI Resume Maker</h5>
-                <p class="text-[11px] text-slate-500">Bookmarked utility for instant PDF creation.</p>
+                <p class="text-[11px] text-slate-500">Saved tool for fast resume building and PDF export.</p>
               </div>
             </div>
             <button class="px-3.5 py-1.5 bg-slate-100 text-slate-900 hover:bg-slate-200 rounded-xl text-xs font-extrabold transition">Open</button>
@@ -475,7 +511,6 @@
                 <p id="profileEmailDisplay" class="text-xs text-slate-500">Not signed in</p>
                 <div class="flex items-center justify-center sm:justify-start gap-2 pt-1">
                   <span class="px-2.5 py-0.5 bg-slate-100 text-slate-800 border border-slate-200 font-bold text-[10px] rounded-md">Verified Account</span>
-                  <span class="px-2.5 py-0.5 bg-slate-900 text-white font-bold text-[10px] rounded-md">PRO Member</span>
                 </div>
               </div>
             </div>
@@ -498,7 +533,7 @@
               <span>🔒</span> Security &amp; Password
             </h4>
             <p class="text-xs text-slate-500">
-              Forgot or want to change your password? We will send an official password reset link directly to your registered email address.
+              Change or reset your password. An official secure link will be sent directly to your registered email address.
             </p>
 
             <div class="pt-1 flex flex-col sm:flex-row items-center gap-3">
@@ -526,7 +561,7 @@
     </section>
   </main>
 
-  <!-- === MOBILE BOTTOM NAVIGATION === -->
+  <!-- === MOBILE BOTTOM NAVIGATION (HOME Tab Renamed) === -->
   <nav class="fixed bottom-3 left-4 right-4 z-40 md:hidden bg-white/95 backdrop-blur-xl border border-slate-200 rounded-3xl p-1.5 shadow-xl flex items-center justify-around text-slate-500">
     <button onclick="switchTab('home')" id="navHomeTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl bg-slate-900 text-white shadow-md shadow-slate-900/20 cursor-pointer">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -588,7 +623,39 @@
     const profilePhotoInitial = document.getElementById('profilePhotoInitial');
     const profileAuthBtn = document.getElementById('profileAuthBtn');
 
-    // Restore cached name & photo immediately
+    // === GLOBAL NOTIFICATION EVENT SYSTEM ===
+    window.pushNotification = (title, message, type = 'info') => {
+      // 1. Toast Notification on top-right
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `p-3 rounded-2xl border shadow-xl flex items-center gap-3 text-xs font-semibold pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0 ${
+        type === 'success' 
+          ? 'bg-slate-900 text-emerald-400 border-emerald-500/50' 
+          : type === 'error'
+          ? 'bg-slate-900 text-rose-400 border-rose-500/50'
+          : 'bg-slate-900 text-white border-slate-700'
+      }`;
+      toast.innerHTML = `<span>🔔</span><div><p class="font-bold">${title}</p><p class="text-[10px] text-slate-300 font-normal">${message}</p></div>`;
+      toastContainer.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+
+      // 2. Add to Notification Dropdown List
+      const notifList = document.getElementById('notifList');
+      const item = document.createElement('div');
+      item.className = 'p-2 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100';
+      item.innerHTML = `<p class="font-bold text-slate-900 text-[11px]">${title}</p><p class="text-[10px] text-slate-500">${message}</p>`;
+      notifList.prepend(item);
+    };
+
+    // Restore cached name & photo
     const cachedName = localStorage.getItem('pa_cached_name');
     const cachedPhoto = localStorage.getItem('pa_cached_photo');
     if (cachedName) {
@@ -610,7 +677,10 @@
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
+      document.getElementById('experienceFieldsContainer').innerHTML = '';
+      document.getElementById('educationFieldsContainer').innerHTML = '';
       renderResumePreview();
+      pushNotification('Form Cleared', 'Resume fields have been reset.', 'info');
     };
 
     window.handleGoogleLogin = async () => {
@@ -628,8 +698,9 @@
             createdAt: new Date().toISOString()
           });
         }
+        pushNotification('Login Successful', `Welcome back, ${user.displayName || 'User'}!`, 'success');
       } catch (e) {
-        alert(e.message);
+        pushNotification('Login Error', e.message, 'error');
       }
     };
 
@@ -637,6 +708,7 @@
       localStorage.removeItem('pa_cached_name');
       localStorage.removeItem('pa_cached_photo');
       await signOut(auth);
+      pushNotification('Signed Out', 'You have been safely logged out.', 'info');
     };
 
     window.handlePhotoUpload = (event) => {
@@ -660,6 +732,7 @@
           }
         }
         updateHeaderAvatar(base64Photo, activeUser?.displayName || 'User');
+        pushNotification('Photo Updated', 'Profile photo changed successfully!', 'success');
       };
       reader.readAsDataURL(file);
     };
@@ -688,11 +761,12 @@
           console.error(err);
         }
       }
+      pushNotification('Photo Removed', 'Profile photo removed successfully.', 'info');
     };
 
     window.handlePasswordReset = async () => {
       if (!activeUser || !activeUser.email) {
-        alert("Please login first to reset your password.");
+        pushNotification('Error', 'Please login first to reset your password.', 'error');
         return;
       }
       try {
@@ -700,8 +774,9 @@
         const statusEl = document.getElementById('passwordResetStatus');
         statusEl.classList.remove('hidden');
         setTimeout(() => statusEl.classList.add('hidden'), 5000);
+        pushNotification('Password Reset Link Sent', `Check ${activeUser.email} for instructions.`, 'success');
       } catch (err) {
-        alert(err.message);
+        pushNotification('Password Reset Error', err.message, 'error');
       }
     };
 
@@ -819,6 +894,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    // When clicking Resume Maker, switch to Free Tools section first then show workspace
     window.openResumeMakerTool = () => {
       document.getElementById('homeFeedView').classList.add('hidden');
       document.getElementById('toolsDirectoryView').classList.add('hidden');
@@ -826,7 +902,12 @@
       document.getElementById('profileView').classList.add('hidden');
       document.getElementById('resumeMakerView').classList.remove('hidden');
 
+      // Highlight Free Tools tab
+      document.getElementById('deskToolsBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer";
+      document.getElementById('deskHomeBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 text-left cursor-pointer";
+
       window.renderResumePreview();
+      pushNotification('Tool Opened', 'AI Resume Maker workspace active in Free Tools.', 'info');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -844,49 +925,53 @@
       window.renderResumePreview();
     };
 
-    // STRICT VALIDATION ON DOWNLOAD: Form must be filled
+    // Add Dynamic Experience Field
+    window.addExperienceField = () => {
+      const container = document.getElementById('experienceFieldsContainer');
+      const div = document.createElement('div');
+      div.className = 'exp-card p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs relative';
+      div.innerHTML = `
+        <button type="button" onclick="this.parentElement.remove(); renderResumePreview();" class="absolute top-2 right-2 text-slate-400 hover:text-rose-500 font-bold text-xs">✕</button>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <input type="text" placeholder="Designation / Role" class="exp-role p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+          <input type="text" placeholder="Company / Organization" class="exp-company p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <input type="text" placeholder="City / State" class="exp-location p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+          <input type="text" placeholder="Duration (e.g. 2022 - 2023)" class="exp-duration p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+        </div>
+        <textarea rows="2" placeholder="Responsibilities & key achievements..." class="exp-desc p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()"></textarea>
+      `;
+      container.appendChild(div);
+      renderResumePreview();
+    };
+
+    // Add Dynamic Education Field
+    window.addEducationField = () => {
+      const container = document.getElementById('educationFieldsContainer');
+      const div = document.createElement('div');
+      div.className = 'edu-card p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs relative';
+      div.innerHTML = `
+        <button type="button" onclick="this.parentElement.remove(); renderResumePreview();" class="absolute top-2 right-2 text-slate-400 hover:text-rose-500 font-bold text-xs">✕</button>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <input type="text" placeholder="Degree / Diploma" class="edu-degree p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+          <input type="text" placeholder="Institute / University" class="edu-inst p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <input type="text" placeholder="Passing Year" class="edu-year p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+          <input type="text" placeholder="Grade / %" class="edu-grade p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+        </div>
+      `;
+      container.appendChild(div);
+      renderResumePreview();
+    };
+
+    // Direct PDF Download with Notification
     window.downloadResumePdfDirect = () => {
       const nameInput = document.getElementById('rName');
-      const titleInput = document.getElementById('rTitle');
-      const phoneInput = document.getElementById('rPhone');
-      const emailInput = document.getElementById('rEmail');
-      const addressInput = document.getElementById('rAddress');
-      const summaryInput = document.getElementById('rSummary');
-      const skillsInput = document.getElementById('rSkills');
-
       if (!nameInput.value.trim()) {
         alert("Please enter your Full Name before downloading!");
         nameInput.focus();
-        return;
-      }
-      if (!titleInput.value.trim()) {
-        alert("Please enter your Job Title / Profession!");
-        titleInput.focus();
-        return;
-      }
-      if (!phoneInput.value.trim()) {
-        alert("Please enter your Mobile Number!");
-        phoneInput.focus();
-        return;
-      }
-      if (!emailInput.value.trim()) {
-        alert("Please enter your Email Address!");
-        emailInput.focus();
-        return;
-      }
-      if (!addressInput.value.trim()) {
-        alert("Please enter your Address!");
-        addressInput.focus();
-        return;
-      }
-      if (!summaryInput.value.trim()) {
-        alert("Please enter your Profile Summary!");
-        summaryInput.focus();
-        return;
-      }
-      if (!skillsInput.value.trim()) {
-        alert("Please enter your Skills!");
-        skillsInput.focus();
         return;
       }
 
@@ -896,138 +981,190 @@
 
       const fileName = nameInput.value.trim().replace(/\s+/g, '_');
       const btnText = document.getElementById('downloadBtnText');
-      btnText.innerText = "Generating PDF...";
+      btnText.innerText = "Exporting PDF...";
 
       const opt = {
-        margin:       [5, 5, 5, 5],
+        margin:       [4, 4, 4, 4],
         filename:     `${fileName}_Resume.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { 
-          scale: 2, 
-          useCORS: true, 
-          logging: false,
-          scrollY: 0
-        },
+        html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
       html2pdf().set(opt).from(innerContent).save().then(() => {
         btnText.innerText = "Download PDF";
+        pushNotification('Resume Ready!', 'Your resume PDF has been downloaded successfully.', 'success');
       }).catch((err) => {
         console.error(err);
         btnText.innerText = "Download PDF";
+        pushNotification('Export Failed', 'Error exporting PDF. Please check your inputs.', 'error');
       });
     };
 
-    // Live Resume Renderer (Royal Slate & Charcoal Theme)
+    // Live Resume Renderer (Fixes cutting & fits full job/education fields)
     window.renderResumePreview = () => {
       const name = document.getElementById('rName').value.trim() || 'Your Full Name';
-      const title = document.getElementById('rTitle').value.trim() || 'Your Profession / Job Title';
+      const title = document.getElementById('rTitle').value.trim() || 'Job Title / Designation';
       const phone = document.getElementById('rPhone').value.trim() || '+91 00000 00000';
-      const email = document.getElementById('rEmail').value.trim() || 'yourname@example.com';
+      const email = document.getElementById('rEmail').value.trim() || 'name@example.com';
       const address = document.getElementById('rAddress').value.trim() || 'City, State';
-      const summary = document.getElementById('rSummary').value.trim() || 'Write a brief professional summary about your skills, strengths, and goals.';
+      const summary = document.getElementById('rSummary').value.trim() || 'Professional summary highlighting key strengths, background, and career objectives.';
       const skills = document.getElementById('rSkills').value.trim() || 'Skill 1, Skill 2, Skill 3';
-      const languages = document.getElementById('rLanguages').value.trim() || 'English, Hindi';
+      const languages = document.getElementById('rLanguages').value.trim() || 'Hindi, English';
       const color = document.getElementById('resumeThemeColor').value || '#0f172a';
       const container = document.getElementById('resumePreviewContainer');
 
-      const skillPills = skills.split(',').map(s => `<span style="background: rgba(255,255,255,0.18); padding: 4px 8px; border-radius: 4px; font-size: 10px; display: inline-block;">${s.trim()}</span>`).join(' ');
+      // Parse Dynamic Experiences
+      const expCards = document.querySelectorAll('.exp-card');
+      let expHTML = '';
+      expCards.forEach(card => {
+        const role = card.querySelector('.exp-role')?.value.trim() || 'Position / Role';
+        const company = card.querySelector('.exp-company')?.value.trim() || 'Organization Name';
+        const loc = card.querySelector('.exp-location')?.value.trim();
+        const duration = card.querySelector('.exp-duration')?.value.trim() || 'Duration';
+        const desc = card.querySelector('.exp-desc')?.value.trim();
+
+        expHTML += `
+          <div class="mb-2 text-[10.5px]">
+            <div class="flex justify-between font-bold text-slate-900">
+              <span>${role}</span>
+              <span class="text-slate-500 font-normal text-[10px]">${duration}</span>
+            </div>
+            <div class="text-slate-600 font-semibold text-[10px]">${company} ${loc ? `• ${loc}` : ''}</div>
+            ${desc ? `<p class="text-slate-600 mt-0.5 text-[9.5px] leading-relaxed">${desc}</p>` : ''}
+          </div>
+        `;
+      });
+
+      // Parse Dynamic Educations
+      const eduCards = document.querySelectorAll('.edu-card');
+      let eduHTML = '';
+      eduCards.forEach(card => {
+        const degree = card.querySelector('.edu-degree')?.value.trim() || 'Degree / Qualification';
+        const inst = card.querySelector('.edu-inst')?.value.trim() || 'Institution';
+        const year = card.querySelector('.edu-year')?.value.trim() || '';
+        const grade = card.querySelector('.edu-grade')?.value.trim() || '';
+
+        eduHTML += `
+          <div class="mb-1.5 text-[10.5px] flex justify-between">
+            <div>
+              <span class="font-bold text-slate-900">${degree}</span>
+              <div class="text-slate-500 text-[10px]">${inst}</div>
+            </div>
+            <div class="text-right text-[10px] text-slate-500">
+              <div>${year}</div>
+              ${grade ? `<div>${grade}</div>` : ''}
+            </div>
+          </div>
+        `;
+      });
+
+      const skillPills = skills.split(',').map(s => `<span style="background: rgba(255,255,255,0.18); padding: 3px 6px; border-radius: 4px; font-size: 9.5px; display: inline-block;">${s.trim()}</span>`).join(' ');
 
       if (window.activeResumeTemplate === 'modern') {
         container.innerHTML = `
-          <div class="w-full bg-white flex min-h-[520px] text-slate-800" style="font-family: sans-serif;">
-            <div class="w-[36%] text-white p-5 flex flex-col justify-start shrink-0" style="background-color: ${color}">
-              <div class="space-y-5">
+          <div class="w-full bg-white flex min-h-[580px] text-slate-800" style="font-family: sans-serif;">
+            <div class="w-[34%] text-white p-4 sm:p-5 flex flex-col justify-start shrink-0" style="background-color: ${color}">
+              <div class="space-y-4">
                 <div>
-                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-slate-300 border-b border-white/20 pb-1 mb-2">Contact</h5>
-                  <div class="space-y-1.5 text-[10px] text-slate-100">
+                  <h5 class="text-[10.5px] font-bold uppercase tracking-wider text-slate-300 border-b border-white/20 pb-1 mb-1.5">Contact</h5>
+                  <div class="space-y-1 text-[9.5px] text-slate-100">
                     <p class="break-all">📞 ${phone}</p>
                     <p class="break-all">✉️ ${email}</p>
                     <p class="break-words">📍 ${address}</p>
                   </div>
                 </div>
                 <div>
-                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-slate-300 border-b border-white/20 pb-1 mb-2">Skills</h5>
-                  <div class="flex flex-wrap gap-1.5">${skillPills}</div>
+                  <h5 class="text-[10.5px] font-bold uppercase tracking-wider text-slate-300 border-b border-white/20 pb-1 mb-1.5">Skills</h5>
+                  <div class="flex flex-wrap gap-1">${skillPills}</div>
                 </div>
                 <div>
-                  <h5 class="text-[11px] font-bold uppercase tracking-wider text-slate-300 border-b border-white/20 pb-1 mb-2">Languages</h5>
-                  <p class="text-[10px] text-slate-100 break-words">${languages}</p>
+                  <h5 class="text-[10.5px] font-bold uppercase tracking-wider text-slate-300 border-b border-white/20 pb-1 mb-1.5">Languages</h5>
+                  <p class="text-[9.5px] text-slate-100 break-words">${languages}</p>
                 </div>
               </div>
             </div>
-            <div class="w-[64%] p-6 flex flex-col justify-start space-y-4 min-w-0">
-              <div>
-                <div class="border-b border-slate-200 pb-3 mb-3">
-                  <h2 class="text-xl font-black truncate" style="color: ${color}">${name}</h2>
-                  <p class="text-xs font-bold text-slate-500 uppercase truncate mt-0.5">${title}</p>
-                  <p class="text-[10.5px] text-slate-600 mt-2 leading-relaxed">${summary}</p>
-                </div>
-                <div class="mb-4">
-                  <h4 class="text-[11px] font-bold uppercase mb-1.5 pb-1 border-b border-slate-200" style="color: ${color}">Experience</h4>
-                  <div class="text-[10.5px] flex justify-between font-bold text-slate-900"><span>Your Role</span><span class="text-slate-400 font-normal">2022 - Present</span></div>
-                  <p class="text-[9.5px] text-slate-500 mt-0.5">Company Name / Organization</p>
-                </div>
-                <div>
-                  <h4 class="text-[11px] font-bold uppercase mb-1.5 pb-1 border-b border-slate-200" style="color: ${color}">Education</h4>
-                  <div class="text-[10.5px] flex justify-between font-bold text-slate-900"><span>Degree / Course</span><span class="text-slate-400 font-normal">Year</span></div>
-                  <p class="text-[9.5px] text-slate-500 mt-0.5">College or University Name</p>
-                </div>
+            <div class="w-[66%] p-5 sm:p-6 flex flex-col justify-start space-y-3 min-w-0">
+              <div class="border-b border-slate-200 pb-2 mb-1">
+                <h2 class="text-lg sm:text-xl font-black truncate" style="color: ${color}">${name}</h2>
+                <p class="text-[11px] font-bold text-slate-500 uppercase truncate mt-0.5">${title}</p>
+                <p class="text-[10px] text-slate-600 mt-1.5 leading-relaxed">${summary}</p>
               </div>
+
+              ${expHTML ? `
+                <div>
+                  <h4 class="text-[11px] font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style="color: ${color}">Experience</h4>
+                  ${expHTML}
+                </div>
+              ` : ''}
+
+              ${eduHTML ? `
+                <div>
+                  <h4 class="text-[11px] font-bold uppercase mb-1 pb-0.5 border-b border-slate-200" style="color: ${color}">Education</h4>
+                  ${eduHTML}
+                </div>
+              ` : ''}
             </div>
           </div>
         `;
       } else if (window.activeResumeTemplate === 'classic') {
         container.innerHTML = `
-          <div class="w-full bg-white p-7 flex flex-col justify-start min-h-[520px] text-slate-800" style="font-family: serif;">
+          <div class="w-full bg-white p-6 sm:p-7 flex flex-col justify-start min-h-[580px] text-slate-800" style="font-family: serif;">
+            <div class="text-center border-b border-slate-200 pb-3 mb-3">
+              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 truncate">${name}</h2>
+              <p class="text-[11px] font-semibold text-slate-600 uppercase mt-0.5 truncate">${title}</p>
+              <p class="text-[9.5px] text-slate-500 mt-1 break-words">${phone} | ${email} | ${address}</p>
+            </div>
+            <div class="mb-3">
+              <h4 class="text-[11px] font-bold uppercase border-b border-slate-200 pb-0.5 mb-1" style="color: ${color}">Summary</h4>
+              <p class="text-[9.5px] text-slate-600 leading-relaxed">${summary}</p>
+            </div>
+            ${expHTML ? `
+              <div class="mb-3">
+                <h4 class="text-[11px] font-bold uppercase border-b border-slate-200 pb-0.5 mb-1" style="color: ${color}">Experience</h4>
+                ${expHTML}
+              </div>
+            ` : ''}
+            ${eduHTML ? `
+              <div class="mb-3">
+                <h4 class="text-[11px] font-bold uppercase border-b border-slate-200 pb-0.5 mb-1" style="color: ${color}">Education</h4>
+                ${eduHTML}
+              </div>
+            ` : ''}
             <div>
-              <div class="text-center border-b border-slate-200 pb-3.5 mb-3.5">
-                <h2 class="text-2xl font-bold tracking-tight text-slate-900 truncate">${name}</h2>
-                <p class="text-xs font-semibold text-slate-600 uppercase mt-1 truncate">${title}</p>
-                <p class="text-[10px] text-slate-500 mt-1 break-words">${phone} | ${email} | ${address}</p>
-              </div>
-              <div class="mb-3.5">
-                <h4 class="text-[11.5px] font-bold uppercase border-b border-slate-200 pb-1 mb-1.5" style="color: ${color}">Summary</h4>
-                <p class="text-[10px] text-slate-600 leading-relaxed">${summary}</p>
-              </div>
-              <div class="mb-3.5">
-                <h4 class="text-[11.5px] font-bold uppercase border-b border-slate-200 pb-1 mb-1.5" style="color: ${color}">Experience</h4>
-                <p class="text-[10.5px] font-bold text-slate-800">Your Role - Company Name (Year)</p>
-              </div>
-              <div class="mb-3.5">
-                <h4 class="text-[11.5px] font-bold uppercase border-b border-slate-200 pb-1 mb-1.5" style="color: ${color}">Education</h4>
-                <p class="text-[10px]"><strong>Your Degree</strong> - School or College</p>
-              </div>
-              <div>
-                <h4 class="text-[11.5px] font-bold uppercase border-b border-slate-200 pb-1 mb-1.5" style="color: ${color}">Skills</h4>
-                <p class="text-[10px] text-slate-700">${skills}</p>
-              </div>
+              <h4 class="text-[11px] font-bold uppercase border-b border-slate-200 pb-0.5 mb-1" style="color: ${color}">Skills &amp; Languages</h4>
+              <p class="text-[9.5px] text-slate-700">${skills} • ${languages}</p>
             </div>
           </div>
         `;
       } else {
         container.innerHTML = `
-          <div class="w-full bg-white flex flex-col justify-start min-h-[520px] text-slate-800" style="font-family: sans-serif;">
-            <div>
-              <div class="p-5 text-white" style="background-color: ${color}">
-                <h2 class="text-xl font-black truncate">${name}</h2>
-                <p class="text-xs font-medium text-slate-200 truncate mt-0.5">${title}</p>
-                <p class="text-[9px] text-slate-300 mt-1.5 break-words">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
+          <div class="w-full bg-white flex flex-col justify-start min-h-[580px] text-slate-800" style="font-family: sans-serif;">
+            <div class="p-4 sm:p-5 text-white" style="background-color: ${color}">
+              <h2 class="text-lg sm:text-xl font-black truncate">${name}</h2>
+              <p class="text-[11px] font-medium text-slate-200 truncate mt-0.5">${title}</p>
+              <p class="text-[9px] text-slate-300 mt-1 break-words">📞 ${phone} | ✉️ ${email} | 📍 ${address}</p>
+            </div>
+            <div class="p-5 space-y-3">
+              <div>
+                <h4 class="text-[10.5px] font-bold uppercase tracking-wider text-slate-500">Summary</h4>
+                <p class="text-[9.5px] text-slate-600 leading-relaxed mt-0.5">${summary}</p>
               </div>
-              <div class="p-6 space-y-4">
+              ${expHTML ? `
                 <div>
-                  <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Profile</h4>
-                  <p class="text-[10px] text-slate-600 leading-relaxed mt-1">${summary}</p>
+                  <h4 class="text-[10.5px] font-bold uppercase tracking-wider text-slate-500">Experience</h4>
+                  <div class="mt-1">${expHTML}</div>
                 </div>
+              ` : ''}
+              ${eduHTML ? `
                 <div>
-                  <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Experience</h4>
-                  <p class="text-[10.5px] font-bold text-slate-800 mt-1">Your Role - Company Name</p>
+                  <h4 class="text-[10.5px] font-bold uppercase tracking-wider text-slate-500">Education</h4>
+                  <div class="mt-1">${eduHTML}</div>
                 </div>
-                <div>
-                  <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Skills</h4>
-                  <p class="text-[10px] text-slate-700 mt-1">${skills}</p>
-                </div>
+              ` : ''}
+              <div>
+                <h4 class="text-[10.5px] font-bold uppercase tracking-wider text-slate-500">Skills</h4>
+                <p class="text-[9.5px] text-slate-700 mt-0.5">${skills}</p>
               </div>
             </div>
           </div>

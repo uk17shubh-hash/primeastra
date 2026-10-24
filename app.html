@@ -14,6 +14,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+  <!-- MediaPipe Pose Detection for Auto-Reframing -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -26,7 +30,6 @@
     .card-shadow {
       box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
     }
-    /* Minimal smooth scrollbar for form */
     .form-scroll::-webkit-scrollbar {
       width: 5px;
     }
@@ -163,8 +166,8 @@
                   <span class="text-[10px] text-slate-700 font-bold bg-slate-100 px-2 py-0.5 rounded-md">1 New</span>
                 </div>
                 <div class="p-2.5 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
-                  <p class="font-bold text-slate-900 text-[11px]">🎬 Visual Filmstrip Trimmer Live!</p>
-                  <p class="text-[10px] text-slate-500">Video frames timeline loaded automatically.</p>
+                  <p class="font-bold text-slate-900 text-[11px]">🎬 30s Body-Tracking Slicer Live!</p>
+                  <p class="text-[10px] text-slate-500">Auto-tracking person center for full 30s shorts.</p>
                 </div>
               </div>
             </div>
@@ -275,7 +278,7 @@
                     AI Video Clipping Generator
                   </h4>
                   <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
-                    Visual Video Trimmer: See real frames, drag handles to set range and extract 10 vertical 30s shorts.
+                    Auto-Reframing with AI Body Tracking: Keeps the person centered in full 30s vertical shorts.
                   </p>
                 </div>
               </div>
@@ -287,7 +290,7 @@
           </div>
         </div>
 
-        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE (VISUAL FILMSTRIP) -->
+        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE -->
         <div id="videoClipperWorkspaceView" class="hidden space-y-4 w-full text-left pt-3">
           
           <div class="p-3.5 sm:p-4 bg-[#0F172A] text-white rounded-2xl flex items-center justify-between shadow-xs border border-slate-800">
@@ -299,7 +302,7 @@
                 <h2 class="text-sm sm:text-base font-extrabold flex items-center gap-2">
                   <span>🎬</span> AI Video Clipping Generator
                 </h2>
-                <p class="text-[10px] sm:text-[11px] text-slate-400">Visual Trimmer • 10 Shorts (30s each)</p>
+                <p class="text-[10px] sm:text-[11px] text-slate-400">Full Body Tracking • Visual Filmstrip Trimmer • 10 Shorts (30s each)</p>
               </div>
             </div>
             <div class="px-3.5 py-1.5 bg-[#854d0e]/40 border border-[#ca8a04]/40 text-[#fde047] rounded-xl text-xs font-black tracking-wide shrink-0">
@@ -313,7 +316,7 @@
             <div class="lg:col-span-7 bg-white p-5 rounded-3xl border border-slate-200 card-shadow space-y-4 text-xs">
               <div>
                 <h3 class="text-xs font-black text-slate-900">Step 1: Upload Source Video</h3>
-                <p class="text-[11px] text-slate-500 mt-0.5">Select any MP4 or MOV video file to load the visual timeline frames.</p>
+                <p class="text-[11px] text-slate-500 mt-0.5">Upload your video to extract frames and enable real-time body tracking.</p>
               </div>
 
               <!-- Upload Area -->
@@ -373,6 +376,15 @@
                 </div>
               </div>
 
+              <!-- Tracking Status Indicator -->
+              <div class="p-3 bg-slate-100 rounded-2xl flex items-center justify-between border border-slate-200">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span class="font-bold text-slate-800 text-[11px]">AI Smart Crop Mode:</span>
+                </div>
+                <span class="px-2.5 py-0.5 bg-slate-900 text-white font-bold text-[10px] rounded-lg">Full Body Track</span>
+              </div>
+
               <div class="grid grid-cols-2 gap-3 pt-1">
                 <div>
                   <label class="text-[11px] font-bold text-slate-700">Clip Duration</label>
@@ -380,7 +392,7 @@
                 </div>
                 <div>
                   <label class="text-[11px] font-bold text-slate-700">Aspect Ratio</label>
-                  <input type="text" value="9:16 (Shorts &amp; Reels)" readonly class="w-full mt-1 px-3 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 cursor-not-allowed" />
+                  <input type="text" value="9:16 (Auto-Reframe)" readonly class="w-full mt-1 px-3 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 cursor-not-allowed" />
                 </div>
               </div>
 
@@ -412,7 +424,7 @@
           </div>
         </div>
 
-        <!-- VIEW 5: RESUME MAKER (FULL FIELDS + SMOOTH SCROLL) -->
+        <!-- VIEW 5: RESUME MAKER -->
         <div id="resumeMakerView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="p-3.5 bg-slate-900 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-xs border border-slate-800">
             <div class="flex items-center gap-3">
@@ -620,7 +632,7 @@
     <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500"><span class="text-[10px] font-semibold">Profile</span></button>
   </nav>
 
-  <!-- SCRIPT ENGINE -->
+  <!-- SCRIPT ENGINE (WITH FULL 30s RECORDING & MEDIAPIPE BODY TRACKING) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -692,7 +704,7 @@
       document.getElementById('notifPanel').classList.toggle('hidden');
     };
 
-    // Video Selection + Load Visual Filmstrip
+    // Video Selection & Filmstrip Generator
     window.handleFileChange = async (event) => {
       const file = event.target.files[0];
       if (!file) return;
@@ -724,8 +736,6 @@
         endSlider.value = trimEndSec;
 
         updateTrimmerUI();
-
-        // Generate 12 real frame thumbnails from the video file
         await generateVisualFilmstrip(file, videoDuration);
       };
     };
@@ -809,6 +819,7 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
+    // FULL BODY TRACKING SLICER ENGINE (POORE 30 SECONDS KA SHORT)
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise((resolve) => {
         const vid = document.createElement('video');
@@ -817,61 +828,113 @@
         vid.crossOrigin = "anonymous";
         vid.src = URL.createObjectURL(videoSource);
 
+        let currentTargetX = 0.5;
+        let smoothedTargetX = 0.5;
+
+        // MediaPipe Pose Model
+        let poseDetector = null;
+        if (window.Pose) {
+          poseDetector = new window.Pose({
+            locateFile: (f) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}`
+          });
+          poseDetector.setOptions({
+            modelComplexity: 0,
+            smoothLandmarks: true,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+          });
+
+          poseDetector.onResults((results) => {
+            if (results.poseLandmarks && results.poseLandmarks.length > 0) {
+              const leftHip = results.poseLandmarks[23];
+              const rightHip = results.poseLandmarks[24];
+              const leftShoulder = results.poseLandmarks[11];
+              const rightShoulder = results.poseLandmarks[12];
+
+              if (leftHip && rightHip) {
+                currentTargetX = (leftHip.x + rightHip.x) / 2;
+              } else if (leftShoulder && rightShoulder) {
+                currentTargetX = (leftShoulder.x + rightShoulder.x) / 2;
+              }
+            }
+          });
+        }
+
+        const CLIP_DURATION = 30; // Har short exact 30 seconds ka hoga
+
         vid.onloadedmetadata = () => {
-          vid.currentTime = Math.min(startTime, Math.max(0, vid.duration - 3));
+          vid.currentTime = Math.min(startTime, Math.max(0, vid.duration - CLIP_DURATION));
         };
 
         vid.onseeked = () => {
           const canvas = document.createElement('canvas');
           canvas.width = 540;
-          canvas.height = 960;
+          canvas.height = 960; // 9:16 vertical ratio
           const ctx = canvas.getContext('2d');
 
           const stream = canvas.captureStream(25);
           let rec;
-          try { rec = new MediaRecorder(stream, { mimeType: 'video/webm' }); }
-          catch(e) { rec = new MediaRecorder(stream); }
+          try { 
+            rec = new MediaRecorder(stream, { mimeType: 'video/webm' }); 
+          } catch(e) { 
+            rec = new MediaRecorder(stream); 
+          }
 
           const chunks = [];
-          rec.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
-          rec.onstop = () => resolve(URL.createObjectURL(new Blob(chunks, { type: 'video/mp4' })));
+          rec.ondataavailable = (e) => { 
+            if (e.data.size > 0) chunks.push(e.data); 
+          };
+          rec.onstop = () => {
+            const finalBlob = new Blob(chunks, { type: 'video/mp4' });
+            resolve(URL.createObjectURL(finalBlob));
+          };
 
           rec.start();
           vid.play();
 
-          const drawInterval = setInterval(() => {
+          const drawInterval = setInterval(async () => {
             if (vid.paused || vid.ended) {
               clearInterval(drawInterval);
               if (rec.state === 'recording') rec.stop();
               return;
             }
 
+            // Real-time body tracking
+            if (poseDetector) {
+              try {
+                await poseDetector.send({ image: vid });
+              } catch (e) {}
+            }
+
+            smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.15;
+
             const vw = vid.videoWidth || 640;
             const vh = vid.videoHeight || 360;
             const targetRatio = 540 / 960;
-            const vidRatio = vw / vh;
 
-            let sw, sh, sx, sy;
-            if (vidRatio > targetRatio) {
-              sh = vh; sw = vh * targetRatio;
-              sx = (vw - sw) / 2; sy = 0;
-            } else {
-              sw = vw; sh = vw / targetRatio;
-              sx = 0; sy = (vh - sh) / 2;
-            }
+            const sh = vh;
+            const sw = vh * targetRatio;
 
-            ctx.drawImage(vid, sx, sy, sw, sh, 0, 0, 540, 960);
+            let personCenterX = smoothedTargetX * vw;
+            let sx = personCenterX - (sw / 2);
+
+            if (sx < 0) sx = 0;
+            if (sx + sw > vw) sx = vw - sw;
+
+            ctx.drawImage(vid, sx, 0, sw, sh, 0, 0, 540, 960);
           }, 40);
 
+          // EXACT 30 SECONDS (30,000 ms) RECORDING
           setTimeout(() => {
             clearInterval(drawInterval);
             if (rec.state === 'recording') rec.stop();
             vid.pause();
-          }, 3000);
+          }, CLIP_DURATION * 1000);
         };
       });
     }
 
+    // MAIN 10 SHORTS EXECUTION (BODY TRACKING ENABLED)
     window.slice10TimelineShorts = async () => {
       if (!selectedRawVideo) {
         alert("Pehle MP4 video upload karein!");
@@ -889,7 +952,7 @@
 
         for (let i = 1; i <= 10; i++) {
           const currentStart = trimStartSec + (i - 1) * step;
-          btn.innerHTML = `<span>⏳ Slicing Short ${i} of 10 (${Math.floor(currentStart)}s)...</span>`;
+          btn.innerHTML = `<span>🎯 Body Tracking &amp; Slicing 30s Clip ${i} of 10...</span>`;
           const blobUrl = await sliceDirectVideoSegment(selectedRawVideo, i, currentStart);
           generatedShorts.push({
             url: blobUrl,
@@ -910,7 +973,7 @@
               <div class="min-w-0">
                 <p class="font-black text-slate-900 text-xs truncate">Short Clip #${index + 1}</p>
                 <p class="text-[10px] text-amber-600 font-bold truncate mt-0.5">30s Clip • ${item.timeLabel}</p>
-                <p class="text-[9px] text-slate-400 mt-0.5">Vertical 9:16 Video</p>
+                <p class="text-[9px] text-slate-400 mt-0.5">Vertical 9:16 • AI Body Tracked</p>
               </div>
             </div>
             <a href="${item.url}" download="Short_Clip_${index + 1}.mp4" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shrink-0 transition text-center cursor-pointer">
@@ -922,12 +985,12 @@
 
         btn.disabled = false;
         btn.innerHTML = `<span>⚡ Generate 10 AI Shorts (Cost: 10 Credits)</span>`;
-        alert("Visual range ke according 10 Shorts video taiyar ho gaye hain! Ab direct MP4 download kar sakte hain.");
+        alert("Success! 30-30 seconds ke 10 Shorts video body tracking ke sath ready hain! Download button dabate hi direct MP4 download hogi.");
       } catch (err) {
         console.error(err);
         btn.disabled = false;
         btn.innerHTML = `<span>⚡ Generate 10 AI Shorts (Cost: 10 Credits)</span>`;
-        alert("Slicing me issue aaya, dobara koshish karein!");
+        alert("Processing me issue aaya, dobara koshish karein!");
       }
     };
 

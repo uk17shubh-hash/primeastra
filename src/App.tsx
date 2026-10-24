@@ -9,6 +9,7 @@ import Login from './Login';
 import { NotificationProvider, useNotification } from './context/NotificationContext';
 import { ResumeData } from './types/resume';
 import { Bell, LogOut } from 'lucide-react';
+import { AiVideoClipper } from './components/AiVideoClipper';
 
 function MainLayout() {
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -79,7 +80,13 @@ function MainLayout() {
           <div className="flex items-center gap-2">
             <h1 className="font-bold text-lg text-slate-800">PrimeAstra</h1>
             <span className="text-xs bg-slate-100 text-slate-600 font-semibold px-2.5 py-0.5 rounded-full">
-              {activeTab === 'home' ? 'Home' : activeTab === 'free-tools' ? 'Free Tools' : activeTab}
+              {activeTab === 'home'
+                ? 'Home'
+                : activeTab === 'free-tools'
+                ? 'Free Tools'
+                : activeTab === 'ai-clipper'
+                ? 'AI Video Clipper'
+                : activeTab}
             </span>
           </div>
 
@@ -132,6 +139,11 @@ function MainLayout() {
               setThemeColor={setThemeColor}
               onBack={() => setActiveTab('home')}
             />
+          )}
+
+          {/* AI Video Clipper Tool View */}
+          {activeTab === 'ai-clipper' && (
+            <AiVideoClipper onBack={() => setActiveTab('home')} />
           )}
 
           {activeTab === 'saved-tools' && (

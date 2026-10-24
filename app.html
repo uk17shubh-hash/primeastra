@@ -151,10 +151,29 @@
       <div>
         <header class="flex items-center justify-between gap-3 pb-3 border-b border-[rgba(226,192,114,0.15)]">
           <div class="flex items-center gap-2.5">
+            <!-- Mobile Logo Fixed to match Desktop 3D Shield -->
             <div class="md:hidden w-11 h-11 flex items-center justify-center shrink-0">
               <svg class="w-11 h-11 drop-shadow-[0_0_10px_rgba(226,192,114,0.3)]" viewBox="0 0 500 500" fill="none">
-                <circle cx="250" cy="250" r="230" fill="#121216"/>
-                <polygon points="250,90 290,200 400,200 310,270 345,380 250,310 155,380 190,270 100,200 210,200" fill="#e2c072"/>
+                <defs>
+                  <linearGradient id="mobileShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#e2c072"/>
+                    <stop offset="45%" stop-color="#c5a059"/>
+                    <stop offset="100%" stop-color="#946b2d"/>
+                  </linearGradient>
+                  <linearGradient id="mobileStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="60%" stop-color="#e2c072"/>
+                    <stop offset="100%" stop-color="#946b2d"/>
+                  </linearGradient>
+                </defs>
+                <path d="M250 18 Q250 65 285 65 Q250 65 250 112 Q250 65 215 65 Q250 65 250 18 Z" fill="url(#mobileStarGrad)"/>
+                <path d="M220 85 C135 95 105 140 105 220 C105 330 175 425 250 480 C180 415 140 315 140 220 C140 160 160 125 220 105 Z" fill="url(#mobileShieldGrad)"/>
+                <path d="M280 85 C310 92 340 108 355 125 L328 148 C315 135 295 120 280 115 Z" fill="url(#mobileShieldGrad)"/>
+                <path d="M250 480 C290 435 345 375 370 300 L335 280 C315 340 275 395 250 435 Z" fill="url(#mobileShieldGrad)"/>
+                <path d="M135 430 C145 320 215 255 270 220 C320 185 350 125 370 55 L395 130 C370 180 335 225 285 260 C220 310 165 365 135 430 Z" fill="url(#mobileShieldGrad)"/>
+                <polygon points="380,55 305,108 335,122 360,170" fill="url(#mobileStarGrad)"/>
+                <polygon points="380,55 335,122 360,170" fill="#c5a059"/>
+                <path d="M250 140 L165 335 L200 335 L250 205 L275 270 L305 270 Z" fill="url(#mobileShieldGrad)"/>
               </svg>
             </div>
             <div>
@@ -180,7 +199,7 @@
                 </div>
                 <div class="p-2.5 bg-[#181820] rounded-xl space-y-0.5 border border-[rgba(226,192,114,0.1)]">
                   <p class="font-bold text-white text-[11px]">🎬 Audio &amp; Body Tracking Active!</p>
-                  <p class="text-[10px] text-slate-400">5 Shorts with 30s audio &amp; smart reframe ready.</p>
+                  <p class="text-[10px] text-slate-400">Shorts with 30s audio &amp; smart reframe ready.</p>
                 </div>
               </div>
             </div>
@@ -295,7 +314,7 @@
                     AI Video Clipping Generator
                   </h4>
                   <p class="text-[11px] text-slate-400 line-clamp-2 mt-0.5 leading-relaxed">
-                    Auto-Reframing with AI Body Tracking &amp; Audio: Extract 5 high-energy 30s vertical shorts with sound.
+                    Auto-Reframing with AI Body Tracking &amp; Audio: Extract custom vertical shorts with sound.
                   </p>
                 </div>
               </div>
@@ -307,7 +326,7 @@
           </div>
         </div>
 
-        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE (5 SHORTS + AUDIO + TRACKING) -->
+        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE (WITH SHORTS COUNT DROPDOWN & AUDIO FIX) -->
         <div id="videoClipperWorkspaceView" class="hidden space-y-4 w-full text-left pt-3">
           
           <div class="p-3.5 sm:p-4 bg-[#121216] text-white rounded-2xl flex items-center justify-between shadow-xs border border-[rgba(226,192,114,0.2)]">
@@ -319,7 +338,7 @@
                 <h2 class="text-sm sm:text-base font-extrabold flex items-center gap-2 text-white">
                   <span>🎬</span> AI Video Clipping Generator
                 </h2>
-                <p class="text-[10px] sm:text-[11px] text-slate-400">Full Body Tracking • Audio Enabled • 5 Shorts (30s each)</p>
+                <p class="text-[10px] sm:text-[11px] text-slate-400">Full Body Tracking • Audio Enabled • 1-5 Shorts (30s each)</p>
               </div>
             </div>
             <div class="px-3.5 py-1.5 bg-[rgba(226,192,114,0.15)] border border-[rgba(226,192,114,0.3)] text-[#e2c072] rounded-xl text-xs font-black tracking-wide shrink-0">
@@ -386,11 +405,23 @@
                   </div>
                 </div>
 
-                <!-- Range Summary Badge (5 Shorts x 30s) -->
+                <!-- Range Summary Badge -->
                 <div class="p-2.5 bg-[rgba(226,192,114,0.1)] border border-[rgba(226,192,114,0.25)] rounded-xl text-[10.5px] text-[#e2c072] font-semibold flex items-center justify-between">
                   <span id="rangeSummaryText">Selected Range: 0s to 150s</span>
-                  <span class="font-black bg-[#e2c072] text-[#070707] px-2 py-0.5 rounded-md">5 Shorts x 30s</span>
+                  <span class="font-black bg-[#e2c072] text-[#070707] px-2 py-0.5 rounded-md" id="shortsCountBadge">5 Shorts x 30s</span>
                 </div>
+              </div>
+
+              <!-- Number of Shorts Dropdown Selection (1 to 5) -->
+              <div>
+                <label class="text-[11px] font-bold text-slate-300 block mb-1">Select Number of Shorts to Generate:</label>
+                <select id="shortsCountSelect" onchange="updateShortsSelectionCount()" class="w-full p-2.5 bg-[#181820] border border-[rgba(226,192,114,0.25)] rounded-xl text-white font-bold text-xs focus:outline-none focus:border-[#e2c072]">
+                  <option value="1">1 Short (30s)</option>
+                  <option value="2">2 Shorts</option>
+                  <option value="3">3 Shorts</option>
+                  <option value="4">4 Shorts</option>
+                  <option value="5" selected>5 Shorts</option>
+                </select>
               </div>
 
               <!-- Tracking Status Indicator -->
@@ -413,14 +444,14 @@
                 </div>
               </div>
 
-              <!-- Generate 5 Shorts Button -->
+              <!-- Generate Shorts Button -->
               <button 
                 type="button" 
                 id="generateClipsBtn" 
-                onclick="slice5TimelineShorts()" 
+                onclick="sliceTimelineShorts()" 
                 class="w-full py-3.5 bg-gradient-to-r from-[#e2c072] to-[#c5a059] hover:brightness-110 text-[#070707] font-black text-xs rounded-xl shadow-md transition active:scale-[0.99] cursor-pointer flex items-center justify-center gap-1.5"
               >
-                <span>⚡ Generate 5 AI Shorts (Cost: 10 Credits)</span>
+                <span>⚡ Generate AI Shorts (Cost: 10 Credits)</span>
               </button>
             </div>
 
@@ -428,7 +459,7 @@
             <div class="lg:col-span-5 bg-[#121216] p-5 rounded-3xl border border-[rgba(226,192,114,0.15)] card-shadow space-y-3 min-h-[360px]">
               <div class="flex items-center justify-between border-b border-[rgba(226,192,114,0.15)] pb-2.5">
                 <span class="text-xs font-black text-white uppercase">GENERATED CLIPS</span>
-                <span class="text-[10px] text-[#e2c072] font-bold" id="galleryStatusLabel">5 Clips Ready</span>
+                <span class="text-[10px] text-[#e2c072] font-bold" id="galleryStatusLabel">Clips Ready</span>
               </div>
 
               <div id="clipsGalleryArea" class="flex flex-col items-center justify-center h-64 text-center p-4">
@@ -649,7 +680,7 @@
     <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-400"><span class="text-[10px] font-semibold">Profile</span></button>
   </nav>
 
-  <!-- SCRIPT ENGINE (WITH AUDIO & BODY TRACKING) -->
+  <!-- SCRIPT ENGINE (WITH ROBUST AUDIO STREAM CAPTURE & SELECTABLE SHORTS 1-5) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -813,6 +844,11 @@
       updateTrimmerUI();
     };
 
+    window.updateShortsSelectionCount = () => {
+      const count = document.getElementById('shortsCountSelect').value;
+      document.getElementById('shortsCountBadge').innerText = `${count} Shorts x 30s`;
+    };
+
     function updateTrimmerUI() {
       const startPercent = (trimStartSec / videoDuration) * 100;
       const endPercent = (trimEndSec / videoDuration) * 100;
@@ -836,9 +872,9 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
-    // SLICER WITH AUDIO CAPTURE AND BODY TRACKING
+    // ROBUST SLICER WITH WEB AUDIO API & BODY TRACKING
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
-      return new Promise((resolve) => {
+      return new Promise(async (resolve) => {
         const vid = document.createElement('video');
         vid.muted = false;
         vid.playsInline = true;
@@ -881,101 +917,123 @@
 
         const CLIP_DURATION = 30; // EXACT 30 SECONDS
 
-        vid.onloadedmetadata = () => {
-          vid.currentTime = Math.min(startTime, Math.max(0, vid.duration - CLIP_DURATION));
-        };
+        await new Promise((res) => {
+          vid.onloadedmetadata = () => {
+            vid.currentTime = Math.min(startTime, Math.max(0, vid.duration - CLIP_DURATION));
+            res();
+          };
+        });
 
-        vid.onseeked = async () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = 540;
-          canvas.height = 960; // 9:16 vertical ratio
-          const ctx = canvas.getContext('2d', { alpha: false });
+        await new Promise((res) => {
+          vid.onseeked = () => res();
+        });
 
-          const canvasStream = canvas.captureStream(20);
-          const videoTrack = canvasStream.getVideoTracks()[0];
+        const canvas = document.createElement('canvas');
+        canvas.width = 540;
+        canvas.height = 960; // 9:16 vertical ratio
+        const ctx = canvas.getContext('2d', { alpha: false });
 
-          let audioTrack = null;
+        const canvasStream = canvas.captureStream(20);
+        const videoTrack = canvasStream.getVideoTracks()[0];
+
+        // Robust Web Audio API setup to ensure audio is captured reliably
+        let audioTrack = null;
+        try {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          const audioCtx = new AudioContextClass();
+          if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+          }
+          const sourceNode = audioCtx.createMediaElementSource(vid);
+          const dest = audioCtx.createMediaStreamDestination();
+          sourceNode.connect(dest);
+          sourceNode.connect(audioCtx.destination); // Connect to output so context runs smoothly
+          if (dest.stream.getAudioTracks().length > 0) {
+            audioTrack = dest.stream.getAudioTracks()[0];
+          }
+        } catch (err) {
+          console.warn("Web Audio API warning:", err);
           try {
             const vidStream = vid.captureStream ? vid.captureStream() : vid.mozCaptureStream();
             if (vidStream && vidStream.getAudioTracks().length > 0) {
               audioTrack = vidStream.getAudioTracks()[0];
             }
           } catch (e) {}
+        }
 
-          const tracks = [videoTrack];
-          if (audioTrack) {
-            tracks.push(audioTrack);
-          }
-          const combinedStream = new MediaStream(tracks);
+        const tracks = [videoTrack];
+        if (audioTrack) {
+          tracks.push(audioTrack);
+        }
+        const combinedStream = new MediaStream(tracks);
 
-          let rec;
-          try { 
-            rec = new MediaRecorder(combinedStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 2000000 }); 
-          } catch(e) { 
-            rec = new MediaRecorder(combinedStream); 
-          }
+        let rec;
+        try { 
+          rec = new MediaRecorder(combinedStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 2000000 }); 
+        } catch(e) { 
+          rec = new MediaRecorder(combinedStream); 
+        }
 
-          const chunks = [];
-          rec.ondataavailable = (e) => { 
-            if (e.data.size > 0) chunks.push(e.data); 
-          };
-          rec.onstop = () => {
-            const finalBlob = new Blob(chunks, { type: 'video/mp4' });
-            resolve(URL.createObjectURL(finalBlob));
-          };
-
-          rec.start();
-          await vid.play();
-
-          const vw = vid.videoWidth || 640;
-          const vh = vid.videoHeight || 360;
-          const targetRatio = 540 / 960;
-          const sh = vh;
-          const sw = vh * targetRatio;
-
-          let isRecording = true;
-          const renderLoop = async () => {
-            if (!isRecording) return;
-            if (!vid.paused && !vid.ended) {
-              frameCounter++;
-              if (poseDetector && frameCounter % 6 === 0) {
-                try {
-                  await poseDetector.send({ image: vid });
-                } catch (e) {}
-              }
-
-              smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.15;
-
-              let personCenterX = smoothedTargetX * vw;
-              let sx = personCenterX - (sw / 2);
-
-              if (sx < 0) sx = 0;
-              if (sx + sw > vw) sx = vw - sw;
-
-              ctx.drawImage(vid, sx, 0, sw, sh, 0, 0, 540, 960);
-            }
-            requestAnimationFrame(renderLoop);
-          };
-          requestAnimationFrame(renderLoop);
-
-          // EXACT 30 SECONDS RECORDING
-          setTimeout(() => {
-            isRecording = false;
-            if (rec.state === 'recording') rec.stop();
-            vid.pause();
-          }, CLIP_DURATION * 1000);
+        const chunks = [];
+        rec.ondataavailable = (e) => { 
+          if (e.data.size > 0) chunks.push(e.data); 
         };
+        rec.onstop = () => {
+          const finalBlob = new Blob(chunks, { type: 'video/mp4' });
+          resolve(URL.createObjectURL(finalBlob));
+        };
+
+        rec.start();
+        await vid.play();
+
+        const vw = vid.videoWidth || 640;
+        const vh = vid.videoHeight || 360;
+        const targetRatio = 540 / 960;
+        const sh = vh;
+        const sw = vh * targetRatio;
+
+        let isRecording = true;
+        const renderLoop = async () => {
+          if (!isRecording) return;
+          if (!vid.paused && !vid.ended) {
+            frameCounter++;
+            if (poseDetector && frameCounter % 6 === 0) {
+              try {
+                await poseDetector.send({ image: vid });
+              } catch (e) {}
+            }
+
+            smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.15;
+
+            let personCenterX = smoothedTargetX * vw;
+            let sx = personCenterX - (sw / 2);
+
+            if (sx < 0) sx = 0;
+            if (sx + sw > vw) sx = vw - sw;
+
+            ctx.drawImage(vid, sx, 0, sw, sh, 0, 0, 540, 960);
+          }
+          requestAnimationFrame(renderLoop);
+        };
+        requestAnimationFrame(renderLoop);
+
+        // EXACT 30 SECONDS RECORDING
+        setTimeout(() => {
+          isRecording = false;
+          if (rec.state === 'recording') rec.stop();
+          vid.pause();
+        }, CLIP_DURATION * 1000);
       });
     }
 
-    // MAIN 5 SHORTS EXECUTION
-    window.slice5TimelineShorts = async () => {
+    // MAIN TIMELINE SHORTS EXECUTION (READS FROM DROPDOWN 1-5)
+    window.sliceTimelineShorts = async () => {
       if (!selectedRawVideo) {
         alert("Pehle MP4 video upload karein!");
         return;
       }
 
-      const TOTAL_CLIPS = 5;
+      const TOTAL_CLIPS = parseInt(document.getElementById('shortsCountSelect').value) || 5;
       const rangeSpan = Math.max(30, trimEndSec - trimStartSec);
       const step = rangeSpan / TOTAL_CLIPS;
 
@@ -1019,12 +1077,12 @@
         });
 
         btn.disabled = false;
-        btn.innerHTML = `<span>⚡ Generate 5 AI Shorts (Cost: 10 Credits)</span>`;
-        alert("Success! 5 Shorts video aawaz aur body tracking ke sath taiyar hain! Download button dabate hi direct MP4 download hogi.");
+        btn.innerHTML = `<span>⚡ Generate AI Shorts (Cost: 10 Credits)</span>`;
+        alert(`Success! ${TOTAL_CLIPS} Shorts video aawaz aur body tracking ke sath taiyar hain! Download button dabate hi direct MP4 download hogi.`);
       } catch (err) {
         console.error(err);
         btn.disabled = false;
-        btn.innerHTML = `<span>⚡ Generate 5 AI Shorts (Cost: 10 Credits)</span>`;
+        btn.innerHTML = `<span>⚡ Generate AI Shorts (Cost: 10 Credits)</span>`;
         alert("Processing me issue aaya, dobara koshish karein!");
       }
     };

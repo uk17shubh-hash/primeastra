@@ -290,7 +290,7 @@
           </div>
         </div>
 
-        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE (5 SHORTS + AUDIO + TRACKING) -->
+        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE -->
         <div id="videoClipperWorkspaceView" class="hidden space-y-4 w-full text-left pt-3">
           
           <div class="p-3.5 sm:p-4 bg-[#0F172A] text-white rounded-2xl flex items-center justify-between shadow-xs border border-slate-800">
@@ -632,7 +632,7 @@
     <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500"><span class="text-[10px] font-semibold">Profile</span></button>
   </nav>
 
-  <!-- SCRIPT ENGINE (5 SHORTS, 30s AUDIO + BODY TRACKING) -->
+  <!-- SCRIPT ENGINE (AUDIO MERGED, SMOOTH BODY TRACKING, 5 SHORTS x 30s) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -819,7 +819,7 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
-    // SLICER WITH AUDIO MERGING & BODY TRACKING
+    // SLICER WITH AUDIO MERGING & SMOOTH BODY TRACKING
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise((resolve) => {
         const vid = document.createElement('video');
@@ -840,8 +840,8 @@
           poseDetector.setOptions({
             modelComplexity: 0,
             smoothLandmarks: true,
-            minDetectionConfidence: 0.4,
-            minTrackingConfidence: 0.4
+            minDetectionConfidence: 0.3,
+            minTrackingConfidence: 0.3
           });
 
           poseDetector.onResults((results) => {
@@ -852,7 +852,7 @@
               
               if (nose && leftHip && rightHip) {
                 const hipCenter = (leftHip.x + rightHip.x) / 2;
-                currentTargetX = (nose.x * 0.4) + (hipCenter * 0.6);
+                currentTargetX = (nose.x * 0.3) + (hipCenter * 0.7);
               } else if (leftHip && rightHip) {
                 currentTargetX = (leftHip.x + rightHip.x) / 2;
               } else if (nose) {
@@ -868,20 +868,23 @@
           vid.currentTime = Math.min(startTime, Math.max(0, vid.duration - CLIP_DURATION));
         };
 
-        vid.onseeked = () => {
+        vid.onseeked = async () => {
           const canvas = document.createElement('canvas');
           canvas.width = 540;
           canvas.height = 960; // 9:16 vertical ratio
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext('2d', { alpha: false });
 
           // Audio Context setup for sound in shorts
           let audioStreamNode = null;
           try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            const audioCtx = new AudioContextClass();
+            if (audioCtx.state === 'suspended') {
+              await audioCtx.resume();
+            }
             const sourceNode = audioCtx.createMediaElementSource(vid);
             const destination = audioCtx.createMediaStreamDestination();
             sourceNode.connect(destination);
-            sourceNode.connect(audioCtx.destination);
             audioStreamNode = destination.stream.getAudioTracks()[0];
           } catch (err) {}
 
@@ -892,7 +895,7 @@
 
           let rec;
           try { 
-            rec = new MediaRecorder(canvasStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 1500000 }); 
+            rec = new MediaRecorder(canvasStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 2000000 }); 
           } catch(e) { 
             rec = new MediaRecorder(canvasStream); 
           }
@@ -907,43 +910,42 @@
           };
 
           rec.start();
-          vid.play();
+          await vid.play();
 
-          const drawInterval = setInterval(async () => {
-            if (vid.paused || vid.ended) {
-              clearInterval(drawInterval);
-              if (rec.state === 'recording') rec.stop();
-              return;
+          const vw = vid.videoWidth || 640;
+          const vh = vid.videoHeight || 360;
+          const targetRatio = 540 / 960;
+          const sh = vh;
+          const sw = vh * targetRatio;
+
+          let isRecording = true;
+          const renderLoop = async () => {
+            if (!isRecording) return;
+            if (!vid.paused && !vid.ended) {
+              frameCounter++;
+              if (poseDetector && frameCounter % 6 === 0) {
+                try {
+                  await poseDetector.send({ image: vid });
+                } catch (e) {}
+              }
+
+              smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.15;
+
+              let personCenterX = smoothedTargetX * vw;
+              let sx = personCenterX - (sw / 2);
+
+              if (sx < 0) sx = 0;
+              if (sx + sw > vw) sx = vw - sw;
+
+              ctx.drawImage(vid, sx, 0, sw, sh, 0, 0, 540, 960);
             }
-
-            frameCounter++;
-            if (poseDetector && frameCounter % 8 === 0) {
-              try {
-                await poseDetector.send({ image: vid });
-              } catch (e) {}
-            }
-
-            smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.2;
-
-            const vw = vid.videoWidth || 640;
-            const vh = vid.videoHeight || 360;
-            const targetRatio = 540 / 960;
-
-            const sh = vh;
-            const sw = vh * targetRatio;
-
-            let personCenterX = smoothedTargetX * vw;
-            let sx = personCenterX - (sw / 2);
-
-            if (sx < 0) sx = 0;
-            if (sx + sw > vw) sx = vw - sw;
-
-            ctx.drawImage(vid, sx, 0, sw, sh, 0, 0, 540, 960);
-          }, 50);
+            requestAnimationFrame(renderLoop);
+          };
+          requestAnimationFrame(renderLoop);
 
           // EXACT 30 SECONDS RECORDING
           setTimeout(() => {
-            clearInterval(drawInterval);
+            isRecording = false;
             if (rec.state === 'recording') rec.stop();
             vid.pause();
           }, CLIP_DURATION * 1000);

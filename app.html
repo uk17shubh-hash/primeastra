@@ -680,7 +680,7 @@
     <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-400"><span class="text-[10px] font-semibold">Profile</span></button>
   </nav>
 
-  <!-- SCRIPT ENGINE (AUDIO CAPTURE FIXED, NO POPUPS, DROPDOWN 1-5) -->
+  <!-- SCRIPT ENGINE (WITH WEBM AUDIO FIX & SELECTABLE SHORTS 1-5) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -872,7 +872,7 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
-    // SLICER WITH WEB AUDIO API & BODY TRACKING (NO POPUPS)
+    // WEBM AUDIO FIX & BODY TRACKING SLICER (NO POPUPS)
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise(async (resolve) => {
         const vid = document.createElement('video');
@@ -936,7 +936,7 @@
         const canvasStream = canvas.captureStream(20);
         const videoTrack = canvasStream.getVideoTracks()[0];
 
-        // Web Audio API Stream Capture for 100% Reliable Sound
+        // Web Audio API Capture
         let audioTrack = null;
         try {
           const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -978,7 +978,8 @@
           if (e.data.size > 0) chunks.push(e.data); 
         };
         rec.onstop = () => {
-          const finalBlob = new Blob(chunks, { type: 'video/mp4' });
+          // WEBM format for 100% stable mobile audio playback
+          const finalBlob = new Blob(chunks, { type: 'video/webm' });
           resolve(URL.createObjectURL(finalBlob));
         };
 
@@ -1016,7 +1017,6 @@
         };
         requestAnimationFrame(renderLoop);
 
-        // EXACT 30 SECONDS RECORDING
         setTimeout(() => {
           isRecording = false;
           if (rec.state === 'recording') rec.stop();
@@ -1068,7 +1068,7 @@
                 <p class="text-[9px] text-slate-400 mt-0.5">Vertical 9:16 • Tracked &amp; Audio</p>
               </div>
             </div>
-            <a href="${item.url}" download="Short_Clip_${index + 1}.mp4" class="px-3.5 py-2 bg-gradient-to-r from-[#e2c072] to-[#c5a059] text-[#070707] hover:brightness-110 rounded-xl text-xs font-bold shrink-0 transition text-center cursor-pointer">
+            <a href="${item.url}" download="Short_Clip_${index + 1}.webm" class="px-3.5 py-2 bg-gradient-to-r from-[#e2c072] to-[#c5a059] text-[#070707] hover:brightness-110 rounded-xl text-xs font-bold shrink-0 transition text-center cursor-pointer">
               Download
             </a>
           `;

@@ -290,7 +290,7 @@
           </div>
         </div>
 
-        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE -->
+        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE (5 SHORTS + AUDIO + TRACKING) -->
         <div id="videoClipperWorkspaceView" class="hidden space-y-4 w-full text-left pt-3">
           
           <div class="p-3.5 sm:p-4 bg-[#0F172A] text-white rounded-2xl flex items-center justify-between shadow-xs border border-slate-800">
@@ -632,7 +632,7 @@
     <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500"><span class="text-[10px] font-semibold">Profile</span></button>
   </nav>
 
-  <!-- SCRIPT ENGINE (AUDIO MERGED, SMOOTH BODY TRACKING, 5 SHORTS x 30s) -->
+  <!-- SCRIPT ENGINE (WITH DIRECT AUDIO STREAM CAPTURE & TRACKING) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -819,7 +819,7 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
-    // SLICER WITH AUDIO MERGING & SMOOTH BODY TRACKING
+    // SLICER WITH NATIVE AUDIO CAPTURE AND BODY TRACKING
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise((resolve) => {
         const vid = document.createElement('video');
@@ -874,30 +874,28 @@
           canvas.height = 960; // 9:16 vertical ratio
           const ctx = canvas.getContext('2d', { alpha: false });
 
-          // Audio Context setup for sound in shorts
-          let audioStreamNode = null;
-          try {
-            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-            const audioCtx = new AudioContextClass();
-            if (audioCtx.state === 'suspended') {
-              await audioCtx.resume();
-            }
-            const sourceNode = audioCtx.createMediaElementSource(vid);
-            const destination = audioCtx.createMediaStreamDestination();
-            sourceNode.connect(destination);
-            audioStreamNode = destination.stream.getAudioTracks()[0];
-          } catch (err) {}
-
           const canvasStream = canvas.captureStream(20);
-          if (audioStreamNode) {
-            canvasStream.addTrack(audioStreamNode);
+          const videoTrack = canvasStream.getVideoTracks()[0];
+
+          let audioTrack = null;
+          try {
+            const vidStream = vid.captureStream ? vid.captureStream() : vid.mozCaptureStream();
+            if (vidStream && vidStream.getAudioTracks().length > 0) {
+              audioTrack = vidStream.getAudioTracks()[0];
+            }
+          } catch (e) {}
+
+          const tracks = [videoTrack];
+          if (audioTrack) {
+            tracks.push(audioTrack);
           }
+          const combinedStream = new MediaStream(tracks);
 
           let rec;
           try { 
-            rec = new MediaRecorder(canvasStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 2000000 }); 
+            rec = new MediaRecorder(combinedStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 2000000 }); 
           } catch(e) { 
-            rec = new MediaRecorder(canvasStream); 
+            rec = new MediaRecorder(combinedStream); 
           }
 
           const chunks = [];

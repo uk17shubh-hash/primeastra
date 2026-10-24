@@ -1,0 +1,5 @@
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 35%, #F1F5F9 70%, #E2E8F0 100%);
+  -webkit-tap-highlight-color: transparent;
+}

@@ -1,429 +1,318 @@
-// src/tools/ResumeMaker.tsx
-import React, { useRef } from 'react';
-import { ResumeData, ExperienceItem, EducationItem } from '../types/resume.ts';
-import { useNotification } from '../../context/NitificationContext.tsx';
-import { ArrowLeft, Plus, Trash2, Printer, CheckCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Sparkles, Download, RotateCcw, Plus, Trash2, ArrowLeft, Layers } from 'lucide-react';
+import { ModernTemplate } from './templates/ModernTemplate';
+import { ClassicTemplate } from './templates/ClassicTemplate';
+import { ExecutiveTemplate } from './templates/ExecutiveTemplate';
 
-interface ResumeMakerProps {
-  formData: ResumeData;
-  setFormData: React.Dispatch<React.SetStateAction<ResumeData>>;
-  themeColor: string;
-  setThemeColor: (color: string) => void;
-  onBack: () => void;
+export interface ResumeData {
+  name: string;
+  title: string;
+  phone: string;
+  email: string;
+  address: string;
+  summary: string;
+  education: Array<{ degree: string; board: string; year: string; marks: string }>;
+  experience: Array<{ role: string; company: string; period: string; desc: string }>;
+  skills: string;
+  languages: string;
 }
 
-export default function ResumeMaker({
-  formData,
-  setFormData,
-  themeColor,
-  setThemeColor,
-  onBack,
-}: ResumeMakerProps): React.JSX.Element {
-  const { addNotification } = useNotification();
-  const printRef = useRef<HTMLDivElement>(null);
+export const ResumeMaker: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const [template, setTemplate] = useState<'modern' | 'classic' | 'executive'>('modern');
+  const [themeColor, setThemeColor] = useState('#1e3a8a');
 
-  const handleInputChange = (field: keyof ResumeData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+  // By default sarv fields empty thevle ahet
+  const [formData, setFormData] = useState<ResumeData>({
+    name: '',
+    title: '',
+    phone: '',
+    email: '',
+    address: '',
+    summary: '',
+    education: [{ degree: '', board: '', year: '', marks: '' }],
+    experience: [{ role: '', company: '', period: '', desc: '' }],
+    skills: '',
+    languages: '',
+  });
 
-  const handleExpChange = (id: number, field: keyof ExperienceItem, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      experience: prev.experience.map((item) =>
-        item.id === id ? { ...item, [field]: value } : item
-      ),
-    }));
-  };
+  const addEducation = () => setFormData(p => ({ ...p, education: [...p.education, { degree: '', board: '', year: '', marks: '' }] }));
+  const removeEducation = (i: number) => setFormData(p => ({ ...p, education: p.education.filter((_, idx) => idx !== i) }));
+  const addExperience = () => setFormData(p => ({ ...p, experience: [...p.experience, { role: '', company: '', period: '', desc: '' }] }));
+  const removeExperience = (i: number) => setFormData(p => ({ ...p, experience: p.experience.filter((_, idx) => idx !== i) }));
 
-  const addExperience = () => {
-    const newItem: ExperienceItem = {
-      id: Date.now(),
-      role: '',
-      company: '',
-      duration: '',
-      details: '',
-    };
-    setFormData((prev) => ({ ...prev, experience: [...prev.experience, newItem] }));
-  };
-
-  const removeExperience = (id: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      experience: prev.experience.filter((item) => item.id !== id),
-    }));
-  };
-
-  const handleEduChange = (id: number, field: keyof EducationItem, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      education: prev.education.map((item) =>
-        item.id === id ? { ...item, [field]: value } : item
-      ),
-    }));
-  };
-
-  const addEducation = () => {
-    const newItem: EducationItem = {
-      id: Date.now(),
-      degree: '',
-      institution: '',
-      year: '',
-    };
-    setFormData((prev) => ({ ...prev, education: [...prev.education, newItem] }));
-  };
-
-  const removeEducation = (id: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      education: prev.education.filter((item) => item.id !== id),
-    }));
-  };
-
-  const handlePrint = () => {
-    window.print();
-    addNotification('Print/Save prompt opened successfully!', 'info');
-  };
-
-  const handleSaveData = () => {
-    addNotification('Resume data saved successfully!', 'info');
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      title: '',
+      phone: '',
+      email: '',
+      address: '',
+      summary: '',
+      education: [{ degree: '', board: '', year: '', marks: '' }],
+      experience: [{ role: '', company: '', period: '', desc: '' }],
+      skills: '',
+      languages: '',
+    });
   };
 
   return (
-    <div className="flex flex-col h-full space-y-4">
-      {/* Top Bar */}
-      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+    <div className="w-full flex flex-col gap-4 text-left">
+      <div className="p-3.5 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-sm">
         <div className="flex items-center gap-3">
-          <button
-            onClick={onBack}
-            type="button"
-            className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition"
-            title="Go Back"
-          >
-            <ArrowLeft className="w-5 h-5" />
+          <button onClick={onBack} className="p-1.5 bg-white/20 hover:bg-white/30 rounded-xl transition cursor-pointer" title="Back">
+            <ArrowLeft className="w-4 h-4 text-white" />
           </button>
-          <h2 className="text-lg font-bold text-slate-800">AI Resume Maker</h2>
+          <div>
+            <h2 className="text-base font-bold flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-300" /> AI Resume Maker
+            </h2>
+            <p className="text-[11px] text-purple-100">Live preview &amp; printable PDF ready</p>
+          </div>
         </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleSaveData}
-            type="button"
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition"
-          >
-            <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
-            Save
-          </button>
-          <button
-            onClick={handlePrint}
-            type="button"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition shadow-sm"
-          >
-            <Printer className="w-3.5 h-3.5" />
-            Print / PDF
-          </button>
-        </div>
+        <button onClick={() => window.print()} className="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-white text-indigo-900 rounded-xl text-xs font-bold shadow hover:bg-slate-100 transition cursor-pointer">
+          <Download className="w-3.5 h-3.5" />
+          <span>Download PDF / Print</span>
+        </button>
       </div>
 
-      {/* Main Grid: Form (Left) & Preview (Right) */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 overflow-hidden">
-        {/* LEFT FORM: Scrollable */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 overflow-y-auto max-h-[calc(100vh-140px)] space-y-5">
-          {/* Personal Info */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-              1. Personal Details
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={formData.fullName}
-                onChange={(e) => handleInputChange('fullName', e.target.value)}
-                className="col-span-2 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-600"
-              />
-              <input
-                type="text"
-                placeholder="Job Role / Headline"
-                value={formData.jobTitle}
-                onChange={(e) => handleInputChange('jobTitle', e.target.value)}
-                className="col-span-2 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-600"
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                className="border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-600"
-              />
-              <input
-                type="text"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
-                className="border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-600"
-              />
-              <input
-                type="text"
-                placeholder="Location (City, State)"
-                value={formData.location}
-                onChange={(e) => handleInputChange('location', e.target.value)}
-                className="col-span-2 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-600"
-              />
-            </div>
-          </div>
-
-          {/* Summary */}
-          <div className="space-y-2">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-              2. Professional Summary
-            </h3>
-            <textarea
-              rows={3}
-              placeholder="Write a brief professional summary..."
-              value={formData.summary}
-              onChange={(e) => handleInputChange('summary', e.target.value)}
-              className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none focus:border-blue-600"
-            />
-          </div>
-
-          {/* Job Experience */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                3. Work Experience
-              </h3>
-              <button
-                type="button"
-                onClick={addExperience}
-                className="flex items-center gap-1 text-xs text-blue-600 font-semibold hover:underline"
-              >
-                <Plus className="w-3.5 h-3.5" /> Add Job
-              </button>
-            </div>
-
-            {formData.experience.map((exp) => (
-              <div
-                key={exp.id}
-                className="p-3 border border-slate-200 rounded-xl space-y-2.5 relative bg-slate-50/50"
-              >
-                <div className="grid grid-cols-2 gap-2">
-                  <input
-                    type="text"
-                    placeholder="Job Role"
-                    value={exp.role}
-                    onChange={(e) => handleExpChange(exp.id, 'role', e.target.value)}
-                    className="border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs bg-white outline-none focus:border-blue-600"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Company"
-                    value={exp.company}
-                    onChange={(e) => handleExpChange(exp.id, 'company', e.target.value)}
-                    className="border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs bg-white outline-none focus:border-blue-600"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Duration (e.g. 2022 - Present)"
-                    value={exp.duration}
-                    onChange={(e) => handleExpChange(exp.id, 'duration', e.target.value)}
-                    className="col-span-2 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs bg-white outline-none focus:border-blue-600"
-                  />
-                </div>
-                <textarea
-                  rows={2}
-                  placeholder="Responsibilities & achievements..."
-                  value={exp.details}
-                  onChange={(e) => handleExpChange(exp.id, 'details', e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg p-2 text-xs bg-white outline-none focus:border-blue-600"
-                />
-                {formData.experience.length > 1 && (
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        <div className="lg:col-span-6 space-y-4">
+          <div className="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 text-xs shadow-xs">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <span className="font-bold text-slate-700 flex items-center gap-1.5">
+                <Layers className="w-3.5 h-3.5 text-purple-600" /> Select Template:
+              </span>
+              <div className="flex items-center gap-1.5">
+                {(['modern', 'classic', 'executive'] as const).map(t => (
                   <button
+                    key={t}
                     type="button"
-                    onClick={() => removeExperience(exp.id)}
-                    className="absolute top-2 right-2 text-slate-400 hover:text-rose-500"
-                    title="Remove"
+                    onClick={() => setTemplate(t)}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition capitalize ${
+                      template === t ? 'bg-purple-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    {t}
                   </button>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
-
-          {/* Education */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                4. Education
-              </h3>
-              <button
-                type="button"
-                onClick={addEducation}
-                className="flex items-center gap-1 text-xs text-blue-600 font-semibold hover:underline"
-              >
-                <Plus className="w-3.5 h-3.5" /> Add Education
+            </div>
+            <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-slate-600">Theme Color:</span>
+                <input type="color" value={themeColor} onChange={e => setThemeColor(e.target.value)} className="w-7 h-7 rounded-lg border-0 cursor-pointer" />
+              </div>
+              <button type="button" onClick={resetForm} className="flex items-center gap-1 text-slate-500 hover:text-slate-800 transition cursor-pointer">
+                <RotateCcw className="w-3.5 h-3.5" /> Clear All
               </button>
             </div>
+          </div>
 
-            {formData.education.map((edu) => (
-              <div
-                key={edu.id}
-                className="p-3 border border-slate-200 rounded-xl space-y-2 relative bg-slate-50/50"
-              >
-                <input
-                  type="text"
-                  placeholder="Degree / Course"
-                  value={edu.degree}
-                  onChange={(e) => handleEduChange(edu.id, 'degree', e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs bg-white outline-none focus:border-blue-600"
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 text-xs">
+            <h3 className="text-xs font-bold text-slate-800 border-b pb-1">Personal Details</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Full Name</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. Rahul Sharma" 
+                  value={formData.name} 
+                  onChange={e => setFormData({ ...formData, name: e.target.value })} 
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500" 
                 />
-                <div className="grid grid-cols-3 gap-2">
-                  <input
-                    type="text"
-                    placeholder="College / Institute"
-                    value={edu.institution}
-                    onChange={(e) => handleEduChange(edu.id, 'institution', e.target.value)}
-                    className="col-span-2 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs bg-white outline-none focus:border-blue-600"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Year"
-                    value={edu.year}
-                    onChange={(e) => handleEduChange(edu.id, 'year', e.target.value)}
-                    className="border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs bg-white outline-none focus:border-blue-600"
-                  />
-                </div>
+              </div>
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Job Title / Post</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. Software Engineer" 
+                  value={formData.title} 
+                  onChange={e => setFormData({ ...formData, title: e.target.value })} 
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500" 
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Mobile</label>
+                <input 
+                  type="text" 
+                  placeholder="+91 0000000000" 
+                  value={formData.phone} 
+                  onChange={e => setFormData({ ...formData, phone: e.target.value })} 
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500" 
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-semibold text-slate-500">Email</label>
+                <input 
+                  type="email" 
+                  placeholder="name@example.com" 
+                  value={formData.email} 
+                  onChange={e => setFormData({ ...formData, email: e.target.value })} 
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500" 
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="text-[10px] font-semibold text-slate-500">Address</label>
+                <input 
+                  type="text" 
+                  placeholder="City, State" 
+                  value={formData.address} 
+                  onChange={e => setFormData({ ...formData, address: e.target.value })} 
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500" 
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="text-[10px] font-semibold text-slate-500">Profile Summary</label>
+                <textarea 
+                  rows={2} 
+                  placeholder="Thodkyaat tumchya anubhavabaddal liha..." 
+                  value={formData.summary} 
+                  onChange={e => setFormData({ ...formData, summary: e.target.value })} 
+                  className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500" 
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 text-xs">
+            <div className="flex items-center justify-between border-b pb-1">
+              <h3 className="text-xs font-bold text-slate-800">Education</h3>
+              <button onClick={addEducation} className="text-[11px] text-purple-700 font-bold flex items-center gap-1 cursor-pointer">
+                <Plus className="w-3 h-3" /> Add
+              </button>
+            </div>
+            {formData.education.map((edu, index) => (
+              <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-2 relative p-2.5 bg-slate-50 rounded-xl border border-slate-200/70">
                 {formData.education.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeEducation(edu.id)}
-                    className="absolute top-2 right-2 text-slate-400 hover:text-rose-500"
-                    title="Remove"
-                  >
+                  <button onClick={() => removeEducation(index)} className="absolute top-2 right-2 text-rose-500">
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 )}
+                <div>
+                  <label className="text-[10px] text-slate-500">Degree</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. B.Tech / BCA" 
+                    value={edu.degree} 
+                    onChange={e => { const up = [...formData.education]; up[index].degree = e.target.value; setFormData({ ...formData, education: up }); }} 
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs" 
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500">Board / College</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. University Name" 
+                    value={edu.board} 
+                    onChange={e => { const up = [...formData.education]; up[index].board = e.target.value; setFormData({ ...formData, education: up }); }} 
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs" 
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500">Year</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 2022" 
+                    value={edu.year} 
+                    onChange={e => { const up = [...formData.education]; up[index].year = e.target.value; setFormData({ ...formData, education: up }); }} 
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs" 
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500">Marks / Grade</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 80% / First Class" 
+                    value={edu.marks} 
+                    onChange={e => { const up = [...formData.education]; up[index].marks = e.target.value; setFormData({ ...formData, education: up }); }} 
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs" 
+                  />
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Skills & Languages */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-              5. Skills & Languages
-            </h3>
-            <input
-              type="text"
-              placeholder="Skills (e.g. React, Node.js, MS Office)"
-              value={formData.skills}
-              onChange={(e) => handleInputChange('skills', e.target.value)}
-              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-600"
-            />
-            <input
-              type="text"
-              placeholder="Languages (e.g. Hindi, English)"
-              value={formData.languages}
-              onChange={(e) => handleInputChange('languages', e.target.value)}
-              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-600"
-            />
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 text-xs">
+            <div className="flex items-center justify-between border-b pb-1">
+              <h3 className="text-xs font-bold text-slate-800">Experience</h3>
+              <button onClick={addExperience} className="text-[11px] text-purple-700 font-bold flex items-center gap-1 cursor-pointer">
+                <Plus className="w-3 h-3" /> Add
+              </button>
+            </div>
+            {formData.experience.map((exp, index) => (
+              <div key={index} className="space-y-2 relative p-2.5 bg-slate-50 rounded-xl border border-slate-200/70">
+                {formData.experience.length > 1 && (
+                  <button onClick={() => removeExperience(index)} className="absolute top-2 right-2 text-rose-500">
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-[10px] text-slate-500">Role</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. Frontend Developer" 
+                      value={exp.role} 
+                      onChange={e => { const up = [...formData.experience]; up[index].role = e.target.value; setFormData({ ...formData, experience: up }); }} 
+                      className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs" 
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] text-slate-500">Company</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. Company Name" 
+                      value={exp.company} 
+                      onChange={e => { const up = [...formData.experience]; up[index].company = e.target.value; setFormData({ ...formData, experience: up }); }} 
+                      className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs" 
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-500">Period</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 2021 - Present" 
+                    value={exp.period} 
+                    onChange={e => { const up = [...formData.experience]; up[index].period = e.target.value; setFormData({ ...formData, experience: up }); }} 
+                    className="w-full p-1.5 border border-slate-200 rounded-lg bg-white text-xs" 
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 text-xs">
+            <h3 className="text-xs font-bold text-slate-800 border-b pb-1">Skills &amp; Languages</h3>
+            <div>
+              <label className="text-[10px] font-semibold text-slate-500">Skills (comma separated)</label>
+              <input 
+                type="text" 
+                placeholder="e.g. MS Office, Data Entry, JavaScript" 
+                value={formData.skills} 
+                onChange={e => setFormData({ ...formData, skills: e.target.value })} 
+                className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500" 
+              />
+            </div>
+            <div>
+              <label className="text-[10px] font-semibold text-slate-500">Languages</label>
+              <input 
+                type="text" 
+                placeholder="e.g. Marathi, Hindi, English" 
+                value={formData.languages} 
+                onChange={e => setFormData({ ...formData, languages: e.target.value })} 
+                className="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500" 
+              />
+            </div>
           </div>
         </div>
 
-        {/* RIGHT PREVIEW: Fully Scaled Container, No Screen Cuts */}
-        <div className="bg-slate-100/70 border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-start overflow-y-auto max-h-[calc(100vh-140px)]">
-          <div
-            ref={printRef}
-            className="w-full max-w-[500px] bg-white shadow-md rounded-lg p-6 space-y-4 text-slate-800 text-xs leading-relaxed border border-slate-200 select-none"
-            style={{ minHeight: '680px' }}
-          >
-            {/* Header Banner */}
-            <div className="border-b-2 pb-3" style={{ borderColor: themeColor }}>
-              <h1 className="text-xl font-black uppercase tracking-tight" style={{ color: themeColor }}>
-                {formData.fullName || 'YOUR NAME'}
-              </h1>
-              <p className="font-semibold text-slate-600 text-xs mt-0.5">
-                {formData.jobTitle || 'TARGET PROFESSION'}
-              </p>
-              <div className="text-[11px] text-slate-500 mt-1 flex flex-wrap gap-2">
-                {formData.email && <span>{formData.email}</span>}
-                {formData.phone && <span>• {formData.phone}</span>}
-                {formData.location && <span>• {formData.location}</span>}
-              </div>
-            </div>
-
-            {/* Summary */}
-            {formData.summary && (
-              <div>
-                <h4 className="font-bold uppercase tracking-wider text-[11px] mb-1" style={{ color: themeColor }}>
-                  Summary
-                </h4>
-                <p className="text-slate-600 leading-normal">{formData.summary}</p>
-              </div>
-            )}
-
-            {/* Work Experience */}
-            {formData.experience.length > 0 && (
-              <div>
-                <h4 className="font-bold uppercase tracking-wider text-[11px] mb-1.5" style={{ color: themeColor }}>
-                  Experience
-                </h4>
-                <div className="space-y-2">
-                  {formData.experience.map((exp) => (
-                    <div key={exp.id}>
-                      <div className="flex justify-between font-bold text-slate-800 text-[11px]">
-                        <span>{exp.role || 'Job Role'}</span>
-                        <span className="text-slate-500 font-normal">{exp.duration}</span>
-                      </div>
-                      <div className="text-slate-600 font-medium text-[11px]">{exp.company}</div>
-                      {exp.details && <p className="text-slate-500 mt-0.5 text-[10.5px]">{exp.details}</p>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Education */}
-            {formData.education.length > 0 && (
-              <div>
-                <h4 className="font-bold uppercase tracking-wider text-[11px] mb-1.5" style={{ color: themeColor }}>
-                  Education
-                </h4>
-                <div className="space-y-1.5">
-                  {formData.education.map((edu) => (
-                    <div key={edu.id} className="flex justify-between text-[11px]">
-                      <div>
-                        <div className="font-bold text-slate-800">{edu.degree || 'Degree / Diploma'}</div>
-                        <div className="text-slate-500">{edu.institution}</div>
-                      </div>
-                      <span className="text-slate-500 text-[10px]">{edu.year}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Skills & Languages */}
-            <div className="pt-2 border-t border-slate-100 grid grid-cols-2 gap-3">
-              {formData.skills && (
-                <div>
-                  <h4 className="font-bold uppercase tracking-wider text-[11px] mb-0.5" style={{ color: themeColor }}>
-                    Skills
-                  </h4>
-                  <p className="text-slate-600 text-[10.5px]">{formData.skills}</p>
-                </div>
-              )}
-              {formData.languages && (
-                <div>
-                  <h4 className="font-bold uppercase tracking-wider text-[11px] mb-0.5" style={{ color: themeColor }}>
-                    Languages
-                  </h4>
-                  <p className="text-slate-600 text-[10.5px]">{formData.languages}</p>
-                </div>
-              )}
-            </div>
-          </div>
+        <div className="lg:col-span-6 bg-slate-200/70 p-2 sm:p-3 rounded-2xl border border-slate-300 flex justify-center lg:sticky lg:top-0 w-full overflow-x-auto">
+          {template === 'modern' && <ModernTemplate data={formData} themeColor={themeColor} />}
+          {template === 'classic' && <ClassicTemplate data={formData} themeColor={themeColor} />}
+          {template === 'executive' && <ExecutiveTemplate data={formData} themeColor={themeColor} />}
         </div>
       </div>
     </div>
   );
-}
+};

@@ -7,79 +7,45 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
-OUTPUT_FOLDER = os.path.join(BASE_DIR, 'outputs')
-
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+UPLOAD_DIR = os.path.join(os.getcwd(), 'uploads')
+OUTPUT_DIR = os.path.join(os.getcwd(), 'outputs')
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 @app.route('/process-video', methods=['POST'])
-def process_video():
+def process():
     task_id = str(uuid.uuid4())[:8]
+    url = request.form.get('url')
+    file = request.files.get('video')
 
-    try:
-        url = request.form.get('url')
-        video_file = request.files.get('video')
-        duration = request.form.get('duration', 'auto')
-        aspect_ratio = request.form.get('aspectRatio', '9:16')
+    raw_path = os.path.join(UPLOAD_DIR, f"raw_{task_id}.mp4")
+    out_name = f"clip_{task_id}.mp4"
+    out_path = os.path.join(OUTPUT_DIR, out_name)
 
-        if not url and not video_file:
-            return jsonify({"success": False, "error": "URL ya file enter karein"}), 400
+    if url:
+        # Download YouTube Video using yt-dlp
+        cmd = ["yt-dlp", "-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best", "-o", raw_path, url]
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        if res.returncode != 0:
+            return jsonify({"success": False, "error": "Download failed"}), 500
+    elif file:
+        file.save(raw_path)
+    else:
+        return jsonify({"success": False, "error": "No source"}), 400
 
-        # 1. Source Video lena
-        if url:
-            raw_video_path = os.path.join(UPLOAD_FOLDER, f"yt_{task_id}.mp4")
-            dl_cmd = [
-                "yt-dlp",
-                "-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
-                "--merge-output-format", "mp4",
-                "-o", raw_video_path,
-                url
-            ]
-            res = subprocess.run(dl_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            if res.returncode != 0:
-                return jsonify({"success": False, "error": "YouTube download fail hua"}), 500
-        elif video_file:
-            raw_video_path = os.path.join(UPLOAD_FOLDER, f"upload_{task_id}.mp4")
-            video_file.save(raw_video_path)
+    # Crop to 9:16 (1080x1920) and cut 30 seconds
+    ffmpeg_cmd = [
+        "ffmpeg", "-y", "-ss", "00:00:15", "-i", raw_path, "-t", "30",
+        "-vf", "crop=ih*(9/16):ih,scale=1080:1920",
+        "-c:v", "libx264", "-c:a", "aac", out_path
+    ]
+    subprocess.run(ffmpeg_cmd, check=True)
 
-        output_filename = f"clip_{task_id}.mp4"
-        output_clip_path = os.path.join(OUTPUT_FOLDER, output_filename)
+    return jsonify({"success": True, "clipUrl": f"/download/{out_name}"})
 
-        # 2. Timing aur Aspect ratio
-        clip_time = "30" if duration == "auto" else ("15" if duration == "short" else "60")
-        vf_filter = "crop=ih*(9/16):ih,scale=1080:1920" if aspect_ratio == "9:16" else "scale=1920:1080"
-
-        # 3. FFmpeg se Crop & Cut
-        ffmpeg_cmd = [
-            "ffmpeg", "-y",
-            "-ss", "00:00:05",
-            "-i", raw_video_path,
-            "-t", clip_time,
-            "-vf", vf_filter,
-            "-c:v", "libx264",
-            "-preset", "fast",
-            "-c:a", "aac",
-            output_clip_path
-        ]
-
-        f_res = subprocess.run(ffmpeg_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        if f_res.returncode != 0:
-            return jsonify({"success": False, "error": "FFmpeg processing fail hui"}), 500
-
-        return jsonify({
-            "success": True,
-            "clipUrl": f"/download/{output_filename}"
-        })
-
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
-
-@app.route('/download/<filename>', methods=['GET'])
-def download_clip(filename):
-    return send_from_directory(OUTPUT_FOLDER, filename)
+@app.route('/download/<filename>')
+def download(filename):
+    return send_from_directory(OUTPUT_DIR, filename, as_attachment=True)
 
 if __name__ == '__main__':
-    print("Server running on http://localhost:5000")
-    app.run(port=5000, debug=True)
+    app.run(port=5000)

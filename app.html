@@ -52,9 +52,6 @@
     <div class="absolute bottom-6 -left-12 w-72 h-72 rounded-full bg-slate-200/50 blur-3xl"></div>
   </div>
 
-  <!-- Toast Notification System Popups -->
-  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
-
   <!-- Master Application Container -->
   <main class="relative z-10 w-full max-w-[1360px] bg-white/95 md:backdrop-blur-2xl rounded-[32px] md:rounded-[36px] shadow-xl md:shadow-2xl border border-slate-200/80 p-4 sm:p-6 md:p-8 flex flex-col md:grid md:grid-cols-12 gap-6 min-h-[calc(100vh-7rem)] md:min-h-[640px]">
     
@@ -92,7 +89,7 @@
           </div>
         </a>
 
-        <!-- Desktop Navigation Items (HOME renamed from Home Hub) -->
+        <!-- Desktop Navigation Items -->
         <nav class="space-y-2">
           <button id="deskHomeBtn" onclick="switchTab('home')" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer">
             <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -114,11 +111,6 @@
             <span>Profile &amp; Settings</span>
           </button>
         </nav>
-      </div>
-
-      <div class="p-3.5 bg-slate-100/90 rounded-2xl border border-slate-200 text-xs">
-        <span class="font-extrabold text-slate-900 block">PrimeAstra Suite</span>
-        <span class="text-[11px] text-slate-500">100% Free Tools with zero limits.</span>
       </div>
     </aside>
 
@@ -165,19 +157,19 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
-                <span id="notifBadge" class="w-2 h-2 rounded-full bg-emerald-500 absolute top-1.5 right-1.5"></span>
+                <span id="notifBadge" class="hidden w-2 h-2 rounded-full bg-rose-500 absolute top-1.5 right-1.5"></span>
               </button>
 
               <!-- Notifications Dropdown -->
               <div id="notifPanel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 text-xs text-left space-y-2">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-                  <span class="font-extrabold text-slate-900">Activity &amp; Notifications</span>
-                  <span id="notifCount" class="text-[10px] text-slate-700 font-bold bg-slate-100 px-2 py-0.5 rounded-md">New</span>
+                  <span class="font-extrabold text-slate-900">Notifications</span>
+                  <span class="text-[10px] text-slate-500">Activity Log</span>
                 </div>
-                <div id="notifList" class="space-y-1.5 max-h-56 overflow-y-auto">
-                  <div class="p-2 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
-                    <p class="font-bold text-slate-900 text-[11px]">✨ PrimeAstra Live</p>
-                    <p class="text-[10px] text-slate-500">Welcome to PrimeAstra digital utilities.</p>
+                <div id="notifList" class="space-y-1.5 max-h-56 overflow-y-auto custom-scrollbar">
+                  <div class="p-2.5 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
+                    <p class="font-bold text-slate-900 text-[11px]">✨ System Ready</p>
+                    <p class="text-[10px] text-slate-500">Welcome to PrimeAstra Tools.</p>
                   </div>
                 </div>
               </div>
@@ -221,7 +213,7 @@
                 Welcome to PrimeAstra
               </h3>
               <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-md mx-auto leading-relaxed font-normal">
-                Explore your curated collection of free digital utilities and AI power tools.
+                Explore your curated collection of free digital utilities and AI tools.
               </p>
             </div>
 
@@ -234,7 +226,7 @@
             </button>
           </div>
 
-          <!-- Trending Tools Section -->
+          <!-- Featured Tool Section -->
           <div class="space-y-3 pt-1">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
@@ -308,7 +300,7 @@
         </div>
 
         <!-- ==============================================
-             VIEW 3: RESUME MAKER WORKSPACE VIEW (With Full Fields & No Preview Cuts)
+             VIEW 3: RESUME MAKER WORKSPACE VIEW
              ============================================== -->
         <div id="resumeMakerView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="p-3.5 bg-slate-900 text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-xs border border-slate-800">
@@ -320,7 +312,7 @@
                 <h2 class="text-base font-bold flex items-center gap-2">
                   <span>📝</span> AI Resume Maker
                 </h2>
-                <p class="text-[11px] text-slate-300">Free Tools Section • Live auto-sync preview</p>
+                <p class="text-[11px] text-slate-300">Free Tools Section • Full A4 Export</p>
               </div>
             </div>
 
@@ -356,7 +348,7 @@
 
               <!-- 1. Personal Details -->
               <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3">
-                <h3 class="text-xs font-bold text-slate-900 border-b border-slate-100 pb-1.5 uppercase tracking-wider text-slate-600">1. Personal Information</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 border-b border-slate-100 pb-1.5">1. Personal Information</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div>
                     <label class="text-[10px] font-semibold text-slate-500">Full Name *</label>
@@ -380,7 +372,7 @@
                   </div>
                   <div class="sm:col-span-2">
                     <label class="text-[10px] font-semibold text-slate-500">Profile / Career Summary *</label>
-                    <textarea rows="2" id="rSummary" placeholder="Short description about your professional experience..." oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900">Dedicated professional with experience in business operations, documentation, production planning, and digital services management.</textarea>
+                    <textarea rows="3" id="rSummary" placeholder="Short description about your professional experience..." oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900">Dedicated professional with proven experience in digital documentation, client catalog operations, inventory workflow coordination, and e-commerce account handling.</textarea>
                   </div>
                 </div>
               </div>
@@ -393,15 +385,15 @@
                 </div>
 
                 <div id="experienceFieldsContainer" class="space-y-3">
-                  <!-- Experience Item 1 -->
-                  <div class="exp-card p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs">
+                  <div class="exp-card p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs relative">
+                    <button type="button" onclick="this.parentElement.remove(); renderResumePreview();" class="absolute top-2 right-2 text-slate-400 hover:text-rose-500 font-bold text-xs">✕</button>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <input type="text" placeholder="Designation / Role" value="Senior Officer - Operations" class="exp-role p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
                       <input type="text" placeholder="Company / Organization" value="Shubh Enterprises" class="exp-company p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
                     </div>
                     <div class="grid grid-cols-2 gap-2">
-                      <input type="text" placeholder="City / State" value="Roorkee" class="exp-location p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
-                      <input type="text" placeholder="Duration (e.g. 2023 - Present)" value="2023 - Present" class="exp-duration p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                      <input type="text" placeholder="City / State" value="Roorkee, Uttarakhand" class="exp-location p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+                      <input type="text" placeholder="Duration" value="2023 - Present" class="exp-duration p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
                     </div>
                     <textarea rows="2" placeholder="Responsibilities &amp; achievements..." class="exp-desc p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()">Managed catalog management, client accounts, documentation, inventory planning, and return claim disputes with optimum efficiency.</textarea>
                   </div>
@@ -416,8 +408,8 @@
                 </div>
 
                 <div id="educationFieldsContainer" class="space-y-3">
-                  <!-- Education Item 1 -->
-                  <div class="edu-card p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs">
+                  <div class="edu-card p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs relative">
+                    <button type="button" onclick="this.parentElement.remove(); renderResumePreview();" class="absolute top-2 right-2 text-slate-400 hover:text-rose-500 font-bold text-xs">✕</button>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <input type="text" placeholder="Degree / Diploma" value="Bachelor of Computer Applications (BCA)" class="edu-degree p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
                       <input type="text" placeholder="Institute / University" value="University Campus" class="edu-inst p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
@@ -444,11 +436,11 @@
               </div>
             </div>
 
-            <!-- RIGHT PREVIEW CONTAINER: Fixed Scaling (No Preview Cuts) -->
+            <!-- RIGHT PREVIEW CONTAINER -->
             <div class="lg:col-span-6 bg-slate-100/90 p-3 sm:p-4 rounded-2xl border border-slate-200 w-full overflow-y-auto max-h-[82vh] flex flex-col items-center custom-scrollbar lg:sticky lg:top-4">
               <div class="w-full flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
                 <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Live Document Preview</span>
-                <span class="text-[10px] bg-white border border-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">A4 Formatted</span>
+                <span class="text-[10px] bg-white border border-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">Standard A4</span>
               </div>
               
               <!-- Printable & Scaled A4 Container -->
@@ -561,7 +553,7 @@
     </section>
   </main>
 
-  <!-- === MOBILE BOTTOM NAVIGATION (HOME Tab Renamed) === -->
+  <!-- === MOBILE BOTTOM NAVIGATION === -->
   <nav class="fixed bottom-3 left-4 right-4 z-40 md:hidden bg-white/95 backdrop-blur-xl border border-slate-200 rounded-3xl p-1.5 shadow-xl flex items-center justify-around text-slate-500">
     <button onclick="switchTab('home')" id="navHomeTab" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl bg-slate-900 text-white shadow-md shadow-slate-900/20 cursor-pointer">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -623,36 +615,33 @@
     const profilePhotoInitial = document.getElementById('profilePhotoInitial');
     const profileAuthBtn = document.getElementById('profileAuthBtn');
 
-    // === GLOBAL NOTIFICATION EVENT SYSTEM ===
-    window.pushNotification = (title, message, type = 'info') => {
-      // 1. Toast Notification on top-right
-      const toastContainer = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = `p-3 rounded-2xl border shadow-xl flex items-center gap-3 text-xs font-semibold pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0 ${
-        type === 'success' 
-          ? 'bg-slate-900 text-emerald-400 border-emerald-500/50' 
-          : type === 'error'
-          ? 'bg-slate-900 text-rose-400 border-rose-500/50'
-          : 'bg-slate-900 text-white border-slate-700'
-      }`;
-      toast.innerHTML = `<span>🔔</span><div><p class="font-bold">${title}</p><p class="text-[10px] text-slate-300 font-normal">${message}</p></div>`;
-      toastContainer.appendChild(toast);
-
-      requestAnimationFrame(() => {
-        toast.classList.remove('translate-y-2', 'opacity-0');
-      });
-
-      setTimeout(() => {
-        toast.classList.add('opacity-0', '-translate-y-2');
-        setTimeout(() => toast.remove(), 300);
-      }, 4000);
-
-      // 2. Add to Notification Dropdown List
+    // === NOTIFICATION SYSTEM: ONLY INSIDE BELL DROPDOWN ===
+    window.pushNotification = (title, message) => {
       const notifList = document.getElementById('notifList');
-      const item = document.createElement('div');
-      item.className = 'p-2 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100';
-      item.innerHTML = `<p class="font-bold text-slate-900 text-[11px]">${title}</p><p class="text-[10px] text-slate-500">${message}</p>`;
-      notifList.prepend(item);
+      if (notifList) {
+        const item = document.createElement('div');
+        item.className = 'p-2.5 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100 transition hover:bg-slate-100';
+        item.innerHTML = `
+          <p class="font-bold text-slate-900 text-[11px]">🔔 ${title}</p>
+          <p class="text-[10px] text-slate-600">${message}</p>
+        `;
+        notifList.prepend(item);
+      }
+
+      // Bell icon indicator
+      const badge = document.getElementById('notifBadge');
+      if (badge) {
+        badge.classList.remove('hidden');
+      }
+    };
+
+    window.toggleNotifications = () => {
+      const panel = document.getElementById('notifPanel');
+      panel.classList.toggle('hidden');
+      const badge = document.getElementById('notifBadge');
+      if (badge && !panel.classList.contains('hidden')) {
+        badge.classList.add('hidden');
+      }
     };
 
     // Restore cached name & photo
@@ -668,10 +657,6 @@
       }
     }
 
-    window.toggleNotifications = () => {
-      document.getElementById('notifPanel').classList.toggle('hidden');
-    };
-
     window.clearResumeForm = () => {
       ['rName', 'rTitle', 'rPhone', 'rEmail', 'rAddress', 'rSummary', 'rSkills', 'rLanguages'].forEach(id => {
         const el = document.getElementById(id);
@@ -680,7 +665,7 @@
       document.getElementById('experienceFieldsContainer').innerHTML = '';
       document.getElementById('educationFieldsContainer').innerHTML = '';
       renderResumePreview();
-      pushNotification('Form Cleared', 'Resume fields have been reset.', 'info');
+      pushNotification('Form Cleared', 'Resume fields have been reset.');
     };
 
     window.handleGoogleLogin = async () => {
@@ -698,9 +683,9 @@
             createdAt: new Date().toISOString()
           });
         }
-        pushNotification('Login Successful', `Welcome back, ${user.displayName || 'User'}!`, 'success');
+        pushNotification('Login Successful', `Welcome back, ${user.displayName || 'User'}!`);
       } catch (e) {
-        pushNotification('Login Error', e.message, 'error');
+        pushNotification('Login Error', e.message);
       }
     };
 
@@ -708,7 +693,7 @@
       localStorage.removeItem('pa_cached_name');
       localStorage.removeItem('pa_cached_photo');
       await signOut(auth);
-      pushNotification('Signed Out', 'You have been safely logged out.', 'info');
+      pushNotification('Signed Out', 'You have been safely logged out.');
     };
 
     window.handlePhotoUpload = (event) => {
@@ -732,7 +717,7 @@
           }
         }
         updateHeaderAvatar(base64Photo, activeUser?.displayName || 'User');
-        pushNotification('Photo Updated', 'Profile photo changed successfully!', 'success');
+        pushNotification('Photo Updated', 'Profile photo changed successfully!');
       };
       reader.readAsDataURL(file);
     };
@@ -761,12 +746,12 @@
           console.error(err);
         }
       }
-      pushNotification('Photo Removed', 'Profile photo removed successfully.', 'info');
+      pushNotification('Photo Removed', 'Profile photo removed successfully.');
     };
 
     window.handlePasswordReset = async () => {
       if (!activeUser || !activeUser.email) {
-        pushNotification('Error', 'Please login first to reset your password.', 'error');
+        pushNotification('Action Required', 'Please login first to reset your password.');
         return;
       }
       try {
@@ -774,9 +759,9 @@
         const statusEl = document.getElementById('passwordResetStatus');
         statusEl.classList.remove('hidden');
         setTimeout(() => statusEl.classList.add('hidden'), 5000);
-        pushNotification('Password Reset Link Sent', `Check ${activeUser.email} for instructions.`, 'success');
+        pushNotification('Password Reset Sent', `Reset link sent to ${activeUser.email}`);
       } catch (err) {
-        pushNotification('Password Reset Error', err.message, 'error');
+        pushNotification('Password Reset Error', err.message);
       }
     };
 
@@ -894,7 +879,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // When clicking Resume Maker, switch to Free Tools section first then show workspace
     window.openResumeMakerTool = () => {
       document.getElementById('homeFeedView').classList.add('hidden');
       document.getElementById('toolsDirectoryView').classList.add('hidden');
@@ -902,12 +886,11 @@
       document.getElementById('profileView').classList.add('hidden');
       document.getElementById('resumeMakerView').classList.remove('hidden');
 
-      // Highlight Free Tools tab
       document.getElementById('deskToolsBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all bg-white text-slate-900 shadow-sm border border-slate-200 text-left cursor-pointer";
       document.getElementById('deskHomeBtn').className = "w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 text-left cursor-pointer";
 
       window.renderResumePreview();
-      pushNotification('Tool Opened', 'AI Resume Maker workspace active in Free Tools.', 'info');
+      pushNotification('Resume Workspace', 'AI Resume Maker active in Free Tools.');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -958,7 +941,7 @@
           <input type="text" placeholder="Institute / University" class="edu-inst p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
         </div>
         <div class="grid grid-cols-2 gap-2">
-          <input type="text" placeholder="Passing Year" class="edu-year p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
+          <input type="text" placeholder="Year of Passing" class="edu-year p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
           <input type="text" placeholder="Grade / %" class="edu-grade p-2 border border-slate-200 rounded-lg bg-white w-full" oninput="renderResumePreview()" />
         </div>
       `;
@@ -966,7 +949,7 @@
       renderResumePreview();
     };
 
-    // Direct PDF Download with Notification
+    // === FULL-PAGE A4 EXPORT (NO HALF PAGE) ===
     window.downloadResumePdfDirect = () => {
       const nameInput = document.getElementById('rName');
       if (!nameInput.value.trim()) {
@@ -981,23 +964,48 @@
 
       const fileName = nameInput.value.trim().replace(/\s+/g, '_');
       const btnText = document.getElementById('downloadBtnText');
-      btnText.innerText = "Exporting PDF...";
+      btnText.innerText = "Exporting Full A4 PDF...";
+
+      // Standard A4 dimensions at 96 DPI: 794px width x 1123px height
+      const printClone = innerContent.cloneNode(true);
+      printClone.style.width = "794px";
+      printClone.style.minHeight = "1123px";
+      printClone.style.boxSizing = "border-box";
+      printClone.style.padding = "28px";
+      printClone.style.margin = "0";
+
+      // Wrapper offscreen
+      const wrapper = document.createElement('div');
+      wrapper.style.position = "fixed";
+      wrapper.style.left = "-9999px";
+      wrapper.style.top = "0";
+      wrapper.style.width = "794px";
+      wrapper.appendChild(printClone);
+      document.body.appendChild(wrapper);
 
       const opt = {
-        margin:       [4, 4, 4, 4],
+        margin:       0,
         filename:     `${fileName}_Resume.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas:  { 
+          scale: 2, 
+          useCORS: true, 
+          scrollY: 0,
+          width: 794,
+          windowWidth: 794
+        },
+        jsPDF:        { unit: 'px', format: [794, 1123], orientation: 'portrait' }
       };
 
-      html2pdf().set(opt).from(innerContent).save().then(() => {
+      html2pdf().set(opt).from(printClone).save().then(() => {
+        document.body.removeChild(wrapper);
         btnText.innerText = "Download PDF";
-        pushNotification('Resume Ready!', 'Your resume PDF has been downloaded successfully.', 'success');
+        pushNotification('PDF Downloaded', `${fileName}_Resume.pdf downloaded successfully.`);
       }).catch((err) => {
         console.error(err);
+        document.body.removeChild(wrapper);
         btnText.innerText = "Download PDF";
-        pushNotification('Export Failed', 'Error exporting PDF. Please check your inputs.', 'error');
+        pushNotification('Download Failed', 'Could not export PDF. Please check your data.');
       });
     };
 

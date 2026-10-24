@@ -198,8 +198,8 @@
                   <span class="text-[10px] text-[#e2c072] font-bold bg-[rgba(226,192,114,0.15)] px-2 py-0.5 rounded-md">1 New</span>
                 </div>
                 <div class="p-2.5 bg-[#181820] rounded-xl space-y-0.5 border border-[rgba(226,192,114,0.1)]">
-                  <p class="font-bold text-white text-[11px]">🎬 Gimbal Stabilization &amp; 4K Clarity Active!</p>
-                  <p class="text-[10px] text-slate-400">Shorts with ultra-smooth tracking and crystal sound.</p>
+                  <p class="font-bold text-white text-[11px]">🎬 Full Body Tracking &amp; 4K Audio Active!</p>
+                  <p class="text-[10px] text-slate-400">Shorts with gimbal stabilization and HD sound ready.</p>
                 </div>
               </div>
             </div>
@@ -314,7 +314,7 @@
                     AI Video Clipping Generator
                   </h4>
                   <p class="text-[11px] text-slate-400 line-clamp-2 mt-0.5 leading-relaxed">
-                    Gimbal Stabilization &amp; 4K Clarity: Extract custom vertical shorts with crystal sound.
+                    Full Body Tracking &amp; 4K Clarity: Extract custom vertical shorts with crystal sound.
                   </p>
                 </div>
               </div>
@@ -338,7 +338,7 @@
                 <h2 class="text-sm sm:text-base font-extrabold flex items-center gap-2 text-white">
                   <span>🎬</span> AI Video Clipping Generator
                 </h2>
-                <p class="text-[10px] sm:text-[11px] text-slate-400">Gimbal Stabilization • 4K Clarity • Audio Enabled • 1-5 Shorts</p>
+                <p class="text-[10px] sm:text-[11px] text-slate-400">Full Body Tracking • 4K Clarity • Audio Enabled • 1-5 Shorts</p>
               </div>
             </div>
             <div class="px-3.5 py-1.5 bg-[rgba(226,192,114,0.15)] border border-[rgba(226,192,114,0.3)] text-[#e2c072] rounded-xl text-xs font-black tracking-wide shrink-0">
@@ -352,7 +352,7 @@
             <div class="lg:col-span-7 bg-[#121216] p-5 rounded-3xl border border-[rgba(226,192,114,0.15)] card-shadow space-y-4 text-xs">
               <div>
                 <h3 class="text-xs font-black text-white">Step 1: Upload Source Video</h3>
-                <p class="text-[11px] text-slate-400 mt-0.5">Upload your video to extract frames, audio, and enable smart stabilization.</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">Upload your video to extract frames, audio, and enable full body tracking.</p>
               </div>
 
               <!-- Upload Area -->
@@ -360,10 +360,10 @@
                 onclick="document.getElementById('videoFilePicker').click()" 
                 class="border-2 border-dashed border-[rgba(226,192,114,0.25)] hover:border-[rgba(226,192,114,0.6)] bg-[#181820] rounded-2xl p-6 text-center cursor-pointer transition group"
               >
-                <input type="file" id="videoFilePicker" accept="video/mp4,video/quicktime,video/webm" class="hidden" onchange="handleFileChange(event)" />
+                <input type="file" id="videoFilePicker" accept="video/mp4,video/quicktime,video/webm,video/x-matroska,.mkv" class="hidden" onchange="handleFileChange(event)" />
                 <div class="text-3xl mb-1 group-hover:scale-110 transition-transform">📁</div>
                 <div class="font-extrabold text-white text-xs" id="filePickerText">Click to upload raw video</div>
-                <div class="text-[10px] text-slate-400 mt-0.5">MP4, MOV up to 1GB supported</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">MP4, MKV, MOV up to 1GB supported</div>
               </div>
 
               <!-- VISUAL FILMSTRIP TIMELINE ADJUSTMENT -->
@@ -428,7 +428,7 @@
               <div class="p-3 bg-[#181820] rounded-2xl flex items-center justify-between border border-[rgba(226,192,114,0.2)]">
                 <div class="flex items-center gap-2">
                   <span class="w-2.5 h-2.5 rounded-full bg-[#e2c072] animate-pulse"></span>
-                  <span class="font-bold text-white text-[11px]">Stabilized 4K Engine:</span>
+                  <span class="font-bold text-white text-[11px]">Full Body Tracking + 4K Clarity:</span>
                 </div>
                 <span class="px-2.5 py-0.5 bg-[rgba(226,192,114,0.15)] text-[#e2c072] border border-[rgba(226,192,114,0.3)] font-bold text-[10px] rounded-lg">Gimbal Smooth + HD Audio</span>
               </div>
@@ -871,6 +871,7 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
+    // FULL BODY TRACKING + STABILIZED AUDIO 4K SLICER
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise(async (resolve) => {
         const vid = document.createElement('video');
@@ -879,7 +880,9 @@
         vid.crossOrigin = "anonymous";
         vid.src = URL.createObjectURL(videoSource);
         
-        vid.style.display = 'none';
+        vid.style.display = 'block';
+        vid.style.position = 'fixed';
+        vid.style.top = '-9999px';
         document.body.appendChild(vid);
 
         let currentTargetX = 0.5;
@@ -892,21 +895,24 @@
             locateFile: (f) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}`
           });
           poseDetector.setOptions({
-            modelComplexity: 0,
+            modelComplexity: 1, // Full body tracking mode active
             smoothLandmarks: true,
-            minDetectionConfidence: 0.3,
-            minTrackingConfidence: 0.3
+            minDetectionConfidence: 0.4,
+            minTrackingConfidence: 0.4
           });
 
           poseDetector.onResults((results) => {
             if (results.poseLandmarks && results.poseLandmarks.length > 0) {
               const nose = results.poseLandmarks[0];
+              const leftShoulder = results.poseLandmarks[11];
+              const rightShoulder = results.poseLandmarks[12];
               const leftHip = results.poseLandmarks[23];
               const rightHip = results.poseLandmarks[24];
               
-              if (nose && leftHip && rightHip) {
+              if (leftShoulder && rightShoulder && leftHip && rightHip) {
+                const shoulderCenter = (leftShoulder.x + rightShoulder.x) / 2;
                 const hipCenter = (leftHip.x + rightHip.x) / 2;
-                currentTargetX = (nose.x * 0.3) + (hipCenter * 0.7);
+                currentTargetX = (shoulderCenter * 0.4) + (hipCenter * 0.6);
               } else if (leftHip && rightHip) {
                 currentTargetX = (leftHip.x + rightHip.x) / 2;
               } else if (nose) {
@@ -970,7 +976,7 @@
 
         let rec;
         try { 
-          rec = new MediaRecorder(combinedStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 5000000 }); 
+          rec = new MediaRecorder(combinedStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 6000000 }); 
         } catch(e) { 
           rec = new MediaRecorder(combinedStream); 
         }
@@ -999,7 +1005,7 @@
           if (!isRecording) return;
           if (!vid.paused && !vid.ended) {
             frameCounter++;
-            if (poseDetector && frameCounter % 5 === 0) {
+            if (poseDetector && frameCounter % 4 === 0) {
               try {
                 await poseDetector.send({ image: vid });
               } catch (e) {}
@@ -1029,7 +1035,7 @@
 
     window.sliceTimelineShorts = async () => {
       if (!selectedRawVideo) {
-        alert("Pehle MP4 video upload karein!");
+        alert("Pehle video upload karein!");
         return;
       }
 
@@ -1045,7 +1051,7 @@
 
         for (let i = 1; i <= TOTAL_CLIPS; i++) {
           const currentStart = trimStartSec + (i - 1) * step;
-          btn.innerHTML = `<span>🎯 Stabilized Slicing Clip ${i} of ${TOTAL_CLIPS}...</span>`;
+          btn.innerHTML = `<span>🎯 Full Body Tracking Clip ${i} of ${TOTAL_CLIPS}...</span>`;
           const blobUrl = await sliceDirectVideoSegment(selectedRawVideo, i, currentStart);
           generatedShorts.push({
             url: blobUrl,
@@ -1066,7 +1072,7 @@
               <div class="min-w-0">
                 <p class="font-black text-white text-xs truncate">Short Clip #${index + 1}</p>
                 <p class="text-[10px] text-[#e2c072] font-bold truncate mt-0.5">30s Clip • ${item.timeLabel}</p>
-                <p class="text-[9px] text-slate-400 mt-0.5">Vertical 1080p • Stabilized &amp; Audio</p>
+                <p class="text-[9px] text-slate-400 mt-0.5">Vertical 1080p • Body Tracked &amp; Audio</p>
               </div>
             </div>
             <a href="${item.url}" download="Short_Clip_${index + 1}.webm" class="px-3.5 py-2 bg-gradient-to-r from-[#e2c072] to-[#c5a059] text-[#070707] hover:brightness-110 rounded-xl text-xs font-bold shrink-0 transition text-center cursor-pointer">

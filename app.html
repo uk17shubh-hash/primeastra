@@ -166,8 +166,8 @@
                   <span class="text-[10px] text-slate-700 font-bold bg-slate-100 px-2 py-0.5 rounded-md">1 New</span>
                 </div>
                 <div class="p-2.5 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
-                  <p class="font-bold text-slate-900 text-[11px]">🎬 5 Shorts Fast Slicer Live!</p>
-                  <p class="text-[10px] text-slate-500">Optimized 30s body-tracking shorts ready.</p>
+                  <p class="font-bold text-slate-900 text-[11px]">🎬 Audio &amp; Body Tracking Active!</p>
+                  <p class="text-[10px] text-slate-500">5 Shorts with 30s audio &amp; smart reframe ready.</p>
                 </div>
               </div>
             </div>
@@ -278,7 +278,7 @@
                     AI Video Clipping Generator
                   </h4>
                   <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
-                    Auto-Reframing with AI Body Tracking: Extract 5 high-energy 30s vertical shorts directly from any video.
+                    Auto-Reframing with AI Body Tracking &amp; Audio: Extract 5 high-energy 30s vertical shorts with sound.
                   </p>
                 </div>
               </div>
@@ -290,7 +290,7 @@
           </div>
         </div>
 
-        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE (5 SHORTS) -->
+        <!-- VIEW 4: VIDEO CLIPPER WORKSPACE (5 SHORTS + AUDIO + TRACKING) -->
         <div id="videoClipperWorkspaceView" class="hidden space-y-4 w-full text-left pt-3">
           
           <div class="p-3.5 sm:p-4 bg-[#0F172A] text-white rounded-2xl flex items-center justify-between shadow-xs border border-slate-800">
@@ -302,7 +302,7 @@
                 <h2 class="text-sm sm:text-base font-extrabold flex items-center gap-2">
                   <span>🎬</span> AI Video Clipping Generator
                 </h2>
-                <p class="text-[10px] sm:text-[11px] text-slate-400">Full Body Tracking • Visual Filmstrip Trimmer • 5 Shorts (30s each)</p>
+                <p class="text-[10px] sm:text-[11px] text-slate-400">Full Body Tracking • Audio Enabled • 5 Shorts (30s each)</p>
               </div>
             </div>
             <div class="px-3.5 py-1.5 bg-[#854d0e]/40 border border-[#ca8a04]/40 text-[#fde047] rounded-xl text-xs font-black tracking-wide shrink-0">
@@ -316,7 +316,7 @@
             <div class="lg:col-span-7 bg-white p-5 rounded-3xl border border-slate-200 card-shadow space-y-4 text-xs">
               <div>
                 <h3 class="text-xs font-black text-slate-900">Step 1: Upload Source Video</h3>
-                <p class="text-[11px] text-slate-500 mt-0.5">Upload your video to extract frames and enable smooth body tracking.</p>
+                <p class="text-[11px] text-slate-500 mt-0.5">Upload your video to extract frames, audio, and enable smart body tracking.</p>
               </div>
 
               <!-- Upload Area -->
@@ -380,9 +380,9 @@
               <div class="p-3 bg-slate-100 rounded-2xl flex items-center justify-between border border-slate-200">
                 <div class="flex items-center gap-2">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <span class="font-bold text-slate-800 text-[11px]">AI Smart Crop Mode:</span>
+                  <span class="font-bold text-slate-800 text-[11px]">AI Smart Crop &amp; Audio:</span>
                 </div>
-                <span class="px-2.5 py-0.5 bg-slate-900 text-white font-bold text-[10px] rounded-lg">Full Body Track</span>
+                <span class="px-2.5 py-0.5 bg-slate-900 text-white font-bold text-[10px] rounded-lg">Body Track + Sound</span>
               </div>
 
               <div class="grid grid-cols-2 gap-3 pt-1">
@@ -632,7 +632,7 @@
     <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 py-1 px-4 rounded-2xl text-slate-500"><span class="text-[10px] font-semibold">Profile</span></button>
   </nav>
 
-  <!-- SCRIPT ENGINE (5 SHORTS, 30s DURATION, OPTIMIZED BODY TRACKING) -->
+  <!-- SCRIPT ENGINE (5 SHORTS, 30s AUDIO + BODY TRACKING) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -819,11 +819,11 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
-    // OPTIMIZED 30-SECOND SLICER WITH BODY TRACKING
+    // SLICER WITH AUDIO MERGING & BODY TRACKING
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise((resolve) => {
         const vid = document.createElement('video');
-        vid.muted = true;
+        vid.muted = false;
         vid.playsInline = true;
         vid.crossOrigin = "anonymous";
         vid.src = URL.createObjectURL(videoSource);
@@ -839,22 +839,24 @@
           });
           poseDetector.setOptions({
             modelComplexity: 0,
-            smoothLandmarks: false,
-            minDetectionConfidence: 0.5,
-            minTrackingConfidence: 0.5
+            smoothLandmarks: true,
+            minDetectionConfidence: 0.4,
+            minTrackingConfidence: 0.4
           });
 
           poseDetector.onResults((results) => {
             if (results.poseLandmarks && results.poseLandmarks.length > 0) {
+              const nose = results.poseLandmarks[0];
               const leftHip = results.poseLandmarks[23];
               const rightHip = results.poseLandmarks[24];
-              const leftShoulder = results.poseLandmarks[11];
-              const rightShoulder = results.poseLandmarks[12];
-
-              if (leftHip && rightHip) {
+              
+              if (nose && leftHip && rightHip) {
+                const hipCenter = (leftHip.x + rightHip.x) / 2;
+                currentTargetX = (nose.x * 0.4) + (hipCenter * 0.6);
+              } else if (leftHip && rightHip) {
                 currentTargetX = (leftHip.x + rightHip.x) / 2;
-              } else if (leftShoulder && rightShoulder) {
-                currentTargetX = (leftShoulder.x + rightShoulder.x) / 2;
+              } else if (nose) {
+                currentTargetX = nose.x;
               }
             }
           });
@@ -872,12 +874,27 @@
           canvas.height = 960; // 9:16 vertical ratio
           const ctx = canvas.getContext('2d');
 
-          const stream = canvas.captureStream(20);
+          // Audio Context setup for sound in shorts
+          let audioStreamNode = null;
+          try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const sourceNode = audioCtx.createMediaElementSource(vid);
+            const destination = audioCtx.createMediaStreamDestination();
+            sourceNode.connect(destination);
+            sourceNode.connect(audioCtx.destination);
+            audioStreamNode = destination.stream.getAudioTracks()[0];
+          } catch (err) {}
+
+          const canvasStream = canvas.captureStream(20);
+          if (audioStreamNode) {
+            canvasStream.addTrack(audioStreamNode);
+          }
+
           let rec;
           try { 
-            rec = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp8', videoBitsPerSecond: 1500000 }); 
+            rec = new MediaRecorder(canvasStream, { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 1500000 }); 
           } catch(e) { 
-            rec = new MediaRecorder(stream); 
+            rec = new MediaRecorder(canvasStream); 
           }
 
           const chunks = [];
@@ -900,13 +917,13 @@
             }
 
             frameCounter++;
-            if (poseDetector && frameCounter % 10 === 0) {
+            if (poseDetector && frameCounter % 8 === 0) {
               try {
                 await poseDetector.send({ image: vid });
               } catch (e) {}
             }
 
-            smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.15;
+            smoothedTargetX += (currentTargetX - smoothedTargetX) * 0.2;
 
             const vw = vid.videoWidth || 640;
             const vh = vid.videoHeight || 360;
@@ -953,7 +970,7 @@
 
         for (let i = 1; i <= TOTAL_CLIPS; i++) {
           const currentStart = trimStartSec + (i - 1) * step;
-          btn.innerHTML = `<span>🎯 Body Tracking &amp; Slicing 30s Clip ${i} of ${TOTAL_CLIPS}...</span>`;
+          btn.innerHTML = `<span>🎯 Body Tracking &amp; Audio Slicing Clip ${i} of ${TOTAL_CLIPS}...</span>`;
           const blobUrl = await sliceDirectVideoSegment(selectedRawVideo, i, currentStart);
           generatedShorts.push({
             url: blobUrl,
@@ -974,7 +991,7 @@
               <div class="min-w-0">
                 <p class="font-black text-slate-900 text-xs truncate">Short Clip #${index + 1}</p>
                 <p class="text-[10px] text-amber-600 font-bold truncate mt-0.5">30s Clip • ${item.timeLabel}</p>
-                <p class="text-[9px] text-slate-400 mt-0.5">Vertical 9:16 • AI Body Tracked</p>
+                <p class="text-[9px] text-slate-400 mt-0.5">Vertical 9:16 • Tracked &amp; Audio</p>
               </div>
             </div>
             <a href="${item.url}" download="Short_Clip_${index + 1}.mp4" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shrink-0 transition text-center cursor-pointer">
@@ -986,7 +1003,7 @@
 
         btn.disabled = false;
         btn.innerHTML = `<span>⚡ Generate 5 AI Shorts (Cost: 10 Credits)</span>`;
-        alert("Success! Exact 30-second ke 5 Shorts video body tracking ke sath ready hain! Download button dabate hi direct MP4 download hogi.");
+        alert("Success! 5 Shorts video aawaz aur body tracking ke sath taiyar hain! Download button dabate hi direct MP4 download hogi.");
       } catch (err) {
         console.error(err);
         btn.disabled = false;

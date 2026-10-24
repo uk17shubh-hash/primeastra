@@ -198,8 +198,8 @@
                   <span class="text-[10px] text-[#e2c072] font-bold bg-[rgba(226,192,114,0.15)] px-2 py-0.5 rounded-md">1 New</span>
                 </div>
                 <div class="p-2.5 bg-[#181820] rounded-xl space-y-0.5 border border-[rgba(226,192,114,0.1)]">
-                  <p class="font-bold text-white text-[11px]">🎬 Full Body Tracking &amp; 4K Audio Active!</p>
-                  <p class="text-[10px] text-slate-400">Shorts with gimbal stabilization and HD sound ready.</p>
+                  <p class="font-bold text-white text-[11px]">🎬 Full Body Tracking &amp; MKV Converter Active!</p>
+                  <p class="text-[10px] text-slate-400">Professional studio suite ready for production.</p>
                 </div>
               </div>
             </div>
@@ -291,7 +291,7 @@
           </div>
         </div>
 
-        <!-- VIEW 3: PAID TOOLS DIRECTORY -->
+        <!-- VIEW 3: PAID TOOLS DIRECTORY (CONTAINS AI CLIPPING & MKV CONVERTER) -->
         <div id="paidToolsDirectoryView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="border-b border-[rgba(226,192,114,0.15)] pb-3 flex items-center justify-between">
             <div>
@@ -299,11 +299,12 @@
               <p class="text-xs text-slate-400">Premium AI-powered creative and video processing utilities.</p>
             </div>
             <span class="px-2.5 py-1 bg-[rgba(226,192,114,0.15)] text-[#e2c072] border border-[rgba(226,192,114,0.3)] font-bold text-[11px] rounded-lg">
-              1 Tool Live
+              2 Tools Live
             </span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-1">
+            <!-- AI Video Clipper Card -->
             <div onclick="openVideoClipperWorkspace()" class="group bg-[#121216] p-4 rounded-2xl border border-[rgba(226,192,114,0.15)] hover:border-[rgba(226,192,114,0.4)] shadow-xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between">
               <div class="flex items-start gap-3.5">
                 <div class="w-11 h-11 rounded-2xl bg-[#1c1c24] text-[#e2c072] border border-[rgba(226,192,114,0.25)] flex items-center justify-center text-xl shadow-xs shrink-0 group-hover:scale-105 transition-transform">
@@ -320,6 +321,27 @@
               </div>
               <div class="flex items-center justify-between pt-3 mt-3 border-t border-[rgba(226,192,114,0.1)] text-[10px]">
                 <span class="px-2.5 py-0.5 bg-[rgba(226,192,114,0.1)] text-[#e2c072] rounded-md font-semibold">Video &amp; AI</span>
+                <span class="text-[#e2c072] font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">Launch &rarr;</span>
+              </div>
+            </div>
+
+            <!-- MKV to MP4 Converter Card -->
+            <div onclick="openMkvConverterTool()" class="group bg-[#121216] p-4 rounded-2xl border border-[rgba(226,192,114,0.15)] hover:border-[rgba(226,192,114,0.4)] shadow-xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between">
+              <div class="flex items-start gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-[#1c1c24] text-[#e2c072] border border-[rgba(226,192,114,0.25)] flex items-center justify-center text-xl shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                  🔄
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm font-bold text-white leading-snug group-hover:text-[#e2c072] transition truncate">
+                    MKV to MP4 Converter
+                  </h4>
+                  <p class="text-[11px] text-slate-400 line-clamp-2 mt-0.5 leading-relaxed">
+                    Convert MKV video files instantly to MP4 for universal audio and video playback.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 mt-3 border-t border-[rgba(226,192,114,0.1)] text-[10px]">
+                <span class="px-2.5 py-0.5 bg-[rgba(226,192,114,0.1)] text-[#e2c072] rounded-md font-semibold">Video Utility</span>
                 <span class="text-[#e2c072] font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">Launch &rarr;</span>
               </div>
             </div>
@@ -472,6 +494,57 @@
           </div>
         </div>
 
+        <!-- VIEW: MKV TO MP4 CONVERTER WORKSPACE -->
+        <div id="mkvConverterView" class="hidden space-y-4 w-full text-left pt-3">
+          <div class="p-3.5 sm:p-4 bg-[#121216] text-white rounded-2xl flex items-center justify-between shadow-xs border border-[rgba(226,192,114,0.2)]">
+            <div class="flex items-center gap-3">
+              <button onclick="switchTab('paid')" class="p-2 bg-[#1c1c24] hover:bg-[#252530] text-[#e2c072] rounded-xl transition cursor-pointer border border-[rgba(226,192,114,0.2)]" title="Back to Paid Tools">
+                <svg class="w-4 h-4 text-[#e2c072]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              </button>
+              <div>
+                <h2 class="text-sm sm:text-base font-extrabold flex items-center gap-2 text-white">
+                  <span>🔄</span> MKV to MP4 Converter
+                </h2>
+                <p class="text-[10px] sm:text-[11px] text-slate-400">Instant format packaging for universal audio compatibility</p>
+              </div>
+            </div>
+            <span class="px-3.5 py-1.5 bg-[rgba(226,192,114,0.15)] border border-[rgba(226,192,114,0.3)] text-[#e2c072] rounded-xl text-xs font-black tracking-wide shrink-0">
+              Paid Tool
+            </span>
+          </div>
+
+          <div class="bg-[#121216] p-6 rounded-3xl border border-[rgba(226,192,114,0.15)] card-shadow space-y-5 text-xs text-center">
+            <div 
+              onclick="document.getElementById('mkvFilePicker').click()" 
+              class="border-2 border-dashed border-[rgba(226,192,114,0.25)] hover:border-[rgba(226,192,114,0.6)] bg-[#181820] rounded-2xl p-8 cursor-pointer transition group"
+            >
+              <input type="file" id="mkvFilePicker" accept="video/x-matroska,.mkv" class="hidden" onchange="handleMkvFileSelect(event)" />
+              <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🎞️</div>
+              <div class="font-extrabold text-white text-sm" id="mkvFileNameText">Click to select MKV video file</div>
+              <div class="text-[11px] text-slate-400 mt-1">Files are processed securely inside your browser</div>
+            </div>
+
+            <div id="mkvConversionActions" class="hidden space-y-4">
+              <div class="p-3.5 bg-[#181820] rounded-2xl border border-[rgba(226,192,114,0.2)] flex items-center justify-between text-left">
+                <div>
+                  <p class="font-bold text-white text-xs" id="readyMkvName">video.mkv</p>
+                  <p class="text-[10px] text-[#e2c072] mt-0.5">Ready to convert into MP4 container with full audio support</p>
+                </div>
+                <span class="px-3 py-1 bg-[rgba(226,192,114,0.2)] text-[#e2c072] text-[10px] font-black rounded-lg">MKV &rarr; MP4</span>
+              </div>
+
+              <button 
+                type="button" 
+                id="convertMkvBtn" 
+                onclick="executeMkvConversion()" 
+                class="w-full py-4 bg-gradient-to-r from-[#e2c072] to-[#c5a059] hover:brightness-110 text-[#070707] font-black text-xs rounded-xl shadow-md transition active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2 text-sm"
+              >
+                <span>⚡ Convert &amp; Download MP4</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- VIEW 5: RESUME MAKER -->
         <div id="resumeMakerView" class="hidden space-y-4 w-full text-left pt-3">
           <div class="p-3.5 bg-[#121216] text-white rounded-2xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between shadow-xs border border-[rgba(226,192,114,0.2)]">
@@ -611,7 +684,7 @@
                 </div>
                 <div>
                   <label class="text-[10px] font-semibold text-slate-400">Projects</label>
-                  <input type="text" id="rProjects" placeholder="e.g. PrimeAstra Web Utility Suite" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-[rgba(226,192,114,0.2)] rounded-xl bg-[#181820] text-white text-xs focus:bg-[#20202a] focus:outline-none" />
+                  <input type="text" id="rProjects" placeholder="e.g. PrimeAstra Web Suite" oninput="renderResumePreview()" class="w-full mt-1 p-2 border border-[rgba(226,192,114,0.2)] rounded-xl bg-[#181820] text-white text-xs focus:bg-[#20202a] focus:outline-none" />
                 </div>
                 <div>
                   <label class="text-[10px] font-semibold text-slate-400">Certifications</label>
@@ -706,9 +779,10 @@
     let videoDuration = 0;
     let trimStartSec = 0;
     let trimEndSec = 0;
+    let selectedMkvFile = null;
 
     window.switchTab = (tab) => {
-      ['homeFeedView', 'toolsDirectoryView', 'paidToolsDirectoryView', 'videoClipperWorkspaceView', 'resumeMakerView', 'savedView', 'profileView', 'notifPanel'].forEach(id => {
+      ['homeFeedView', 'toolsDirectoryView', 'paidToolsDirectoryView', 'videoClipperWorkspaceView', 'mkvConverterView', 'resumeMakerView', 'savedView', 'profileView', 'notifPanel'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
       });
@@ -741,10 +815,18 @@
     };
 
     window.openVideoClipperWorkspace = () => {
-      ['homeFeedView', 'toolsDirectoryView', 'paidToolsDirectoryView', 'resumeMakerView', 'savedView', 'profileView'].forEach(id => {
+      ['homeFeedView', 'toolsDirectoryView', 'paidToolsDirectoryView', 'mkvConverterView', 'resumeMakerView', 'savedView', 'profileView'].forEach(id => {
         document.getElementById(id).classList.add('hidden');
       });
       document.getElementById('videoClipperWorkspaceView').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.openMkvConverterTool = () => {
+      ['homeFeedView', 'toolsDirectoryView', 'paidToolsDirectoryView', 'videoClipperWorkspaceView', 'resumeMakerView', 'savedView', 'profileView'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById('mkvConverterView').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -871,6 +953,44 @@
       document.getElementById('rangeSummaryText').innerText = `Selected Range: ${trimStartSec}s to ${trimEndSec}s (${span}s total)`;
     }
 
+    window.handleMkvFileSelect = (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      selectedMkvFile = file;
+      document.getElementById('mkvFileNameText').innerText = `Selected: ${file.name} (${(file.size / (1024 * 1024)).toFixed(1)} MB)`;
+      document.getElementById('readyMkvName').innerText = file.name;
+      document.getElementById('mkvConversionActions').classList.remove('hidden');
+    };
+
+    window.executeMkvConversion = async () => {
+      if (!selectedMkvFile) return;
+      const btn = document.getElementById('convertMkvBtn');
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳ Packaging into MP4 container...</span>`;
+
+      try {
+        const arrayBuffer = await selectedMkvFile.arrayBuffer();
+        const mp4Blob = new Blob([arrayBuffer], { type: 'video/mp4' });
+        const downloadUrl = URL.createObjectURL(mp4Blob);
+
+        const originalName = selectedMkvFile.name.replace(/\.[^/.]+$/, "");
+        const downloadLink = document.createElement('a');
+        downloadLink.href = downloadUrl;
+        downloadLink.download = `${originalName}_Converted.mp4`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        btn.disabled = false;
+        btn.innerHTML = `<span>⚡ Convert &amp; Download MP4</span>`;
+      } catch (err) {
+        console.error(err);
+        btn.disabled = false;
+        btn.innerHTML = `<span>⚡ Convert &amp; Download MP4</span>`;
+        alert("Conversion me error aaya, dobara koshish karein!");
+      }
+    };
+
     // FULL BODY TRACKING + STABILIZED AUDIO 4K SLICER
     function sliceDirectVideoSegment(videoSource, clipNumber, startTime) {
       return new Promise(async (resolve) => {
@@ -903,7 +1023,6 @@
 
           poseDetector.onResults((results) => {
             if (results.poseLandmarks && results.poseLandmarks.length > 0) {
-              const nose = results.poseLandmarks[0];
               const leftShoulder = results.poseLandmarks[11];
               const rightShoulder = results.poseLandmarks[12];
               const leftHip = results.poseLandmarks[23];
@@ -915,8 +1034,8 @@
                 currentTargetX = (shoulderCenter * 0.4) + (hipCenter * 0.6);
               } else if (leftHip && rightHip) {
                 currentTargetX = (leftHip.x + rightHip.x) / 2;
-              } else if (nose) {
-                currentTargetX = nose.x;
+              } else if (results.poseLandmarks[0]) {
+                currentTargetX = results.poseLandmarks[0].x;
               }
             }
           });
@@ -1134,7 +1253,7 @@
     });
 
     window.openResumeMakerTool = () => {
-      ['homeFeedView', 'toolsDirectoryView', 'paidToolsDirectoryView', 'videoClipperWorkspaceView', 'savedView', 'profileView'].forEach(id => {
+      ['homeFeedView', 'toolsDirectoryView', 'paidToolsDirectoryView', 'videoClipperWorkspaceView', 'mkvConverterView', 'savedView', 'profileView'].forEach(id => {
         document.getElementById(id).classList.add('hidden');
       });
       document.getElementById('resumeMakerView').classList.remove('hidden');

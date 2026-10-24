@@ -828,12 +828,43 @@
       document.getElementById('notifPanel').classList.toggle('hidden');
     };
 
-    window.handleFetchYoutube = () => {
-      const url = document.getElementById('ytVideoUrl').value.trim();
-      if (!url) return alert("Pehle YouTube link enter karein!");
-      alert("YouTube Link Verified! Direct 10 MP4 video slice generate karne ke liye ready hai.");
-    };
+  window.handleFetchYoutube = async () => {
+  const url = document.getElementById('ytVideoUrl').value.trim();
+  if (!url) {
+    alert("Pehle YouTube link enter karein!");
+    return;
+  }
 
+  const fetchBtn = document.querySelector("button[onclick='handleFetchYoutube()']");
+  if (fetchBtn) {
+    fetchBtn.disabled = true;
+    fetchBtn.innerText = "Fetching...";
+  }
+
+  try {
+    const res = await fetch('/api/yt-stream', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: url })
+    });
+
+    const data = await res.json();
+
+    if (data && data.streamUrl) {
+      selectedRawVideo = data.streamUrl;
+      alert("YouTube Video stream load ho gaya! Ab 'Generate AI Clips' dabayein aur 10 clips download ke liye ready ho jayenge.");
+    } else {
+      alert("YouTube stream fetch nahi ho paya, kripya link dobara check karein.");
+    }
+  } catch (e) {
+    alert("Error fetching YouTube video: " + e.message);
+  } finally {
+    if (fetchBtn) {
+      fetchBtn.disabled = false;
+      fetchBtn.innerText = "Fetch";
+    }
+  }
+};
     window.handleFileChange = (event) => {
       const file = event.target.files[0];
       if (!file) return;

@@ -1,7 +1,40 @@
 import { ToolItem } from '../types';
 
 export const TOOLS_DATA: ToolItem[] = [
-  // The 8 Popular Tools from the mockup
+  // Pro / Paid Tools
+  {
+    id: 'gst-invoice',
+    name: 'GST Tax Invoice Generator Pro',
+    description: 'Official Indian GST tax invoice (PDF matching), HSN breakdown, dynamic UPI QR, and A4 print/PDF.',
+    category: 'Paid / Billing',
+    isPopular: true,
+    isNew: true,
+    badge: 'PRO',
+    iconType: 'pdf',
+    keywords: ['invoice', 'gst', 'tax', 'bill', 'hsn', 'cgst', 'sgst', 'igst', 'upi', 'receipt', 'accounting'],
+  },
+  {
+    id: 'ai-video-clipper',
+    name: 'AI Video Clipping Generator',
+    description: 'Full body tracking & 4K clarity vertical short extraction with crystal synchronized audio.',
+    category: 'Video & AI',
+    isPopular: true,
+    isNew: true,
+    badge: 'PRO',
+    iconType: 'ai',
+    keywords: ['video', 'clipper', 'shorts', 'reels', 'tiktok', 'body tracking', 'ai video', 'trimmer'],
+  },
+  {
+    id: 'mkv-converter',
+    name: 'MKV to MP4 Converter',
+    description: 'Convert MKV container video files instantly to MP4 for universal playback and audio support.',
+    category: 'Conversion',
+    isPopular: true,
+    badge: 'PRO',
+    iconType: 'convert',
+    keywords: ['mkv', 'mp4', 'converter', 'video', 'container', 'audio'],
+  },
+  // The Popular Free Tools
   {
     id: 'pdf-converter',
     name: 'PDF to Word',

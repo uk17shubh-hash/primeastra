@@ -5,7 +5,17 @@ export type ToolCategory =
   | 'AI / Career'
   | 'Design'
   | 'Developer'
-  | 'Security';
+  | 'Security'
+  | 'Paid / Billing'
+  | 'Video & AI';
+
+export interface UserRecord {
+  uid: string;
+  name: string;
+  email: string;
+  photoUrl?: string;
+  createdAt?: string;
+}
 
 export interface ToolItem {
   id: string;

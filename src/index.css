@@ -1,82 +1,61 @@
 @import "tailwindcss";
 
-@layer base {
-  body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    background-color: #ECEEF3;
-    color: #1e293b;
-    margin: 0;
-    padding: 0;
+:root {
+  --bg-dark: #070707;
+  --bg-card: rgba(18, 18, 22, 0.9);
+  --accent-gold: #e2c072;
+  --accent-gold-dark: #c5a059;
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+  --border-glass: rgba(226, 192, 114, 0.15);
+  --border-glass-hover: rgba(226, 192, 114, 0.4);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-gradient {
+  background: linear-gradient(145deg, #121216 0%, #1c1c24 50%, #282836 100%);
+  border: 1px solid var(--border-glass);
+}
+
+.card-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.form-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.form-scroll::-webkit-scrollbar-track {
+  background: #121216;
+  border-radius: 8px;
+}
+.form-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-gold);
+  border-radius: 8px;
+}
+
+/* Print Specific Rules for Invoice Print Area */
+@media print {
+  body * {
+    visibility: hidden;
   }
-}
-
-/* 3D background sphere & torus animations */
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(4deg); }
-}
-@keyframes float-reverse {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(14px) rotate(-3deg); }
-}
-
-.animate-float {
-  animation: float-slow 7s ease-in-out infinite;
-}
-.animate-float-delayed {
-  animation: float-reverse 8.5s ease-in-out infinite;
-}
-
-/* Claymorphic 3D rendering simulation */
-.clay-sphere {
-  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #ede9fe 35%, #c4b5fd 70%, #8b5cf6 100%);
-  box-shadow: 
-    inset -8px -10px 20px rgba(109, 40, 217, 0.35),
-    inset 6px 6px 12px rgba(255, 255, 255, 0.9),
-    0 20px 30px -10px rgba(124, 58, 237, 0.3);
-}
-
-.clay-torus {
-  background: linear-gradient(135deg, #f5f3ff 0%, #ddd6fe 50%, #c4b5fd 100%);
-  box-shadow: 
-    inset 0 4px 10px rgba(255, 255, 255, 0.9),
-    inset -4px -6px 14px rgba(124, 58, 237, 0.25),
-    0 24px 36px -12px rgba(139, 92, 246, 0.35);
-}
-
-.glass-disc {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.25));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 16px 32px rgba(148, 163, 184, 0.15);
-}
-
-.glass-panel {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-}
-
-/* Custom Shadows from Image_2_98858bcd.html */
-.shadow-clay {
-  box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.12), 0 8px 16px -6px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-}
-.shadow-clay-sm {
-  box-shadow: 0 4px 12px rgba(148, 163, 184, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-}
-.shadow-floating {
-  box-shadow: 0 30px 60px -12px rgba(99, 102, 241, 0.16), 0 18px 36px -18px rgba(0, 0, 0, 0.06);
-}
-.shadow-glow-violet {
-  box-shadow: 0 0 25px -5px rgba(167, 139, 250, 0.45);
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  #invoicePrintArea, #invoicePrintArea * {
+    visibility: visible;
+  }
+  #invoicePrintArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
 }

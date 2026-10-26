@@ -1,7 +1,6 @@
 import React from 'react';
 import { Star, ArrowRight } from 'lucide-react';
-import { AppTheme } from '../types';
-import { UserRecord } from '../services/db';
+import { AppTheme, UserRecord } from '../types';
 import { PrimeAstraLogo } from './PrimeAstraLogo';
 
 interface HeroBannerProps {
